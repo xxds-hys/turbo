@@ -1,0 +1,1618 @@
+Allocation history of config default_alloc_config
+1: TRYING to allocate SUPERCLUSTER Uid: 936
+    slice lists:	
+        [ ingress::hdr.recirculate.$valid<1> pov [0:0]
+          ingress::hdr.recirculate_gamma.$valid<1> pov [0:0]
+          ingress::hdr.ethernet.$valid<1> pov [0:0]
+          ingress::hdr.ipv4.$valid<1> pov [0:0]
+          ingress::hdr.udp.$valid<1> pov [0:0]
+          ingress::hdr.attention.$valid<1> pov [0:0]
+          ingress::hdr.attention_data.$valid<1> pov [0:0]
+          ingress::hdr.recirculate_attention.$valid<1> pov [0:0] ]
+    rotational clusters:	
+        [[ingress::hdr.recirculate.$valid<1> pov [0:0]]]
+        [[ingress::hdr.recirculate_gamma.$valid<1> pov [0:0]]]
+        [[ingress::hdr.ethernet.$valid<1> pov [0:0]]]
+        [[ingress::hdr.ipv4.$valid<1> pov [0:0]]]
+        [[ingress::hdr.udp.$valid<1> pov [0:0]]]
+        [[ingress::hdr.attention.$valid<1> pov [0:0]]]
+        [[ingress::hdr.attention_data.$valid<1> pov [0:0]]]
+        [[ingress::hdr.recirculate_attention.$valid<1> pov [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 940
+    slice lists:	
+        [ ingress::hdr.recirculate.$valid<1> pov [0:0]
+          ingress::hdr.recirculate_gamma.$valid<1> pov [0:0]
+          ingress::hdr.ethernet.$valid<1> pov [0:0]
+          ingress::hdr.ipv4.$valid<1> pov [0:0]
+          ingress::hdr.udp.$valid<1> pov [0:0]
+          ingress::hdr.attention.$valid<1> pov [0:0]
+          ingress::hdr.attention_data.$valid<1> pov [0:0]
+          ingress::hdr.recirculate_attention.$valid<1> pov [0:0] ]
+    rotational clusters:	
+        [[ingress::hdr.recirculate.$valid<1> pov [0:0]]]
+        [[ingress::hdr.recirculate_gamma.$valid<1> pov [0:0]]]
+        [[ingress::hdr.ethernet.$valid<1> pov [0:0]]]
+        [[ingress::hdr.ipv4.$valid<1> pov [0:0]]]
+        [[ingress::hdr.udp.$valid<1> pov [0:0]]]
+        [[ingress::hdr.attention.$valid<1> pov [0:0]]]
+        [[ingress::hdr.attention_data.$valid<1> pov [0:0]]]
+        [[ingress::hdr.recirculate_attention.$valid<1> pov [0:0]]]
+
+Best Score: {[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, ], }
+Allocation Decisions:
+allocate: B0[0:0] <- ingress::hdr.recirculate.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[1:1] <- ingress::hdr.recirculate_gamma.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[2:2] <- ingress::hdr.ethernet.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[3:3] <- ingress::hdr.ipv4.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[4:4] <- ingress::hdr.udp.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[5:5] <- ingress::hdr.attention.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[6:6] <- ingress::hdr.attention_data.$valid<1> pov [0:0] @[-1r,12w]
+allocate: B0[7:7] <- ingress::hdr.recirculate_attention.$valid<1> pov [0:0] @[-1r,12w]
+2: TRYING to allocate SUPERCLUSTER Uid: 905
+    slice lists:	
+        [ egress::eg_intr_md_for_dprsr.mirror_io_select.$valid<1> meta pov [0:0]
+          egress::eg_intr_md.egress_port.$valid<1> meta pov [0:0] ]
+    rotational clusters:	
+        [[egress::eg_intr_md_for_dprsr.mirror_io_select.$valid<1> meta pov [0:0]]]
+        [[egress::eg_intr_md.egress_port.$valid<1> meta pov [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 944
+    slice lists:	
+        [ egress::eg_intr_md_for_dprsr.mirror_io_select.$valid<1> meta pov [0:0]
+          egress::eg_intr_md.egress_port.$valid<1> meta pov [0:0] ]
+    rotational clusters:	
+        [[egress::eg_intr_md_for_dprsr.mirror_io_select.$valid<1> meta pov [0:0]]]
+        [[egress::eg_intr_md.egress_port.$valid<1> meta pov [0:0]]]
+
+Best Score: {wasted_pov_bits: 6, [n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, ], }
+Allocation Decisions:
+allocate: B4[0:0] <- egress::eg_intr_md_for_dprsr.mirror_io_select.$valid<1> meta pov [0:0] @[-1r,12w]
+allocate: B4[1:1] <- egress::eg_intr_md.egress_port.$valid<1> meta pov [0:0] @[-1r,12w]
+3: TRYING to allocate SUPERCLUSTER Uid: 823
+    slice lists:	
+        [ ingress::hdr.attention.gamma<8> ^0 ^bit[0..31] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention.seq_id<8> ^0 ^bit[0..23] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention.head_id<8> ^0 ^bit[0..15] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention.layer_id<8> ^0 ^bit[0..7] deparsed exact_containers mocha [0:7] ]
+        [ ingress::ig_md.gamma_max<8> meta no_split [0:7] ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_log_res<8> meta solitary no_split [0:7], ingress::ig_md.gamma_max<8> meta no_split [0:7], ingress::hdr.attention.gamma<8> ^0 ^bit[0..31] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention.seq_id<8> ^0 ^bit[0..23] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention.head_id<8> ^0 ^bit[0..15] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention.layer_id<8> ^0 ^bit[0..7] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 951
+    slice lists:	
+        [ ingress::ig_md.gamma_max<8> meta no_split [0:7] ]
+        [ ingress::hdr.attention.gamma<8> ^0 ^bit[0..31] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention.seq_id<8> ^0 ^bit[0..23] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_log_res<8> meta solitary no_split [0:7], ingress::ig_md.gamma_max<8> meta no_split [0:7], ingress::hdr.attention.gamma<8> ^0 ^bit[0..31] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention.seq_id<8> ^0 ^bit[0..23] deparsed exact_containers mocha [0:7]]]
+
+SUPERCLUSTER Uid: 952
+    slice lists:	
+        [ ingress::hdr.attention.head_id<8> ^0 ^bit[0..15] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention.layer_id<8> ^0 ^bit[0..7] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention.head_id<8> ^0 ^bit[0..15] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention.layer_id<8> ^0 ^bit[0..7] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 16, ], [n_set_gress: 2, n_inc_containers: 2, n_wasted_bits: 8, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: H0[0:7] <- ingress::ig_md.gamma_max<8> meta no_split [0:7] @[-1r,12w]
+allocate: H1[0:7] <- ingress::ig_md.gamma_log_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: MH0[0:7] <- ingress::hdr.attention.gamma<8> ^0 ^bit[0..31] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MH0[8:15] <- ingress::hdr.attention.seq_id<8> ^0 ^bit[0..23] deparsed exact_containers mocha [0:7] @[-1r,12w]
+4: TRYING to allocate SUPERCLUSTER Uid: 869
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_0_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_0_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 964
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_0_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_0_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_overlay_bits: 16, n_wasted_bits: 8, ], }
+Allocation Decisions:
+allocate: H0[0:7] <- ingress::ig_md.attention_0_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: H1[0:7] <- ingress::ig_md.attention_0_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+5: TRYING to allocate SUPERCLUSTER Uid: 870
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_1_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_1_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 965
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_1_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_1_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_packing_bits: 8, n_packing_priority: 100000, n_inc_containers: 1, n_wasted_bits: 8, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H0[8:15] <- ingress::ig_md.attention_1_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: H2[8:15] <- ingress::ig_md.attention_1_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+6: TRYING to allocate SUPERCLUSTER Uid: 871
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_2_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_2_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 966
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_2_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_2_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B5[0:7] <- ingress::ig_md.attention_2_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B6[0:7] <- ingress::ig_md.attention_2_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+7: TRYING to allocate SUPERCLUSTER Uid: 872
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_3_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_3_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 967
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_3_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_3_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B7[0:7] <- ingress::ig_md.attention_3_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B8[0:7] <- ingress::ig_md.attention_3_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+8: TRYING to allocate SUPERCLUSTER Uid: 873
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_4_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_4_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 968
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_4_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_4_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B9[0:7] <- ingress::ig_md.attention_4_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B10[0:7] <- ingress::ig_md.attention_4_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+9: TRYING to allocate SUPERCLUSTER Uid: 874
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_5_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_5_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 969
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_5_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_5_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B12[0:7] <- ingress::ig_md.attention_5_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B13[0:7] <- ingress::ig_md.attention_5_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+10: TRYING to allocate SUPERCLUSTER Uid: 875
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_6_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_6_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 970
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_6_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_6_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B14[0:7] <- ingress::ig_md.attention_6_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B15[0:7] <- ingress::ig_md.attention_6_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+11: TRYING to allocate SUPERCLUSTER Uid: 876
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_7_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_7_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 971
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_7_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_7_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B16[0:7] <- ingress::ig_md.attention_7_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B17[0:7] <- ingress::ig_md.attention_7_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+12: TRYING to allocate SUPERCLUSTER Uid: 877
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_8_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_8_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 972
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_8_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_8_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B5[0:7] <- ingress::ig_md.attention_8_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B11[0:7] <- ingress::ig_md.attention_8_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+13: TRYING to allocate SUPERCLUSTER Uid: 878
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_9_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_9_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 973
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_9_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_9_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B12[0:7] <- ingress::ig_md.attention_9_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B18[0:7] <- ingress::ig_md.attention_9_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+14: TRYING to allocate SUPERCLUSTER Uid: 879
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_10_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_10_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 974
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_10_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_10_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B13[0:7] <- ingress::ig_md.attention_10_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B19[0:7] <- ingress::ig_md.attention_10_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+15: TRYING to allocate SUPERCLUSTER Uid: 880
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_11_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_11_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 975
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_11_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_11_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B14[0:7] <- ingress::ig_md.attention_11_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B20[0:7] <- ingress::ig_md.attention_11_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+16: TRYING to allocate SUPERCLUSTER Uid: 881
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_12_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_12_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 976
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_12_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_12_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B15[0:7] <- ingress::ig_md.attention_12_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B21[0:7] <- ingress::ig_md.attention_12_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+17: TRYING to allocate SUPERCLUSTER Uid: 882
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_13_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_13_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 977
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_13_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_13_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B16[0:7] <- ingress::ig_md.attention_13_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B22[0:7] <- ingress::ig_md.attention_13_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+18: TRYING to allocate SUPERCLUSTER Uid: 883
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_14_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_14_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 978
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_14_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_14_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B17[0:7] <- ingress::ig_md.attention_14_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B23[0:7] <- ingress::ig_md.attention_14_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+19: TRYING to allocate SUPERCLUSTER Uid: 884
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_15_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_15_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 979
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_15_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_15_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, ], }
+Allocation Decisions:
+allocate: B1[0:7] <- ingress::ig_md.attention_15_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B6[0:7] <- ingress::ig_md.attention_15_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+20: TRYING to allocate SUPERCLUSTER Uid: 885
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_16_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_16_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 980
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_16_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_16_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, ], }
+Allocation Decisions:
+allocate: B1[0:7] <- ingress::ig_md.attention_16_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B2[0:7] <- ingress::ig_md.attention_16_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+21: TRYING to allocate SUPERCLUSTER Uid: 886
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_17_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_17_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 981
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_17_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_17_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, ], }
+Allocation Decisions:
+allocate: B3[0:7] <- ingress::ig_md.attention_17_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B5[0:7] <- ingress::ig_md.attention_17_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+22: TRYING to allocate SUPERCLUSTER Uid: 887
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_18_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_18_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 982
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_18_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_18_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_wasted_bits: 8, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H1[0:7] <- ingress::ig_md.attention_18_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: H3[0:7] <- ingress::ig_md.attention_18_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+23: TRYING to allocate SUPERCLUSTER Uid: 888
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_19_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_19_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 983
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_19_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_19_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, n_packing_bits: 8, n_packing_priority: 100000, n_wasted_bits: 8, ], }
+Allocation Decisions:
+allocate: H2[8:15] <- ingress::ig_md.attention_19_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: H3[8:15] <- ingress::ig_md.attention_19_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+24: TRYING to allocate SUPERCLUSTER Uid: 889
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_20_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_20_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 984
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_20_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_20_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B24[0:7] <- ingress::ig_md.attention_20_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B25[0:7] <- ingress::ig_md.attention_20_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+25: TRYING to allocate SUPERCLUSTER Uid: 890
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_21_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_21_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 985
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_21_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_21_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B26[0:7] <- ingress::ig_md.attention_21_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B27[0:7] <- ingress::ig_md.attention_21_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+26: TRYING to allocate SUPERCLUSTER Uid: 891
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_22_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_22_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 986
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_22_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_22_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B28[0:7] <- ingress::ig_md.attention_22_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B29[0:7] <- ingress::ig_md.attention_22_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+27: TRYING to allocate SUPERCLUSTER Uid: 892
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_23_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_23_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 987
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_23_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_23_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B30[0:7] <- ingress::ig_md.attention_23_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B31[0:7] <- ingress::ig_md.attention_23_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+28: TRYING to allocate SUPERCLUSTER Uid: 893
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_24_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_24_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 988
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_24_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_24_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B24[0:7] <- ingress::ig_md.attention_24_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B32[0:7] <- ingress::ig_md.attention_24_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+29: TRYING to allocate SUPERCLUSTER Uid: 894
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_25_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_25_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 989
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_25_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_25_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B25[0:7] <- ingress::ig_md.attention_25_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B33[0:7] <- ingress::ig_md.attention_25_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+30: TRYING to allocate SUPERCLUSTER Uid: 895
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_26_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_26_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 990
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_26_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_26_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B26[0:7] <- ingress::ig_md.attention_26_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B34[0:7] <- ingress::ig_md.attention_26_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+31: TRYING to allocate SUPERCLUSTER Uid: 896
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_27_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_27_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 991
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_27_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_27_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B27[0:7] <- ingress::ig_md.attention_27_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: B35[0:7] <- ingress::ig_md.attention_27_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+32: TRYING to allocate SUPERCLUSTER Uid: 897
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_28_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_28_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 992
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_28_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_28_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_overlay_bits: 8, n_inc_containers: 1, n_wasted_bits: 8, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H1[0:7] <- ingress::ig_md.attention_28_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: H4[0:7] <- ingress::ig_md.attention_28_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+33: TRYING to allocate SUPERCLUSTER Uid: 898
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_29_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_29_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 993
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_29_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_29_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, n_packing_bits: 8, n_packing_priority: 100000, n_wasted_bits: 8, ], }
+Allocation Decisions:
+allocate: H2[8:15] <- ingress::ig_md.attention_29_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+allocate: H4[8:15] <- ingress::ig_md.attention_29_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+34: TRYING to allocate SUPERCLUSTER Uid: 899
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_30_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_30_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 994
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_30_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_30_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B36[0:7] <- ingress::ig_md.attention_30_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B37[0:7] <- ingress::ig_md.attention_30_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+35: TRYING to allocate SUPERCLUSTER Uid: 900
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_31_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_31_pkt_res<8> meta no_split [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 995
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_31_local_res<8> meta solitary no_split [0:7], ingress::ig_md.attention_31_pkt_res<8> meta no_split [0:7]]]
+
+Best Score: {[n_set_gress: 2, n_inc_containers: 2, n_inc_small_containers: 2, n_mismatched_deparser_gress: 2, ], }
+Allocation Decisions:
+allocate: B38[0:7] <- ingress::ig_md.attention_31_pkt_res<8> meta no_split [0:7] @[-1r,12w]
+allocate: B39[0:7] <- ingress::ig_md.attention_31_local_res<8> meta solitary no_split [0:7] @[-1r,12w]
+36: TRYING to allocate SUPERCLUSTER Uid: 911
+    slice lists:	
+        [ egress::eg_intr_md.egress_port<9> ^0 ^bit[0..15] intrinsic no_split deparsed_bottom_bits deparsed_to_tm mocha [0:8]
+          egress::eg_intr_md._pad0<7> intrinsic deparsed_to_tm mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_port<9> ^0 ^bit[0..15] intrinsic no_split deparsed_bottom_bits deparsed_to_tm mocha [0:8]]]
+        [[egress::eg_intr_md._pad0<7> intrinsic deparsed_to_tm mocha [0:6]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 999
+    slice lists:	
+        [ egress::eg_intr_md.egress_port<9> ^0 ^bit[0..15] intrinsic no_split deparsed_bottom_bits deparsed_to_tm mocha [0:8]
+          egress::eg_intr_md._pad0<7> intrinsic deparsed_to_tm mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_port<9> ^0 ^bit[0..15] intrinsic no_split deparsed_bottom_bits deparsed_to_tm mocha [0:8]]]
+        [[egress::eg_intr_md._pad0<7> intrinsic deparsed_to_tm mocha [0:6]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, ], }
+Allocation Decisions:
+allocate: MH4[0:8] <- egress::eg_intr_md.egress_port<9> ^0 ^bit[0..15] intrinsic no_split deparsed_bottom_bits deparsed_to_tm mocha [0:8] @[-1r,12w]
+37: TRYING to allocate SUPERCLUSTER Uid: 901
+    slice lists:	[ ]
+    rotational clusters:	
+        [[egress::eg_intr_md_for_dprsr.mirror_io_select<1> meta intrinsic no_split deparsed_to_tm mocha [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1000
+    slice lists:	[ ]
+    rotational clusters:	
+        [[egress::eg_intr_md_for_dprsr.mirror_io_select<1> meta intrinsic no_split deparsed_to_tm mocha [0:0]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_inc_containers: 1, ], }
+Allocation Decisions:
+allocate: MH5[0:0] <- egress::eg_intr_md_for_dprsr.mirror_io_select<1> meta intrinsic no_split deparsed_to_tm mocha [0:0] @[-1r,12w]
+38: TRYING to allocate SUPERCLUSTER Uid: 802
+    slice lists:	
+        [ ingress::hdr.attention_data.data_31<8> ^0 ^bit[0..287] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_30<8> ^0 ^bit[0..279] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_29<8> ^0 ^bit[0..271] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_28<8> ^0 ^bit[0..263] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_31<8> ^0 ^bit[0..287] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_30<8> ^0 ^bit[0..279] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_29<8> ^0 ^bit[0..271] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_28<8> ^0 ^bit[0..263] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1005
+    slice lists:	
+        [ ingress::hdr.attention_data.data_31<8> ^0 ^bit[0..287] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_30<8> ^0 ^bit[0..279] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_29<8> ^0 ^bit[0..271] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_28<8> ^0 ^bit[0..263] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_31<8> ^0 ^bit[0..287] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_30<8> ^0 ^bit[0..279] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_29<8> ^0 ^bit[0..271] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_28<8> ^0 ^bit[0..263] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW0[0:7] <- ingress::hdr.attention_data.data_31<8> ^0 ^bit[0..287] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW0[8:15] <- ingress::hdr.attention_data.data_30<8> ^0 ^bit[0..279] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW0[16:23] <- ingress::hdr.attention_data.data_29<8> ^0 ^bit[0..271] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW0[24:31] <- ingress::hdr.attention_data.data_28<8> ^0 ^bit[0..263] deparsed exact_containers mocha [0:7] @[-1r,12w]
+39: TRYING to allocate SUPERCLUSTER Uid: 804
+    slice lists:	
+        [ ingress::hdr.attention_data.data_27<8> ^0 ^bit[0..255] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_26<8> ^0 ^bit[0..247] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_25<8> ^0 ^bit[0..239] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_24<8> ^0 ^bit[0..231] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_27<8> ^0 ^bit[0..255] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_26<8> ^0 ^bit[0..247] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_25<8> ^0 ^bit[0..239] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_24<8> ^0 ^bit[0..231] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1024
+    slice lists:	
+        [ ingress::hdr.attention_data.data_27<8> ^0 ^bit[0..255] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_26<8> ^0 ^bit[0..247] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_25<8> ^0 ^bit[0..239] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_24<8> ^0 ^bit[0..231] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_27<8> ^0 ^bit[0..255] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_26<8> ^0 ^bit[0..247] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_25<8> ^0 ^bit[0..239] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_24<8> ^0 ^bit[0..231] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW1[0:7] <- ingress::hdr.attention_data.data_27<8> ^0 ^bit[0..255] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW1[8:15] <- ingress::hdr.attention_data.data_26<8> ^0 ^bit[0..247] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW1[16:23] <- ingress::hdr.attention_data.data_25<8> ^0 ^bit[0..239] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW1[24:31] <- ingress::hdr.attention_data.data_24<8> ^0 ^bit[0..231] deparsed exact_containers mocha [0:7] @[-1r,12w]
+40: TRYING to allocate SUPERCLUSTER Uid: 806
+    slice lists:	
+        [ ingress::hdr.attention_data.data_23<8> ^0 ^bit[0..223] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_22<8> ^0 ^bit[0..215] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_21<8> ^0 ^bit[0..207] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_20<8> ^0 ^bit[0..199] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_23<8> ^0 ^bit[0..223] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_22<8> ^0 ^bit[0..215] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_21<8> ^0 ^bit[0..207] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_20<8> ^0 ^bit[0..199] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1043
+    slice lists:	
+        [ ingress::hdr.attention_data.data_23<8> ^0 ^bit[0..223] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_22<8> ^0 ^bit[0..215] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_21<8> ^0 ^bit[0..207] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_20<8> ^0 ^bit[0..199] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_23<8> ^0 ^bit[0..223] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_22<8> ^0 ^bit[0..215] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_21<8> ^0 ^bit[0..207] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_20<8> ^0 ^bit[0..199] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW2[0:7] <- ingress::hdr.attention_data.data_23<8> ^0 ^bit[0..223] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW2[8:15] <- ingress::hdr.attention_data.data_22<8> ^0 ^bit[0..215] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW2[16:23] <- ingress::hdr.attention_data.data_21<8> ^0 ^bit[0..207] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW2[24:31] <- ingress::hdr.attention_data.data_20<8> ^0 ^bit[0..199] deparsed exact_containers mocha [0:7] @[-1r,12w]
+41: TRYING to allocate SUPERCLUSTER Uid: 808
+    slice lists:	
+        [ ingress::hdr.attention_data.data_19<8> ^0 ^bit[0..191] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_18<8> ^0 ^bit[0..183] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_17<8> ^0 ^bit[0..175] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_16<8> ^0 ^bit[0..167] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_19<8> ^0 ^bit[0..191] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_18<8> ^0 ^bit[0..183] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_17<8> ^0 ^bit[0..175] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_16<8> ^0 ^bit[0..167] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1062
+    slice lists:	
+        [ ingress::hdr.attention_data.data_19<8> ^0 ^bit[0..191] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_18<8> ^0 ^bit[0..183] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_17<8> ^0 ^bit[0..175] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_16<8> ^0 ^bit[0..167] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_19<8> ^0 ^bit[0..191] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_18<8> ^0 ^bit[0..183] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_17<8> ^0 ^bit[0..175] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_16<8> ^0 ^bit[0..167] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW3[0:7] <- ingress::hdr.attention_data.data_19<8> ^0 ^bit[0..191] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW3[8:15] <- ingress::hdr.attention_data.data_18<8> ^0 ^bit[0..183] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW3[16:23] <- ingress::hdr.attention_data.data_17<8> ^0 ^bit[0..175] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW3[24:31] <- ingress::hdr.attention_data.data_16<8> ^0 ^bit[0..167] deparsed exact_containers mocha [0:7] @[-1r,12w]
+42: TRYING to allocate SUPERCLUSTER Uid: 810
+    slice lists:	
+        [ ingress::hdr.attention_data.data_15<8> ^0 ^bit[0..159] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_14<8> ^0 ^bit[0..151] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_13<8> ^0 ^bit[0..143] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_12<8> ^0 ^bit[0..135] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_15<8> ^0 ^bit[0..159] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_14<8> ^0 ^bit[0..151] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_13<8> ^0 ^bit[0..143] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_12<8> ^0 ^bit[0..135] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1081
+    slice lists:	
+        [ ingress::hdr.attention_data.data_15<8> ^0 ^bit[0..159] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_14<8> ^0 ^bit[0..151] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_13<8> ^0 ^bit[0..143] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_12<8> ^0 ^bit[0..135] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_15<8> ^0 ^bit[0..159] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_14<8> ^0 ^bit[0..151] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_13<8> ^0 ^bit[0..143] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_12<8> ^0 ^bit[0..135] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW4[0:7] <- ingress::hdr.attention_data.data_15<8> ^0 ^bit[0..159] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW4[8:15] <- ingress::hdr.attention_data.data_14<8> ^0 ^bit[0..151] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW4[16:23] <- ingress::hdr.attention_data.data_13<8> ^0 ^bit[0..143] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW4[24:31] <- ingress::hdr.attention_data.data_12<8> ^0 ^bit[0..135] deparsed exact_containers mocha [0:7] @[-1r,12w]
+43: TRYING to allocate SUPERCLUSTER Uid: 812
+    slice lists:	
+        [ ingress::hdr.attention_data.data_11<8> ^0 ^bit[0..127] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_10<8> ^0 ^bit[0..119] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_9<8> ^0 ^bit[0..111] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_8<8> ^0 ^bit[0..103] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_11<8> ^0 ^bit[0..127] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_10<8> ^0 ^bit[0..119] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_9<8> ^0 ^bit[0..111] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_8<8> ^0 ^bit[0..103] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1100
+    slice lists:	
+        [ ingress::hdr.attention_data.data_11<8> ^0 ^bit[0..127] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_10<8> ^0 ^bit[0..119] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_9<8> ^0 ^bit[0..111] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_8<8> ^0 ^bit[0..103] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_11<8> ^0 ^bit[0..127] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_10<8> ^0 ^bit[0..119] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_9<8> ^0 ^bit[0..111] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_8<8> ^0 ^bit[0..103] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW5[0:7] <- ingress::hdr.attention_data.data_11<8> ^0 ^bit[0..127] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW5[8:15] <- ingress::hdr.attention_data.data_10<8> ^0 ^bit[0..119] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW5[16:23] <- ingress::hdr.attention_data.data_9<8> ^0 ^bit[0..111] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW5[24:31] <- ingress::hdr.attention_data.data_8<8> ^0 ^bit[0..103] deparsed exact_containers mocha [0:7] @[-1r,12w]
+44: TRYING to allocate SUPERCLUSTER Uid: 814
+    slice lists:	
+        [ ingress::hdr.attention_data.data_7<8> ^0 ^bit[0..95] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_6<8> ^0 ^bit[0..87] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_5<8> ^0 ^bit[0..79] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_4<8> ^0 ^bit[0..71] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_7<8> ^0 ^bit[0..95] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_6<8> ^0 ^bit[0..87] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_5<8> ^0 ^bit[0..79] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_4<8> ^0 ^bit[0..71] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1119
+    slice lists:	
+        [ ingress::hdr.attention_data.data_7<8> ^0 ^bit[0..95] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_6<8> ^0 ^bit[0..87] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_5<8> ^0 ^bit[0..79] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_4<8> ^0 ^bit[0..71] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_7<8> ^0 ^bit[0..95] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_6<8> ^0 ^bit[0..87] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_5<8> ^0 ^bit[0..79] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_4<8> ^0 ^bit[0..71] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_set_deparser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW6[0:7] <- ingress::hdr.attention_data.data_7<8> ^0 ^bit[0..95] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW6[8:15] <- ingress::hdr.attention_data.data_6<8> ^0 ^bit[0..87] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW6[16:23] <- ingress::hdr.attention_data.data_5<8> ^0 ^bit[0..79] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW6[24:31] <- ingress::hdr.attention_data.data_4<8> ^0 ^bit[0..71] deparsed exact_containers mocha [0:7] @[-1r,12w]
+45: TRYING to allocate SUPERCLUSTER Uid: 816
+    slice lists:	
+        [ ingress::hdr.attention_data.data_3<8> ^0 ^bit[0..63] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_2<8> ^0 ^bit[0..55] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_1<8> ^0 ^bit[0..47] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_0<8> ^0 ^bit[0..39] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_3<8> ^0 ^bit[0..63] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_2<8> ^0 ^bit[0..55] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_1<8> ^0 ^bit[0..47] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_0<8> ^0 ^bit[0..39] deparsed exact_containers mocha [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1138
+    slice lists:	
+        [ ingress::hdr.attention_data.data_3<8> ^0 ^bit[0..63] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_2<8> ^0 ^bit[0..55] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_1<8> ^0 ^bit[0..47] deparsed exact_containers mocha [0:7]
+          ingress::hdr.attention_data.data_0<8> ^0 ^bit[0..39] deparsed exact_containers mocha [0:7] ]
+    rotational clusters:	
+        [[ingress::hdr.attention_data.data_3<8> ^0 ^bit[0..63] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_2<8> ^0 ^bit[0..55] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_1<8> ^0 ^bit[0..47] deparsed exact_containers mocha [0:7]]]
+        [[ingress::hdr.attention_data.data_0<8> ^0 ^bit[0..39] deparsed exact_containers mocha [0:7]]]
+
+Best Score: {M[n_set_gress: 1, n_set_parser_group_gress: 1, n_inc_containers: 1, n_clot_bits: 32, ], }
+Allocation Decisions:
+allocate: MW7[0:7] <- ingress::hdr.attention_data.data_3<8> ^0 ^bit[0..63] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW7[8:15] <- ingress::hdr.attention_data.data_2<8> ^0 ^bit[0..55] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW7[16:23] <- ingress::hdr.attention_data.data_1<8> ^0 ^bit[0..47] deparsed exact_containers mocha [0:7] @[-1r,12w]
+allocate: MW7[24:31] <- ingress::hdr.attention_data.data_0<8> ^0 ^bit[0..39] deparsed exact_containers mocha [0:7] @[-1r,12w]
+46: TRYING to allocate SUPERCLUSTER Uid: 835
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [16:47]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1153
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [16:47]]]
+
+Best Score: {M[n_set_gress: 1, n_inc_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: MW8[0:31] <- ingress::ig_md.padding<80> meta mocha [16:47] @[-1r,12w]
+47: TRYING to allocate SUPERCLUSTER Uid: 836
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [48:79]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1221
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [48:79]]]
+
+Best Score: {M[n_set_gress: 1, n_inc_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: MW9[0:31] <- ingress::ig_md.padding<80> meta mocha [48:79] @[-1r,12w]
+48: TRYING to allocate SUPERCLUSTER Uid: 830
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [0:15]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1289
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.padding<80> meta mocha [0:15]]]
+
+Best Score: {M[n_set_gress: 1, n_inc_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: MH6[0:15] <- ingress::ig_md.padding<80> meta mocha [0:15] @[-1r,12w]
+49: TRYING to allocate SUPERCLUSTER Uid: 824
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_ba_cal_res<6> meta [0:5]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1296
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_ba_cal_res<6> meta [0:5]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B40[0:5] <- ingress::ig_md.gamma_ba_cal_res<6> meta [0:5] @[-1r,12w]
+50: TRYING to allocate SUPERCLUSTER Uid: 825
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.local_gamma_big_flag<1> meta [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1297
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.local_gamma_big_flag<1> meta [0:0]]]
+
+Best Score: {[n_packing_bits: 1, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: B40[6:6] <- ingress::ig_md.local_gamma_big_flag<1> meta [0:0] @[-1r,12w]
+51: TRYING to allocate SUPERCLUSTER Uid: 912
+    slice lists:	
+        [ egress::eg_intr_md._pad_eg_int_md<8> intrinsic mocha [0:7]
+          egress::eg_intr_md.pkt_length<16> intrinsic [0:15]
+          egress::eg_intr_md.deflection_flag<1> intrinsic [0:0]
+          egress::eg_intr_md._pad10<7> intrinsic mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md._pad_eg_int_md<8> intrinsic mocha [0:7]]]
+        [[egress::eg_intr_md.pkt_length<16> intrinsic [0:15]]]
+        [[egress::eg_intr_md.deflection_flag<1> intrinsic [0:0]]]
+        [[egress::eg_intr_md._pad10<7> intrinsic mocha [0:6]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1302
+    slice lists:	
+        [ egress::eg_intr_md._pad_eg_int_md<8> intrinsic mocha [0:7]
+          egress::eg_intr_md.pkt_length<16> intrinsic [0:15]
+          egress::eg_intr_md.deflection_flag<1> intrinsic [0:0]
+          egress::eg_intr_md._pad10<7> intrinsic mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md._pad_eg_int_md<8> intrinsic mocha [0:7]]]
+        [[egress::eg_intr_md.pkt_length<16> intrinsic [0:15]]]
+        [[egress::eg_intr_md.deflection_flag<1> intrinsic [0:0]]]
+        [[egress::eg_intr_md._pad10<7> intrinsic mocha [0:6]]]
+
+Best Score: {}
+Allocation Decisions:
+52: TRYING to allocate SUPERCLUSTER Uid: 920
+    slice lists:	
+        [ egress::eg_intr_md.deq_timedelta<18> intrinsic [0:17]
+          egress::eg_intr_md._pad6<14> intrinsic mocha [0:13] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.deq_timedelta<18> intrinsic [0:17]]]
+        [[egress::eg_intr_md._pad6<14> intrinsic mocha [0:13]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1330
+    slice lists:	
+        [ egress::eg_intr_md.deq_timedelta<18> intrinsic [0:17]
+          egress::eg_intr_md._pad6<14> intrinsic mocha [0:13] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.deq_timedelta<18> intrinsic [0:17]]]
+        [[egress::eg_intr_md._pad6<14> intrinsic mocha [0:13]]]
+
+Best Score: {}
+Allocation Decisions:
+53: TRYING to allocate SUPERCLUSTER Uid: 928
+    slice lists:	
+        [ egress::eg_intr_md.deq_qdepth<19> intrinsic [0:18]
+          egress::eg_intr_md._pad4<5> intrinsic mocha [0:4]
+          egress::eg_intr_md.enq_tstamp<18> intrinsic [0:7] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.deq_qdepth<19> intrinsic [0:18]]]
+        [[egress::eg_intr_md._pad4<5> intrinsic mocha [0:4]]]
+        [[egress::eg_intr_md.enq_tstamp<18> intrinsic [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1374
+    slice lists:	
+        [ egress::eg_intr_md.deq_qdepth<19> intrinsic [0:18]
+          egress::eg_intr_md._pad4<5> intrinsic mocha [0:4]
+          egress::eg_intr_md.enq_tstamp<18> intrinsic [0:7] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.deq_qdepth<19> intrinsic [0:18]]]
+        [[egress::eg_intr_md._pad4<5> intrinsic mocha [0:4]]]
+        [[egress::eg_intr_md.enq_tstamp<18> intrinsic [0:7]]]
+
+Best Score: {}
+Allocation Decisions:
+54: TRYING to allocate SUPERCLUSTER Uid: 930
+    slice lists:	
+        [ egress::eg_intr_md.enq_tstamp<18> intrinsic [8:17]
+          egress::eg_intr_md._pad3<14> intrinsic mocha [0:13]
+          egress::eg_intr_md.enq_congest_stat<2> intrinsic [0:1]
+          egress::eg_intr_md._pad2<6> intrinsic mocha [0:5] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.enq_tstamp<18> intrinsic [8:17]]]
+        [[egress::eg_intr_md._pad3<14> intrinsic mocha [0:13]]]
+        [[egress::eg_intr_md.enq_congest_stat<2> intrinsic [0:1]]]
+        [[egress::eg_intr_md._pad2<6> intrinsic mocha [0:5]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1406
+    slice lists:	
+        [ egress::eg_intr_md.enq_tstamp<18> intrinsic [8:17]
+          egress::eg_intr_md._pad3<14> intrinsic mocha [0:13]
+          egress::eg_intr_md.enq_congest_stat<2> intrinsic [0:1]
+          egress::eg_intr_md._pad2<6> intrinsic mocha [0:5] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.enq_tstamp<18> intrinsic [8:17]]]
+        [[egress::eg_intr_md._pad3<14> intrinsic mocha [0:13]]]
+        [[egress::eg_intr_md.enq_congest_stat<2> intrinsic [0:1]]]
+        [[egress::eg_intr_md._pad2<6> intrinsic mocha [0:5]]]
+
+Best Score: {}
+Allocation Decisions:
+55: TRYING to allocate SUPERCLUSTER Uid: 932
+    slice lists:	
+        [ egress::eg_intr_md.enq_qdepth<19> intrinsic [0:18]
+          egress::eg_intr_md._pad1<5> intrinsic mocha [0:4] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.enq_qdepth<19> intrinsic [0:18]]]
+        [[egress::eg_intr_md._pad1<5> intrinsic mocha [0:4]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1438
+    slice lists:	
+        [ egress::eg_intr_md.enq_qdepth<19> intrinsic [0:18]
+          egress::eg_intr_md._pad1<5> intrinsic mocha [0:4] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.enq_qdepth<19> intrinsic [0:18]]]
+        [[egress::eg_intr_md._pad1<5> intrinsic mocha [0:4]]]
+
+Best Score: {}
+Allocation Decisions:
+56: TRYING to allocate SUPERCLUSTER Uid: 914
+    slice lists:	
+        [ egress::eg_intr_md.egress_cos<3> intrinsic [0:2]
+          egress::eg_intr_md._pad9<5> intrinsic mocha [0:4]
+          egress::eg_intr_md.egress_qid<7> intrinsic [0:6]
+          egress::eg_intr_md._pad8<1> intrinsic mocha [0:0] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_cos<3> intrinsic [0:2]]]
+        [[egress::eg_intr_md._pad9<5> intrinsic mocha [0:4]]]
+        [[egress::eg_intr_md.egress_qid<7> intrinsic [0:6]]]
+        [[egress::eg_intr_md._pad8<1> intrinsic mocha [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1462
+    slice lists:	
+        [ egress::eg_intr_md.egress_cos<3> intrinsic [0:2]
+          egress::eg_intr_md._pad9<5> intrinsic mocha [0:4]
+          egress::eg_intr_md.egress_qid<7> intrinsic [0:6]
+          egress::eg_intr_md._pad8<1> intrinsic mocha [0:0] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_cos<3> intrinsic [0:2]]]
+        [[egress::eg_intr_md._pad9<5> intrinsic mocha [0:4]]]
+        [[egress::eg_intr_md.egress_qid<7> intrinsic [0:6]]]
+        [[egress::eg_intr_md._pad8<1> intrinsic mocha [0:0]]]
+
+Best Score: {}
+Allocation Decisions:
+57: TRYING to allocate SUPERCLUSTER Uid: 919
+    slice lists:	
+        [ egress::eg_intr_md.egress_rid<16> intrinsic [0:15] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_rid<16> intrinsic [0:15]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1469
+    slice lists:	
+        [ egress::eg_intr_md.egress_rid<16> intrinsic [0:15] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_rid<16> intrinsic [0:15]]]
+
+Best Score: {}
+Allocation Decisions:
+58: TRYING to allocate SUPERCLUSTER Uid: 922
+    slice lists:	
+        [ egress::eg_intr_md.app_pool_congest_stat<8> intrinsic [0:7]
+          egress::eg_intr_md.deq_congest_stat<2> intrinsic [0:1]
+          egress::eg_intr_md._pad5<6> intrinsic mocha [0:5] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.app_pool_congest_stat<8> intrinsic [0:7]]]
+        [[egress::eg_intr_md.deq_congest_stat<2> intrinsic [0:1]]]
+        [[egress::eg_intr_md._pad5<6> intrinsic mocha [0:5]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1480
+    slice lists:	
+        [ egress::eg_intr_md.app_pool_congest_stat<8> intrinsic [0:7]
+          egress::eg_intr_md.deq_congest_stat<2> intrinsic [0:1]
+          egress::eg_intr_md._pad5<6> intrinsic mocha [0:5] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.app_pool_congest_stat<8> intrinsic [0:7]]]
+        [[egress::eg_intr_md.deq_congest_stat<2> intrinsic [0:1]]]
+        [[egress::eg_intr_md._pad5<6> intrinsic mocha [0:5]]]
+
+Best Score: {}
+Allocation Decisions:
+59: TRYING to allocate SUPERCLUSTER Uid: 817
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.offset<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1483
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.offset<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B1[0:7] <- ingress::ig_md.offset<8> meta [0:7] @[-1r,12w]
+60: TRYING to allocate SUPERCLUSTER Uid: 818
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_ba<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1484
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.gamma_ba<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B2[0:7] <- ingress::ig_md.gamma_ba<8> meta [0:7] @[-1r,12w]
+61: TRYING to allocate SUPERCLUSTER Uid: 837
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_0<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1485
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_0<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B25[0:7] <- ingress::ig_md.attention_set.data_0<8> meta [0:7] @[-1r,12w]
+62: TRYING to allocate SUPERCLUSTER Uid: 838
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_1<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1486
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_1<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B27[0:7] <- ingress::ig_md.attention_set.data_1<8> meta [0:7] @[-1r,12w]
+63: TRYING to allocate SUPERCLUSTER Uid: 839
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_2<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1487
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_2<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B29[0:7] <- ingress::ig_md.attention_set.data_2<8> meta [0:7] @[-1r,12w]
+64: TRYING to allocate SUPERCLUSTER Uid: 840
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_3<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1488
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_3<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B31[0:7] <- ingress::ig_md.attention_set.data_3<8> meta [0:7] @[-1r,12w]
+65: TRYING to allocate SUPERCLUSTER Uid: 841
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_4<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1489
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_4<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B37[0:7] <- ingress::ig_md.attention_set.data_4<8> meta [0:7] @[-1r,12w]
+66: TRYING to allocate SUPERCLUSTER Uid: 842
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_5<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1490
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_5<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B39[0:7] <- ingress::ig_md.attention_set.data_5<8> meta [0:7] @[-1r,12w]
+67: TRYING to allocate SUPERCLUSTER Uid: 843
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_6<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1491
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_6<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B41[0:7] <- ingress::ig_md.attention_set.data_6<8> meta [0:7] @[-1r,12w]
+68: TRYING to allocate SUPERCLUSTER Uid: 844
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_7<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1492
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_7<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B42[0:7] <- ingress::ig_md.attention_set.data_7<8> meta [0:7] @[-1r,12w]
+69: TRYING to allocate SUPERCLUSTER Uid: 845
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_8<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1493
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_8<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B43[0:7] <- ingress::ig_md.attention_set.data_8<8> meta [0:7] @[-1r,12w]
+70: TRYING to allocate SUPERCLUSTER Uid: 846
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_9<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1494
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_9<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B44[0:7] <- ingress::ig_md.attention_set.data_9<8> meta [0:7] @[-1r,12w]
+71: TRYING to allocate SUPERCLUSTER Uid: 847
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_10<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1495
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_10<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B45[0:7] <- ingress::ig_md.attention_set.data_10<8> meta [0:7] @[-1r,12w]
+72: TRYING to allocate SUPERCLUSTER Uid: 848
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_11<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1496
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_11<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B46[0:7] <- ingress::ig_md.attention_set.data_11<8> meta [0:7] @[-1r,12w]
+73: TRYING to allocate SUPERCLUSTER Uid: 849
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_12<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1497
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_12<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: B47[0:7] <- ingress::ig_md.attention_set.data_12<8> meta [0:7] @[-1r,12w]
+74: TRYING to allocate SUPERCLUSTER Uid: 850
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_13<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1498
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_13<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H5[0:7] <- ingress::ig_md.attention_set.data_13<8> meta [0:7] @[-1r,12w]
+75: TRYING to allocate SUPERCLUSTER Uid: 851
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_14<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1499
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_14<8> meta [0:7]]]
+
+Best Score: {[n_packing_bits: 8, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: H5[8:15] <- ingress::ig_md.attention_set.data_14<8> meta [0:7] @[-1r,12w]
+76: TRYING to allocate SUPERCLUSTER Uid: 852
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_15<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1500
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_15<8> meta [0:7]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H6[0:7] <- ingress::ig_md.attention_set.data_15<8> meta [0:7] @[-1r,12w]
+77: TRYING to allocate SUPERCLUSTER Uid: 853
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_16<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1501
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_16<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B7[0:7] <- ingress::ig_md.attention_set.data_16<8> meta [0:7] @[-1r,12w]
+78: TRYING to allocate SUPERCLUSTER Uid: 854
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_17<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1502
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_17<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B9[0:7] <- ingress::ig_md.attention_set.data_17<8> meta [0:7] @[-1r,12w]
+79: TRYING to allocate SUPERCLUSTER Uid: 855
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_18<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1503
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_18<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B37[0:7] <- ingress::ig_md.attention_set.data_18<8> meta [0:7] @[-1r,12w]
+80: TRYING to allocate SUPERCLUSTER Uid: 856
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_19<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1504
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_19<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B39[0:7] <- ingress::ig_md.attention_set.data_19<8> meta [0:7] @[-1r,12w]
+81: TRYING to allocate SUPERCLUSTER Uid: 857
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_20<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1505
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_20<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B41[0:7] <- ingress::ig_md.attention_set.data_20<8> meta [0:7] @[-1r,12w]
+82: TRYING to allocate SUPERCLUSTER Uid: 858
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_21<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1506
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_21<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B42[0:7] <- ingress::ig_md.attention_set.data_21<8> meta [0:7] @[-1r,12w]
+83: TRYING to allocate SUPERCLUSTER Uid: 859
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_22<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1507
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_22<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: H0[0:7] <- ingress::ig_md.attention_set.data_22<8> meta [0:7] @[-1r,12w]
+84: TRYING to allocate SUPERCLUSTER Uid: 860
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_23<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1508
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_23<8> meta [0:7]]]
+
+Best Score: {[n_packing_bits: 8, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: H6[8:15] <- ingress::ig_md.attention_set.data_23<8> meta [0:7] @[-1r,12w]
+85: TRYING to allocate SUPERCLUSTER Uid: 861
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_24<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1509
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_24<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B8[0:7] <- ingress::ig_md.attention_set.data_24<8> meta [0:7] @[-1r,12w]
+86: TRYING to allocate SUPERCLUSTER Uid: 862
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_25<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1510
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_25<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B10[0:7] <- ingress::ig_md.attention_set.data_25<8> meta [0:7] @[-1r,12w]
+87: TRYING to allocate SUPERCLUSTER Uid: 863
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_26<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1511
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_26<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B11[0:7] <- ingress::ig_md.attention_set.data_26<8> meta [0:7] @[-1r,12w]
+88: TRYING to allocate SUPERCLUSTER Uid: 864
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_27<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1512
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_27<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B18[0:7] <- ingress::ig_md.attention_set.data_27<8> meta [0:7] @[-1r,12w]
+89: TRYING to allocate SUPERCLUSTER Uid: 865
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_28<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1513
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_28<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B19[0:7] <- ingress::ig_md.attention_set.data_28<8> meta [0:7] @[-1r,12w]
+90: TRYING to allocate SUPERCLUSTER Uid: 866
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_29<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1514
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_29<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B20[0:7] <- ingress::ig_md.attention_set.data_29<8> meta [0:7] @[-1r,12w]
+91: TRYING to allocate SUPERCLUSTER Uid: 867
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_30<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1515
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_30<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B21[0:7] <- ingress::ig_md.attention_set.data_30<8> meta [0:7] @[-1r,12w]
+92: TRYING to allocate SUPERCLUSTER Uid: 868
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_31<8> meta [0:7]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1516
+    slice lists:	[ ]
+    rotational clusters:	
+        [[ingress::ig_md.attention_set.data_31<8> meta [0:7]]]
+
+Best Score: {[n_overlay_bits: 8, ], }
+Allocation Decisions:
+allocate: B22[0:7] <- ingress::ig_md.attention_set.data_31<8> meta [0:7] @[-1r,12w]
+93: TRYING to allocate SUPERCLUSTER Uid: 916
+    slice lists:	
+        [ egress::eg_intr_md.egress_rid_first<1> intrinsic [0:0]
+          egress::eg_intr_md._pad7<7> intrinsic mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_rid_first<1> intrinsic [0:0]]]
+        [[egress::eg_intr_md._pad7<7> intrinsic mocha [0:6]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 1520
+    slice lists:	
+        [ egress::eg_intr_md.egress_rid_first<1> intrinsic [0:0]
+          egress::eg_intr_md._pad7<7> intrinsic mocha [0:6] ]
+    rotational clusters:	
+        [[egress::eg_intr_md.egress_rid_first<1> intrinsic [0:0]]]
+        [[egress::eg_intr_md._pad7<7> intrinsic mocha [0:6]]]
+
+Best Score: {}
+Allocation Decisions:
+

@@ -1,0 +1,245 @@
+{
+  "schema_version": "2.0.6",
+  "target": "tofino2",
+  "build_date": "Thu Sep 19 23:16:41 2024",
+  "compiler_version": "9.8.0 (989b4bf)",
+  "compilation_succeeded": false,
+  "compilation_time": "4811.018168210983",
+  "run_id": "3943d845dd38b6ce",
+  "architecture": "t2na",
+  "architectureConfig": {
+    "name": "64q",
+    "pipes": [
+      {
+        "pipe": 0,
+        "ingress": {
+          "pipeName": "Ingress",
+          "nextControl": [
+            {
+              "pipe": 0,
+              "pipeName": "Egress"
+            }
+          ]
+        },
+        "egress": {
+          "pipeName": "Egress",
+          "nextControl": []
+        }
+      }
+    ]
+  },
+  "programs": [
+    {
+      "program_name": "attention_cal.p4",
+      "p4_version": "p4-16",
+      "event_log_file": "events.json",
+      "frontend_ir_log_file": "frontend-ir.json",
+      "source_files": {
+        "src_root": "/home/tangoic/oldz/gabber/p4_attention",
+        "src_map": "source.json",
+        "includes": [
+          "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include"
+        ],
+        "defines": [
+          "__TARGET_TOFINO__=2",
+          "__TOFINO2_VARIANT__=1",
+          "__p4c__=1",
+          "__p4c_major__=9",
+          "__p4c_minor__=8",
+          "__p4c_patchlevel__=0",
+          "__p4c_version__=\"9.8.0\""
+        ]
+      },
+      "pipes": [
+        {
+          "pipe_id": 0,
+          "pipe_name": "pipe",
+          "files": {
+            "context": {
+              "path": "pipe/context.json"
+            },
+            "resources": [
+              {
+                "path": "pipe/logs/resources.json",
+                "type": "resources"
+              }
+            ],
+            "graphs": [
+              {
+                "path": "pipe/graphs/program_graph.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/table_dep_graph_placement_0.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/Egress.dot",
+                "gress": "egress",
+                "graph_type": "control",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/Ingress.dot",
+                "gress": "ingress",
+                "graph_type": "control",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/EgressParser.dot",
+                "gress": "egress",
+                "graph_type": "parser",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/IngressParser.dot",
+                "gress": "ingress",
+                "graph_type": "parser",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/table_dep_graph_placement_3.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/table_dep_graph_placement_2.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/table_dep_graph_placement_1.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/placement_graph.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/power_graph.dot",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".dot"
+              },
+              {
+                "path": "pipe/graphs/dep.json",
+                "gress": "ingress",
+                "graph_type": "table",
+                "graph_format": ".json"
+              }
+            ],
+            "logs": [
+              {
+                "path": "pipe/logs/clot_allocation.log",
+                "log_type": "parser"
+              },
+              {
+                "path": "pipe/logs/flexible_packing.log",
+                "log_type": "parser"
+              },
+              {
+                "path": "pipe/logs/parser.characterize.log",
+                "log_type": "parser"
+              },
+              {
+                "path": "pipe/logs/parser.log",
+                "log_type": "parser"
+              },
+              {
+                "path": "pipe/logs/phv.json",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_0.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_3.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_history_0.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_history_3.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_history_5.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_incremental_summary_5.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_summary_0.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_allocation_summary_3.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/phv_incremental_allocation_5.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/power.json",
+                "log_type": "power"
+              },
+              {
+                "path": "pipe/logs/pragmas.log",
+                "log_type": "phv"
+              },
+              {
+                "path": "pipe/logs/table_dependency_graph.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/table_placement_1.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/table_placement_2.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/table_placement_4.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/table_placement_6.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/table_summary.log",
+                "log_type": "mau"
+              },
+              {
+                "path": "pipe/logs/mau.json",
+                "log_type": "mau"
+              }
+            ],
+            "metrics": {
+              "path": "pipe/logs/metrics.json"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "compile_command": "/root/P4/bf-sde-9.8.0/install/bin/bf-p4c --std p4-16 --target tofino2 --arch t2na --bf-rt-schema attention_cal/tofino2/bf-rt.json -o /home/tangoic/oldz/gabber/p4_attention/build/attention_cal/tofino2 -g /home/tangoic/oldz/gabber/p4_attention/attention_cal.p4",
+  "conf_file": "attention_cal.conf"
+}

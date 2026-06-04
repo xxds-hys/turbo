@@ -1,0 +1,2223 @@
+# 1 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/core.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* This is the P4-16 core library, which declares some built-in P4 constructs using P4 */
+
+
+
+
+/// Standard error codes.  New error codes can be declared by users.
+error {
+    NoError, /// No error.
+    PacketTooShort, /// Not enough bits in packet for 'extract'.
+    NoMatch, /// 'select' expression has no matches.
+    StackOutOfBounds, /// Reference to invalid element of a header stack.
+    HeaderTooShort, /// Extracting too many bits into a varbit field.
+    ParserTimeout, /// Parser execution time limit exceeded.
+    ParserInvalidArgument /// Parser operation was called with a value
+                           /// not supported by the implementation.
+}
+
+extern packet_in {
+    /// Read a header from the packet into a fixed-sized header @hdr and advance the cursor.
+    /// May trigger error PacketTooShort or StackOutOfBounds.
+    /// @T must be a fixed-size header type
+    void extract<T>(out T hdr);
+    /// Read bits from the packet into a variable-sized header @variableSizeHeader
+    /// and advance the cursor.
+    /// @T must be a header containing exactly 1 varbit field.
+    /// May trigger errors PacketTooShort, StackOutOfBounds, or HeaderTooShort.
+    void extract<T>(out T variableSizeHeader,
+                    in bit<32> variableFieldSizeInBits);
+    /// Read bits from the packet without advancing the cursor.
+    /// @returns: the bits read from the packet.
+    /// T may be an arbitrary fixed-size type.
+    T lookahead<T>();
+    /// Advance the packet cursor by the specified number of bits.
+    void advance(in bit<32> sizeInBits);
+    /// @return packet length in bytes.  This method may be unavailable on
+    /// some target architectures.
+    bit<32> length();
+}
+
+extern packet_out {
+    /// Write @hdr into the output packet, advancing cursor.
+    /// @T can be a header type, a header stack, a header_union, or a struct
+    /// containing fields with such types.
+    void emit<T>(in T hdr);
+}
+
+// TODO: remove from this file, convert to built-in
+/// Check a predicate @check in the parser; if the predicate is true do nothing,
+/// otherwise set the parser error to @toSignal, and transition to the `reject` state.
+extern void verify(in bool check, in error toSignal);
+
+/// Built-in action that does nothing.
+@noWarn("unused")
+action NoAction() {}
+
+/// Standard match kinds for table key fields.
+/// Some architectures may not support all these match kinds.
+/// Architectures can declare additional match kinds.
+match_kind {
+    /// Match bits exactly.
+    exact,
+    /// Ternary match, using a mask.
+    ternary,
+    /// Longest-prefix match.
+    lpm
+}
+# 2 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4" 2
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tna.p4" 1
+/**
+ * Copyright 2013-2022 Intel Corporation.
+ *
+ * This software and the related documents are Intel copyrighted materials, and your use of them
+ * is governed by the express license under which they were provided to you ("License"). Unless
+ * the License provides otherwise, you may not use, modify, copy, publish, distribute, disclose
+ * or transmit this software or the related documents without Intel's prior written permission.
+ *
+ * This software and the related documents are provided as is, with no express or implied
+ * warranties, other than those that are expressly stated in the License.
+ */
+
+
+
+
+
+
+
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino2_specs.p4" 1
+/**
+ * Copyright 2013-2022 Intel Corporation.
+ *
+ * This software and the related documents are Intel copyrighted materials, and your use of them
+ * is governed by the express license under which they were provided to you ("License"). Unless
+ * the License provides otherwise, you may not use, modify, copy, publish, distribute, disclose
+ * or transmit this software or the related documents without Intel's prior written permission.
+ *
+ * This software and the related documents are provided as is, with no express or implied
+ * warranties, other than those that are expressly stated in the License.
+ */
+
+
+
+
+/**
+ Version Notes:
+
+ 1.0.1:
+ - Restructuralize P4 header files (t2na.p4 -> tofino2_specs.p4 + tofino2_base.p4 + tofino2_arch.p4)
+   - t2na.p4               : Top-level header file to be included by P4 programs, includes the below
+     -> tofino2_specs.p4   : Target-device-specific types, constants and macros
+     -> tofino2_arch.p4    : Portable parsers, controls and packages (originally tofino2arch.p4)
+        -> tofino2_base.p4 : Portable constants, headers, externs etc. (originally tofino2.p4)
+
+*/
+
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/core.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* This is the P4-16 core library, which declares some built-in P4 constructs using P4 */
+# 29 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino2_specs.p4" 2
+
+// ----------------------------------------------------------------------------
+// COMMON TYPES
+// ----------------------------------------------------------------------------
+
+typedef bit<9> PortId_t; // Port id -- ingress or egress port
+
+typedef bit<16> MulticastGroupId_t; // Multicast group id
+
+typedef bit<7> QueueId_t; // Queue id
+
+typedef bit<4> MirrorType_t; // Mirror type
+
+typedef bit<8> MirrorId_t; // Mirror id
+
+typedef bit<3> ResubmitType_t; // Resubmit type
+
+typedef bit<3> DigestType_t; // Digest type
+
+typedef bit<16> ReplicationId_t; // Replication id
+
+// CloneId_t will be deprecated in 9.4. Adding a typedef for any old references.
+typedef MirrorType_t CloneId_t;
+
+typedef error ParserError_t;
+
+
+const bit<32> PORT_METADATA_SIZE = 32w192;
+# 20 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tna.p4" 2
+# 28 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tna.p4"
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino1_arch.p4" 1
+/**
+ * Copyright 2013-2022 Intel Corporation.
+ *
+ * This software and the related documents are Intel copyrighted materials, and your use of them
+ * is governed by the express license under which they were provided to you ("License"). Unless
+ * the License provides otherwise, you may not use, modify, copy, publish, distribute, disclose
+ * or transmit this software or the related documents without Intel's prior written permission.
+ *
+ * This software and the related documents are provided as is, with no express or implied
+ * warranties, other than those that are expressly stated in the License.
+ */
+
+
+
+
+/**
+ Version Notes:
+
+ 2.0.1:
+ - Restructuralize P4 header files (tna.p4 -> tofino1_specs.p4 + tofino1_base.p4 + tofino1_arch.p4)
+   - tna.p4                : Top-level header file to be included by P4 programs, includes the below
+     -> tofino1_specs.p4   : Target-device-specific types, constants and macros
+     -> tofino1_arch.p4    : Portable parsers, controls and packages (originally tofino1arch.p4)
+        -> tofino1_base.p4 : Portable constants, headers, externs etc. (originally tofino.p4)
+
+*/
+
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino1_base.p4" 1
+/**
+ * Copyright 2013-2022 Intel Corporation.
+ *
+ * This software and the related documents are Intel copyrighted materials, and your use of them
+ * is governed by the express license under which they were provided to you ("License"). Unless
+ * the License provides otherwise, you may not use, modify, copy, publish, distribute, disclose
+ * or transmit this software or the related documents without Intel's prior written permission.
+ *
+ * This software and the related documents are provided as is, with no express or implied
+ * warranties, other than those that are expressly stated in the License.
+ */
+
+
+
+
+/**
+ Version Notes:
+
+ 1.0.1:
+ - Initial release
+ 1.0.2:
+ - Rename PARSER_ERROR_NO_TCAM to PARSER_ERROR_NO_MATCH
+ 1.0.3:
+ - Add portable macros and types
+ 2.0.1:
+ - Restructuralize P4 header files (tna.p4 -> tofino1_specs.p4 + tofino1_base.p4 + tofino1_arch.p4)
+   - tna.p4                : Top-level header file to be included by P4 programs, includes the below
+     -> tofino1_specs.p4   : Target-device-specific types, constants and macros
+     -> tofino1_arch.p4    : Portable parsers, controls and packages (originally tofino1arch.p4)
+        -> tofino1_base.p4 : Portable constants, headers, externs etc. (originally tofino.p4)
+
+*/
+
+
+
+
+# 1 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/core.p4" 1
+/*
+Copyright 2013-present Barefoot Networks, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/* This is the P4-16 core library, which declares some built-in P4 constructs using P4 */
+# 38 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino1_base.p4" 2
+
+const bit<16> PARSER_ERROR_OK = 16w0x0000;
+const bit<16> PARSER_ERROR_NO_MATCH = 16w0x0001;
+const bit<16> PARSER_ERROR_PARTIAL_HDR = 16w0x0002;
+const bit<16> PARSER_ERROR_CTR_RANGE = 16w0x0004;
+const bit<16> PARSER_ERROR_TIMEOUT_USER = 16w0x0008;
+const bit<16> PARSER_ERROR_TIMEOUT_HW = 16w0x0010;
+const bit<16> PARSER_ERROR_SRC_EXT = 16w0x0020;
+const bit<16> PARSER_ERROR_DST_CONT = 16w0x0040;
+const bit<16> PARSER_ERROR_PHV_OWNER = 16w0x0080;
+const bit<16> PARSER_ERROR_MULTIWRITE = 16w0x0100;
+const bit<16> PARSER_ERROR_ARAM_MBE = 16w0x0400;
+const bit<16> PARSER_ERROR_FCS = 16w0x0800;
+
+/// Meter
+enum MeterType_t { PACKETS, BYTES }
+
+enum bit<8> MeterColor_t { GREEN = 8w0, YELLOW = 8w1, RED = 8w3 }
+
+/// Counter
+enum CounterType_t {
+    PACKETS,
+    BYTES,
+    PACKETS_AND_BYTES
+}
+
+/// Selector mode
+enum SelectorMode_t { FAIR, RESILIENT }
+
+enum HashAlgorithm_t {
+    IDENTITY,
+    RANDOM,
+    CRC8,
+    CRC16,
+    CRC32,
+    CRC64,
+    CUSTOM
+}
+
+match_kind {
+    // exact,
+    // ternary,
+    // lpm,               // Longest-prefix match.
+    range,
+    selector, // Used for implementing dynamic action selection
+    atcam_partition_index // Used for implementing algorithmic tcam
+}
+
+error {
+    // NoError,           // No error.
+    // NoMatch,           // 'select' expression has no matches.
+    // PacketTooShort,    // Not enough bits in packet for 'extract'.
+    // StackOutOfBounds,  // Reference to invalid element of a header stack.
+    // HeaderTooShort,    // Extracting too many bits into a varbit field.
+    // ParserTimeout      // Parser execution time limit exceeded.
+    CounterRange, // Counter initialization error.
+    Timeout,
+    PhvOwner, // Invalid destination container.
+    MultiWrite,
+    IbufOverflow, // Input buffer overflow.
+    IbufUnderflow // Inbut buffer underflow.
+}
+
+// -----------------------------------------------------------------------------
+// INGRESS INTRINSIC METADATA
+// -----------------------------------------------------------------------------
+@__intrinsic_metadata
+header ingress_intrinsic_metadata_t {
+    bit<1> resubmit_flag; // Flag distinguishing original packets
+                                        // from resubmitted packets.
+    @padding bit<1> _pad1;
+
+    bit<2> packet_version; // Read-only Packet version.
+
+    @padding bit<(4 - 9 % 8)> _pad2;
+
+    PortId_t ingress_port; // Ingress physical port id.
+
+    bit<48> ingress_mac_tstamp; // Ingress IEEE 1588 timestamp (in nsec)
+                                        // taken at the ingress MAC.
+}
+
+@__intrinsic_metadata
+struct ingress_intrinsic_metadata_for_tm_t {
+    PortId_t ucast_egress_port; // Egress port for unicast packets. must
+                                        // be presented to TM for unicast.
+
+    bit<1> bypass_egress; // Request flag for the warp mode
+                                        // (egress bypass).
+
+    bit<1> deflect_on_drop; // Request for deflect on drop. must be
+                                        // presented to TM to enable deflection
+                                        // upon drop.
+
+    bit<3> ingress_cos; // Ingress cos (iCoS) for PG mapping,
+                                        // ingress admission control, PFC,
+                                        // etc.
+
+    QueueId_t qid; // Egress (logical) queue id into which
+                                        // this packet will be deposited.
+
+    bit<3> icos_for_copy_to_cpu; // Ingress cos for the copy to CPU. must
+                                        // be presented to TM if copy_to_cpu ==
+                                        // 1.
+
+    bit<1> copy_to_cpu; // Request for copy to cpu.
+
+    bit<2> packet_color; // Packet color (G,Y,R) that is
+                                        // typically derived from meters and
+                                        // used for color-based tail dropping.
+
+    bit<1> disable_ucast_cutthru; // Disable cut-through forwarding for
+                                        // unicast.
+
+    bit<1> enable_mcast_cutthru; // Enable cut-through forwarding for
+                                        // multicast.
+
+    MulticastGroupId_t mcast_grp_a; // 1st multicast group (i.e., tree) id;
+                                        // a tree can have two levels. must be
+                                        // presented to TM for multicast.
+
+    MulticastGroupId_t mcast_grp_b; // 2nd multicast group (i.e., tree) id;
+                                        // a tree can have two levels.
+
+    bit<13> level1_mcast_hash; // Source of entropy for multicast
+                                        // replication-tree level1 (i.e., L3
+                                        // replication). must be presented to TM
+                                        // for L3 dynamic member selection
+                                        // (e.g., ECMP) for multicast.
+
+    bit<13> level2_mcast_hash; // Source of entropy for multicast
+                                        // replication-tree level2 (i.e., L2
+                                        // replication). must be presented to TM
+                                        // for L2 dynamic member selection
+                                        // (e.g., LAG) for nested multicast.
+
+    bit<16> level1_exclusion_id; // Exclusion id for multicast
+                                        // replication-tree level1. used for
+                                        // pruning.
+
+    bit<9> level2_exclusion_id; // Exclusion id for multicast
+                                        // replication-tree level2. used for
+                                        // pruning.
+
+    bit<16> rid; // L3 replication id for multicast.
+}
+
+@__intrinsic_metadata
+struct ingress_intrinsic_metadata_from_parser_t {
+    bit<48> global_tstamp; // Global timestamp (ns) taken upon
+                                        // arrival at ingress.
+
+    bit<32> global_ver; // Global version number taken upon
+                                        // arrival at ingress.
+
+    bit<16> parser_err; // Error flags indicating error(s)
+                                        // encountered at ingress parser.
+}
+
+@__intrinsic_metadata
+struct ingress_intrinsic_metadata_for_deparser_t {
+
+    bit<3> drop_ctl; // Disable packet replication:
+                                        //    - bit 0 disables unicast,
+                                        //      multicast, and resubmit
+                                        //    - bit 1 disables copy-to-cpu
+                                        //    - bit 2 disables mirroring
+    DigestType_t digest_type;
+
+    ResubmitType_t resubmit_type;
+
+    MirrorType_t mirror_type; // The user-selected mirror field list
+                                        // index.
+}
+
+// -----------------------------------------------------------------------------
+// EGRESS INTRINSIC METADATA
+// -----------------------------------------------------------------------------
+@__intrinsic_metadata
+header egress_intrinsic_metadata_t {
+    @padding bit<(8 - 9 % 8)> _pad0;
+
+    PortId_t egress_port; // Egress port id.
+                                        // this field is passed to the deparser
+
+    @padding bit<5> _pad1;
+
+    bit<19> enq_qdepth; // Queue depth at the packet enqueue
+                                        // time.
+
+    @padding bit<6> _pad2;
+
+    bit<2> enq_congest_stat; // Queue congestion status at the packet
+                                        // enqueue time.
+
+    @padding bit<14> _pad3;
+    bit<18> enq_tstamp; // Time snapshot taken when the packet
+                                        // is enqueued (in nsec).
+
+    @padding bit<5> _pad4;
+
+    bit<19> deq_qdepth; // Queue depth at the packet dequeue
+                                        // time.
+
+    @padding bit<6> _pad5;
+
+    bit<2> deq_congest_stat; // Queue congestion status at the packet
+                                        // dequeue time.
+
+    bit<8> app_pool_congest_stat; // Dequeue-time application-pool
+                                        // congestion status. 2bits per
+                                        // pool.
+
+    @padding bit<14> _pad6;
+    bit<18> deq_timedelta; // Time delta between the packet's
+                                        // enqueue and dequeue time.
+
+    bit<16> egress_rid; // L3 replication id for multicast
+                                        // packets.
+
+    @padding bit<7> _pad7;
+
+    bit<1> egress_rid_first; // Flag indicating the first replica for
+                                        // the given multicast group.
+
+    @padding bit<(8 - 7 % 8)> _pad8;
+
+    QueueId_t egress_qid; // Egress (physical) queue id via which
+                                        // this packet was served.
+
+    @padding bit<5> _pad9;
+
+    bit<3> egress_cos; // Egress cos (eCoS) value.
+
+    @padding bit<7> _pad10;
+
+    bit<1> deflection_flag; // Flag indicating whether a packet is
+                                        // deflected due to deflect_on_drop.
+
+    bit<16> pkt_length; // Packet length, in bytes
+}
+
+@__intrinsic_metadata
+struct egress_intrinsic_metadata_from_parser_t {
+    bit<48> global_tstamp; // Global timestamp (ns) taken upon
+                                        // arrival at egress.
+
+    bit<32> global_ver; // Global version number taken upon
+                                        // arrival at ingress.
+
+    bit<16> parser_err; // Error flags indicating error(s)
+                                        // encountered at ingress parser.
+}
+
+@__intrinsic_metadata
+struct egress_intrinsic_metadata_for_deparser_t {
+    bit<3> drop_ctl; // Disable packet replication:
+                                        //    - bit 0 disables unicast,
+                                        //      multicast, and resubmit
+                                        //    - bit 1 disables copy-to-cpu
+                                        //    - bit 2 disables mirroring
+
+    MirrorType_t mirror_type;
+
+    bit<1> coalesce_flush; // Flush the coalesced mirror buffer
+
+    bit<7> coalesce_length; // The number of bytes in the current
+                                        // packet to collect in the mirror
+                                        // buffer
+}
+
+@__intrinsic_metadata
+struct egress_intrinsic_metadata_for_output_port_t {
+    bit<1> capture_tstamp_on_tx; // Request for packet departure
+                                        // timestamping at egress MAC for IEEE
+                                        // 1588. consumed by h/w (egress MAC).
+
+    bit<1> update_delay_on_tx; // Request for PTP delay (elapsed time)
+                                        // update at egress MAC for IEEE 1588
+                                        // Transparent Clock. consumed by h/w
+                                        // (egress MAC). when this is enabled,
+                                        // the egress pipeline must prepend a
+                                        // custom header composed of <ingress
+                                        // tstamp (40), byte offset for the
+                                        // elapsed time field (8), byte offset
+                                        // for UDP checksum (8)> in front of the
+                                        // Ethernet header.
+}
+
+// -----------------------------------------------------------------------------
+// PACKET GENERATION
+// -----------------------------------------------------------------------------
+// Packet generator supports up to 8 applications and a total of 16KB packet
+// payload. Each application is associated with one of the four trigger types:
+// - One-time timer
+// - Periodic timer
+// - Port down
+// - Packet recirculation
+// For recirculated packets, the event fires when the first 32 bits of the
+// recirculated packet matches the application match value and mask.
+// A triggered event may generate programmable number of batches with
+// programmable number of packets per batch.
+header pktgen_timer_header_t {
+    @padding bit<3> _pad1;
+    bit<2> pipe_id; // Pipe id
+    bit<3> app_id; // Application id
+    @padding bit<8> _pad2;
+
+    bit<16> batch_id; // Start at 0 and increment to a
+                                        // programmed number
+
+    bit<16> packet_id; // Start at 0 and increment to a
+                                        // programmed number
+}
+
+header pktgen_port_down_header_t {
+    @padding bit<3> _pad1;
+    bit<2> pipe_id; // Pipe id
+    bit<3> app_id; // Application id
+    @padding bit<(16 - 9 % 8)> _pad2;
+    PortId_t port_num; // Port number
+
+    bit<16> packet_id; // Start at 0 and increment to a
+                                        // programmed number
+}
+
+header pktgen_recirc_header_t {
+    @padding bit<3> _pad1;
+    bit<2> pipe_id; // Pipe id
+    bit<3> app_id; // Application id
+    bit<24> key; // Key from the recirculated packet
+
+    bit<16> packet_id; // Start at 0 and increment to a
+                                        // programmed number
+}
+
+// -----------------------------------------------------------------------------
+// TIME SYNCHRONIZATION
+// -----------------------------------------------------------------------------
+
+header ptp_metadata_t {
+    bit<8> udp_cksum_byte_offset; // Byte offset at which the egress MAC
+                                        // needs to update the UDP checksum
+
+
+    bit<8> cf_byte_offset; // Byte offset at which the egress MAC
+                                        // needs to re-insert
+                                        // ptp_sync.correction field
+
+    bit<48> updated_cf; // Updated correction field in ptp sync
+                                        // message
+}
+
+// -----------------------------------------------------------------------------
+// CHECKSUM
+// -----------------------------------------------------------------------------
+// Tofino checksum engine can verify the checksums for header-only checksums
+// and calculate the residual (checksum minus the header field
+// contribution) for checksums that include the payload.
+// Checksum engine only supports 16-bit ones' complement checksums, also known
+// as csum16 or internet checksum.
+
+extern Checksum {
+    /// Constructor.
+    Checksum();
+
+    /// Add data to checksum.
+    /// @param data : List of fields to be added to checksum calculation. The
+    /// data must be byte aligned.
+    void add<T>(in T data);
+
+    /// Subtract data from existing checksum.
+    /// @param data : List of fields to be subtracted from the checksum. The
+    /// data must be byte aligned.
+    void subtract<T>(in T data);
+
+    /// Verify whether the complemented sum is zero, i.e. the checksum is valid.
+    /// @return : Boolean flag indicating whether the checksum is valid or not.
+    bool verify();
+
+    /// Subtract all header fields after the current state and
+    /// return the calculated checksum value.
+    /// Marks the end position for residual checksum header.
+    /// All header fields extracted after will be automatically subtracted.
+    /// @param residual: The calculated checksum value for added fields.
+    void subtract_all_and_deposit<T>(out T residual);
+
+    /// Get the calculated checksum value.
+    /// @return : The calculated checksum value for added fields.
+    bit<16> get();
+
+    /// Calculate the checksum for a  given list of fields.
+    /// @param data : List of fields contributing to the checksum value.
+    /// @param zeros_as_ones : encode all-zeros value as all-ones.
+    bit<16> update<T>(in T data, @optional in bool zeros_as_ones);
+}
+
+// ----------------------------------------------------------------------------
+// PARSER COUNTER
+// ----------------------------------------------------------------------------
+// Tofino parser counter can be used to extract header stacks or headers with
+// variable length. Tofino has a single 8-bit signed counter that can be
+// initialized with an immediate value or a header field.
+
+extern ParserCounter {
+    /// Constructor
+    ParserCounter();
+
+    /// Load the counter with an immediate value or a header field.
+    void set<T>(in T value);
+
+    /// Load the counter with a header field.
+    /// @param max : Maximum permitted value for counter (pre rotate/mask/add).
+    /// @param rotate : Right rotate (circular) the source field by this number of bits.
+    /// @param mask : Mask the rotated source field by 2 ^ (mask + 1) - 1.
+    /// @param add : Constant to add to the rotated and masked lookup field.
+    void set<T>(in T field,
+                in bit<8> max,
+                in bit<8> rotate,
+                in bit<3> mask,
+                in bit<8> add);
+
+    /// @return true if counter value is zero.
+    bool is_zero();
+
+    /// @return true if counter value is negative.
+    bool is_negative();
+
+    /// Add an immediate value to the parser counter.
+    /// @param value : Constant to add to the counter.
+    void increment(in bit<8> value);
+
+    /// Subtract an immediate value from the parser counter.
+    /// @param value : Constant to subtract from the counter.
+    void decrement(in bit<8> value);
+}
+
+// ----------------------------------------------------------------------------
+// PARSER PRIORITY
+// ----------------------------------------------------------------------------
+// Tofino ingress parser compare the priority with a configurable!!! threshold
+// to determine to whether drop the packet if the input buffer is congested.
+// Egress parser does not perform any dropping.
+
+extern ParserPriority {
+    /// Constructor
+    ParserPriority();
+
+    /// Set a new priority for the packet.
+    /// param prio : parser priority for the parsed packet.
+    void set(in bit<3> prio);
+}
+
+// ----------------------------------------------------------------------------
+// HASH ENGINE
+// ----------------------------------------------------------------------------
+extern CRCPolynomial<T> {
+    CRCPolynomial(T coeff, bool reversed, bool msb, bool extended, T init, T xor);
+}
+
+extern Hash<W> {
+    /// Constructor
+    /// @type_param W : width of the calculated hash.
+    /// @param algo : The default algorithm used for hash calculation.
+    Hash(HashAlgorithm_t algo);
+
+    /// Constructor
+    /// @param poly : The default coefficient used for hash algorithm.
+    Hash(HashAlgorithm_t algo, CRCPolynomial<_> poly);
+
+    /// Compute the hash for the given data.
+    /// @param data : The list of fields contributing to the hash.
+    /// @return The hash value.
+    W get<D>(in D data);
+}
+
+/// Random number generator.
+extern Random<W> {
+    /// Constructor
+    /// @type_param W : width of the calculated hash.
+    Random();
+
+    /// Return a random number with uniform distribution.
+    /// @return : random number between 0 and 2**W - 1
+    W get();
+}
+
+// -----------------------------------------------------------------------------
+// EXTERN FUNCTIONS
+// -----------------------------------------------------------------------------
+
+extern T max<T>(in T t1, in T t2);
+
+extern T min<T>(in T t1, in T t2);
+
+extern void funnel_shift_right<T>(inout T dst, in T src1, in T src2, int shift_amount);
+
+extern void invalidate<T>(in T field);
+
+/// Phase0
+extern T port_metadata_unpack<T>(packet_in pkt);
+
+extern bit<32> sizeInBits<H>(in H h);
+
+extern bit<32> sizeInBytes<H>(in H h);
+
+/// Counter
+/// Indexed counter with `size’ independent counter values.
+extern Counter<W, I> {
+    /// Constructor
+    /// @type_param W : width of the counter value.
+    /// @type_param I : width of the counter index.
+    /// @param type : counter type. Packet an byte counters are supported.
+    Counter(bit<32> size, CounterType_t type);
+
+    /// Increment the counter value.
+    /// @param index : index of the counter to be incremented.
+    /// @param adjust_byte_count : optional parameter indicating value to be
+    //                             subtracted from counter value.
+    void count(in I index, @optional in bit<32> adjust_byte_count);
+}
+
+/// DirectCounter
+extern DirectCounter<W> {
+    DirectCounter(CounterType_t type);
+    void count(@optional in bit<32> adjust_byte_count);
+}
+
+/// Meter
+extern Meter<I> {
+    Meter(bit<32> size, MeterType_t type);
+    Meter(bit<32> size, MeterType_t type, bit<8> red, bit<8> yellow, bit<8> green);
+    bit<8> execute(in I index, in MeterColor_t color, @optional in bit<32> adjust_byte_count);
+    bit<8> execute(in I index, @optional in bit<32> adjust_byte_count);
+}
+
+/// Direct meter.
+extern DirectMeter {
+    DirectMeter(MeterType_t type);
+    DirectMeter(MeterType_t type, bit<8> red, bit<8> yellow, bit<8> green);
+    bit<8> execute(in MeterColor_t color, @optional in bit<32> adjust_byte_count);
+    bit<8> execute(@optional in bit<32> adjust_byte_count);
+}
+
+/// LPF
+extern Lpf<T, I> {
+    Lpf(bit<32> size);
+    T execute(in T val, in I index);
+}
+
+/// Direct LPF
+extern DirectLpf<T> {
+    DirectLpf();
+    T execute(in T val);
+}
+
+/// WRED
+extern Wred<T, I> {
+    Wred(bit<32> size, bit<8> drop_value, bit<8> no_drop_value);
+    bit<8> execute(in T val, in I index);
+}
+
+/// Direct WRED
+extern DirectWred<T> {
+    DirectWred(bit<8> drop_value, bit<8> no_drop_value);
+    bit<8> execute(in T val);
+}
+
+/// Register
+extern Register<T, I> {
+    /// Instantiate an array of <size> registers. The initial value is
+    /// undefined.
+    Register(bit<32> size);
+
+    /// Initialize an array of <size> registers and set their value to
+    /// initial_value.
+    Register(bit<32> size, T initial_value);
+
+    /// Return the value of register at specified index.
+    T read(in I index);
+
+    /// Write value to register at specified index.
+    void write(in I index, in T value);
+}
+
+/// DirectRegister
+extern DirectRegister<T> {
+    /// Instantiate an array of direct registers. The initial value is
+    /// undefined.
+    DirectRegister();
+
+    /// Initialize an array of direct registers and set their value to
+    /// initial_value.
+    DirectRegister(T initial_value);
+
+    /// Return the value of the direct register.
+    T read();
+
+    /// Write value to a direct register.
+    void write(in T value);
+}
+
+extern RegisterParam<T> {
+    /// Construct a read-only run-time configurable parameter that can only be
+    /// used by RegisterAction.
+    /// @param initial_value : initial value of the parameter.
+    RegisterParam(T initial_value);
+
+    /// Return the value of the parameter.
+    T read();
+}
+
+enum MathOp_t {
+    MUL, // 2^scale * f(x)         --  false,  0
+    SQR, // 2^scale * f(x^2)       --  false,  1
+    SQRT, // 2^scale * f(sqrt(x))   --  false, -1
+    DIV, // 2^scale * f(1/x)       --  true,   0
+    RSQR, // 2^scale * f(1/x^2)     --  true,   1
+    RSQRT // 2^scale * f(1/sqrt(x)) --  true,  -1
+};
+
+extern MathUnit<T> {
+    /// Configure a math unit for use in a register action
+    MathUnit(bool invert, int<2> shift, int<6> scale,
+             // Note: data tuple contains values in order from 15..0 (reversed)
+             tuple< bit<8>, bit<8>, bit<8>, bit<8>,
+                    bit<8>, bit<8>, bit<8>, bit<8>,
+                    bit<8>, bit<8>, bit<8>, bit<8>,
+                    bit<8>, bit<8>, bit<8>, bit<8> > data);
+    MathUnit(MathOp_t op, int factor); // configure as factor * op(x)
+    MathUnit(MathOp_t op, int A, int B); // configure as (A/B) * op(x)
+    T execute(in T x);
+};
+
+// This is implemented using an experimental feature in p4c and subject to
+// change. See https://github.com/p4lang/p4-spec/issues/561
+extern RegisterAction<T, I, U> {
+    RegisterAction(Register<T, I> reg);
+
+    U execute(in I index); /* {
+        U rv;
+        T value = reg.read(index);
+        apply(value, rv);
+        reg.write(index, value);
+        return rv;
+    } */
+    // Apply the implemented abstract method using an index that increments each
+    // time. This method is useful for stateful logging.
+    U execute_log();
+
+    // Abstract method that needs to be implemented when RegisterAction is
+    // instantiated.
+    // @param value : register value.
+    // @param rv : return value.
+    @synchronous(execute, execute_log)
+    abstract void apply(inout T value, @optional out U rv);
+
+    U predicate(@optional in bool cmplo,
+                @optional in bool cmphi); /* return the 4-bit predicate value */
+}
+
+extern DirectRegisterAction<T, U> {
+    DirectRegisterAction(DirectRegister<T> reg);
+
+    U execute(); /* {
+        U rv;
+        T value = reg.read();
+        apply(value, rv);
+        reg.write(value);
+        return rv;
+    } */
+
+    // Abstract method that needs to be implemented when RegisterAction is
+    // instantiated.
+    // @param value : register value.
+    // @param rv : return value.
+    @synchronous(execute)
+    abstract void apply(inout T value, @optional out U rv);
+
+    U predicate(@optional in bool cmplo,
+                @optional in bool cmphi); /* return the 4-bit predicate value */
+}
+
+extern ActionProfile {
+    /// Construct an action profile of 'size' entries.
+    ActionProfile(bit<32> size);
+}
+
+extern ActionSelector {
+    /// Construct a selection table for a given ActionProfile.
+    ActionSelector(ActionProfile action_profile,
+                   Hash<_> hash,
+                   SelectorMode_t mode,
+                   bit<32> max_group_size,
+                   bit<32> num_groups);
+
+    /// Stateful action selector.
+    ActionSelector(ActionProfile action_profile,
+                   Hash<_> hash,
+                   SelectorMode_t mode,
+                   Register<bit<1>, _> reg,
+                   bit<32> max_group_size,
+                   bit<32> num_groups);
+
+    /// Construct a selection table for action profile of 'size' entries.
+    @deprecated("ActionSelector must be specified with an associated ActionProfile")
+    ActionSelector(bit<32> size, Hash<_> hash, SelectorMode_t mode);
+
+    @deprecated("ActionSelector must be specified with an associated ActionProfile")
+    ActionSelector(bit<32> size, Hash<_> hash, SelectorMode_t mode, Register<bit<1>, _> reg);
+}
+
+extern SelectorAction {
+    SelectorAction(ActionSelector sel);
+    bit<1> execute(@optional in bit<32> index);
+    @synchronous(execute)
+    abstract void apply(inout bit<1> value, @optional out bit<1> rv);
+}
+
+// Tofino supports mirroring both at the ingress and egress. Ingress deparser
+// creates a copy of the original ingress packet and prepends the mirror header.
+// Egress deparser first constructs the output packet and then prepends the
+// mirror header.
+extern Mirror {
+    /// Constructor
+    @deprecated("Mirror must be specified with the value of the mirror_type instrinsic metadata")
+    Mirror();
+
+    /// Constructor
+    Mirror(MirrorType_t mirror_type);
+
+    /// Mirror the packet.
+    void emit(in MirrorId_t session_id);
+
+    /// Write @hdr into the ingress/egress mirror buffer.
+    /// @param hdr : T can be a header type.
+    void emit<T>(in MirrorId_t session_id, in T hdr);
+}
+
+// Tofino supports packet resubmission at the end of ingress pipeline. When
+// a packet is resubmitted, the original packet reference and some limited
+// amount of metadata (64 bits) are passed back to the packet’s original
+// ingress buffer, where the packet is enqueued again.
+extern Resubmit {
+    /// Constructor
+    @deprecated("Resubmit must be specified with the value of the resubmit_type instrinsic metadata")
+    Resubmit();
+
+    /// Constructor
+    Resubmit(ResubmitType_t resubmit_type);
+
+    /// Resubmit the packet.
+    void emit();
+
+    /// Resubmit the packet and prepend it with @hdr.
+    /// @param hdr : T can be a header type.
+    void emit<T>(in T hdr);
+}
+
+extern Digest<T> {
+    /// define a digest stream to the control plane
+    @deprecated("Digest must be specified with the value of the digest_type instrinsic metadata")
+    Digest();
+
+    /// constructor.
+    Digest(DigestType_t digest_type);
+
+    /// Emit data into the stream.  The p4 program can instantiate multiple
+    /// Digest instances in the same deparser control block, and call the pack
+    /// method once during a single execution of the control block
+    void pack(in T data);
+}
+
+// Algorithmic TCAM.
+// Specify the implementation of a table to be algorithmic TCAM by providing an
+// instance of the extern to the 'implementation' attribute of the table.  User
+// must also specify one of the table keys with 'atcam_partition_index'
+// match_kind.
+extern Atcam {
+    /// define the parameters for ATCAM table.
+    Atcam(@optional bit<32> number_partitions);
+}
+
+// Algorithmic LPM.
+// Specify the implementation of a table to be algorithmic LPM by providing an
+// instance of the extern to the 'implementation' attribute of the table.
+extern Alpm {
+    /// define the parameters for ALPM table.
+    Alpm(@optional bit<32> number_partitions, @optional bit<32> subtrees_per_partition,
+         @optional bit<32> atcam_subset_width, @optional bit<32> shift_granularity);
+}
+# 29 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tofino1_arch.p4" 2
+
+// The following declarations provide a template for the programmable blocks in
+// Tofino.
+
+parser IngressParserT<H, M>(
+    packet_in pkt,
+    out H hdr,
+    out M ig_md,
+    @optional out ingress_intrinsic_metadata_t ig_intr_md,
+    @optional out ingress_intrinsic_metadata_for_tm_t ig_intr_md_for_tm,
+    @optional out ingress_intrinsic_metadata_from_parser_t ig_intr_md_from_prsr);
+
+parser EgressParserT<H, M>(
+    packet_in pkt,
+    out H hdr,
+    out M eg_md,
+    @optional out egress_intrinsic_metadata_t eg_intr_md,
+    @optional out egress_intrinsic_metadata_from_parser_t eg_intr_md_from_prsr,
+    @optional out egress_intrinsic_metadata_for_deparser_t eg_intr_md_for_dprsr);
+
+control IngressT<H, M>(
+    inout H hdr,
+    inout M ig_md,
+    @optional in ingress_intrinsic_metadata_t ig_intr_md,
+    @optional in ingress_intrinsic_metadata_from_parser_t ig_intr_md_from_prsr,
+    @optional inout ingress_intrinsic_metadata_for_deparser_t ig_intr_md_for_dprsr,
+    @optional inout ingress_intrinsic_metadata_for_tm_t ig_intr_md_for_tm);
+
+control EgressT<H, M>(
+    inout H hdr,
+    inout M eg_md,
+    @optional in egress_intrinsic_metadata_t eg_intr_md,
+    @optional in egress_intrinsic_metadata_from_parser_t eg_intr_md_from_prsr,
+    @optional inout egress_intrinsic_metadata_for_deparser_t eg_intr_md_for_dprsr,
+    @optional inout egress_intrinsic_metadata_for_output_port_t eg_intr_md_for_oport);
+
+control IngressDeparserT<H, M>(
+    packet_out pkt,
+    inout H hdr,
+    in M metadata,
+    @optional in ingress_intrinsic_metadata_for_deparser_t ig_intr_md_for_dprsr,
+    @optional in ingress_intrinsic_metadata_t ig_intr_md);
+
+control EgressDeparserT<H, M>(
+    packet_out pkt,
+    inout H hdr,
+    in M metadata,
+    @optional in egress_intrinsic_metadata_for_deparser_t eg_intr_md_for_dprsr,
+    @optional in egress_intrinsic_metadata_t eg_intr_md,
+    @optional in egress_intrinsic_metadata_from_parser_t eg_intr_md_from_prsr);
+
+package Pipeline<IH, IM, EH, EM>(
+    IngressParserT<IH, IM> ingress_parser,
+    IngressT<IH, IM> ingress,
+    IngressDeparserT<IH, IM> ingress_deparser,
+    EgressParserT<EH, EM> egress_parser,
+    EgressT<EH, EM> egress,
+    EgressDeparserT<EH, EM> egress_deparser);
+
+@pkginfo(arch="TNA", version="2.0.1")
+package Switch<IH0, IM0, EH0, EM0, IH1, IM1, EH1, EM1,
+               IH2, IM2, EH2, EM2, IH3, IM3, EH3, EM3>(
+    Pipeline<IH0, IM0, EH0, EM0> pipe0,
+    @optional Pipeline<IH1, IM1, EH1, EM1> pipe1,
+    @optional Pipeline<IH2, IM2, EH2, EM2> pipe2,
+    @optional Pipeline<IH3, IM3, EH3, EM3> pipe3);
+
+package IngressParsers<H, M>(
+    IngressParserT<H, M> prsr0,
+    @optional IngressParserT<H, M> prsr1,
+    @optional IngressParserT<H, M> prsr2,
+    @optional IngressParserT<H, M> prsr3,
+    @optional IngressParserT<H, M> prsr4,
+    @optional IngressParserT<H, M> prsr5,
+    @optional IngressParserT<H, M> prsr6,
+    @optional IngressParserT<H, M> prsr7,
+    @optional IngressParserT<H, M> prsr8,
+    @optional IngressParserT<H, M> prsr9,
+    @optional IngressParserT<H, M> prsr10,
+    @optional IngressParserT<H, M> prsr11,
+    @optional IngressParserT<H, M> prsr12,
+    @optional IngressParserT<H, M> prsr13,
+    @optional IngressParserT<H, M> prsr14,
+    @optional IngressParserT<H, M> prsr15,
+    @optional IngressParserT<H, M> prsr16,
+    @optional IngressParserT<H, M> prsr17);
+
+package EgressParsers<H, M>(
+    EgressParserT<H, M> prsr0,
+    @optional EgressParserT<H, M> prsr1,
+    @optional EgressParserT<H, M> prsr2,
+    @optional EgressParserT<H, M> prsr3,
+    @optional EgressParserT<H, M> prsr4,
+    @optional EgressParserT<H, M> prsr5,
+    @optional EgressParserT<H, M> prsr6,
+    @optional EgressParserT<H, M> prsr7,
+    @optional EgressParserT<H, M> prsr8,
+    @optional EgressParserT<H, M> prsr9,
+    @optional EgressParserT<H, M> prsr10,
+    @optional EgressParserT<H, M> prsr11,
+    @optional EgressParserT<H, M> prsr12,
+    @optional EgressParserT<H, M> prsr13,
+    @optional EgressParserT<H, M> prsr14,
+    @optional EgressParserT<H, M> prsr15,
+    @optional EgressParserT<H, M> prsr16,
+    @optional EgressParserT<H, M> prsr17);
+
+package MultiParserPipeline<IH, IM, EH, EM>(
+    IngressParsers<IH, IM> ig_prsr,
+    IngressT<IH, IM> ingress,
+    IngressDeparserT<IH, IM> ingress_deparser,
+    EgressParsers<EH, EM> eg_prsr,
+    EgressT<EH, EM> egress,
+    EgressDeparserT<EH, EM> egress_deparser);
+
+package MultiParserSwitch<IH0, IM0, EH0, EM0, IH1, IM1, EH1, EM1,
+                          IH2, IM2, EH2, EM2, IH3, IM3, EH3, EM3>(
+    MultiParserPipeline<IH0, IM0, EH0, EM0> pipe0,
+    @optional MultiParserPipeline<IH1, IM1, EH1, EM1> pipe1,
+    @optional MultiParserPipeline<IH2, IM2, EH2, EM2> pipe2,
+    @optional MultiParserPipeline<IH3, IM3, EH3, EM3> pipe3);
+# 29 "/root/P4/bf-sde-9.8.0/install/share/p4c/p4include/tna.p4" 2
+# 3 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4" 2
+# 1 "/home/tangoic/oldz/gabber/p4_attention/headers.p4" 1
+# 9 "/home/tangoic/oldz/gabber/p4_attention/headers.p4"
+// 14B
+header ethernet_h {
+    bit<48> dst_addr;
+    bit<48> src_addr;
+    bit<16> ether_type;
+}
+
+// 20B
+header ipv4_h {
+    bit<4> version;
+    bit<4> ihl;
+    bit<8> diffserv;
+    bit<16> total_len;
+    bit<16> identification;
+    bit<3> flags;
+    bit<13> frag_offset;
+    bit<8> ttl;
+    bit<8> protocol;
+    bit<16> hdr_checksum;
+    bit<32> src_addr;
+    bit<32> dst_addr;
+}
+
+// 8B
+header udp_h {
+    bit<16> src_port;
+    bit<16> dst_port;
+    bit<16> len;
+    bit<16> checksum;
+}
+
+// 16B
+header attention_h {
+    bit<8> layer_id;
+    bit<8> head_id;
+    bit<8> seq_id;
+    bit<8> gamma;
+}
+
+// 12B
+header recirculate_h {
+    bit<8> recirculate_flag; // 220 is recirculate pkt
+    bit<8> recirculate_tag; // 0: gamma; 1: attention and m, n
+}
+
+header recirculate_gamma_h {
+    bit<8> gamma_diff;
+    bit<8> gamma_local;
+    bit<8> gamma_new;
+}
+
+header recirculate_attention_h {
+    bit<8> m; // 1/(1+2^gamma)
+    bit<8> n; // 1 - 1/(1+2^gamma)
+    bit<8> data_rec_0;
+    bit<8> data_rec_1;
+    bit<8> data_rec_2;
+    bit<8> data_rec_3;
+    bit<8> data_rec_4;
+    bit<8> data_rec_5;
+    bit<8> data_rec_6;
+    bit<8> data_rec_7;
+    bit<8> data_rec_8;
+    bit<8> data_rec_9;
+    bit<8> data_rec_10;
+    bit<8> data_rec_11;
+    bit<8> data_rec_12;
+    bit<8> data_rec_13;
+    bit<8> data_rec_14;
+    bit<8> data_rec_15;
+}
+
+// 128B
+header attention_data_h {
+    bit<8> data_0;
+    bit<8> data_1;
+    bit<8> data_2;
+    bit<8> data_3;
+    bit<8> data_4;
+    bit<8> data_5;
+    bit<8> data_6;
+    bit<8> data_7;
+    bit<8> data_8;
+    bit<8> data_9;
+    bit<8> data_10;
+    bit<8> data_11;
+    bit<8> data_12;
+    bit<8> data_13;
+    bit<8> data_14;
+    bit<8> data_15;
+    bit<8> data_16;
+    bit<8> data_17;
+    bit<8> data_18;
+    bit<8> data_19;
+    bit<8> data_20;
+    bit<8> data_21;
+    bit<8> data_22;
+    bit<8> data_23;
+    bit<8> data_24;
+    bit<8> data_25;
+    bit<8> data_26;
+    bit<8> data_27;
+    bit<8> data_28;
+    bit<8> data_29;
+    bit<8> data_30;
+    bit<8> data_31;
+    // bit<ATTENTION_WIDTH> data_32;
+    // bit<ATTENTION_WIDTH> data_33;
+    // bit<ATTENTION_WIDTH> data_34;
+    // bit<ATTENTION_WIDTH> data_35;
+    // bit<ATTENTION_WIDTH> data_36;
+    // bit<ATTENTION_WIDTH> data_37;
+    // bit<ATTENTION_WIDTH> data_38;
+    // bit<ATTENTION_WIDTH> data_39;
+    // bit<ATTENTION_WIDTH> data_40;
+    // bit<ATTENTION_WIDTH> data_41;
+    // bit<ATTENTION_WIDTH> data_42;
+    // bit<ATTENTION_WIDTH> data_43;
+    // bit<ATTENTION_WIDTH> data_44;
+    // bit<ATTENTION_WIDTH> data_45;
+    // bit<ATTENTION_WIDTH> data_46;
+    // bit<ATTENTION_WIDTH> data_47;
+    // bit<ATTENTION_WIDTH> data_48;
+    // bit<ATTENTION_WIDTH> data_49;
+    // bit<ATTENTION_WIDTH> data_50;
+    // bit<ATTENTION_WIDTH> data_51;
+    // bit<ATTENTION_WIDTH> data_52;
+    // bit<ATTENTION_WIDTH> data_53;
+    // bit<ATTENTION_WIDTH> data_54;
+    // bit<ATTENTION_WIDTH> data_55;
+    // bit<ATTENTION_WIDTH> data_56;
+    // bit<ATTENTION_WIDTH> data_57;
+    // bit<ATTENTION_WIDTH> data_58;
+    // bit<ATTENTION_WIDTH> data_59;
+    // bit<ATTENTION_WIDTH> data_60;
+    // bit<ATTENTION_WIDTH> data_61;
+    // bit<ATTENTION_WIDTH> data_62;
+    // bit<ATTENTION_WIDTH> data_63;
+}
+
+struct ingress_header_t {
+    recirculate_h recirculate;
+    recirculate_gamma_h recirculate_gamma;
+    recirculate_attention_h recirculate_attention;
+    ethernet_h ethernet;
+    ipv4_h ipv4;
+    udp_h udp;
+    attention_h attention;
+    attention_data_h attention_data;
+}
+
+struct egress_header_t {
+
+}
+
+struct egress_metadata_t {
+
+}
+
+struct attention_set_t {
+    bit<8> data_0;
+    bit<8> data_1;
+    bit<8> data_2;
+    bit<8> data_3;
+    bit<8> data_4;
+    bit<8> data_5;
+    bit<8> data_6;
+    bit<8> data_7;
+    bit<8> data_8;
+    bit<8> data_9;
+    bit<8> data_10;
+    bit<8> data_11;
+    bit<8> data_12;
+    bit<8> data_13;
+    bit<8> data_14;
+    bit<8> data_15;
+    bit<8> data_16;
+    bit<8> data_17;
+    bit<8> data_18;
+    bit<8> data_19;
+    bit<8> data_20;
+    bit<8> data_21;
+    bit<8> data_22;
+    bit<8> data_23;
+    bit<8> data_24;
+    bit<8> data_25;
+    bit<8> data_26;
+    bit<8> data_27;
+    bit<8> data_28;
+    bit<8> data_29;
+    bit<8> data_30;
+    bit<8> data_31;
+    // bit<ATTENTION_WIDTH> data_32;
+    // bit<ATTENTION_WIDTH> data_33;
+    // bit<ATTENTION_WIDTH> data_34;
+    // bit<ATTENTION_WIDTH> data_35;
+    // bit<ATTENTION_WIDTH> data_36;
+    // bit<ATTENTION_WIDTH> data_37;
+    // bit<ATTENTION_WIDTH> data_38;
+    // bit<ATTENTION_WIDTH> data_39;
+    // bit<ATTENTION_WIDTH> data_40;
+    // bit<ATTENTION_WIDTH> data_41;
+    // bit<ATTENTION_WIDTH> data_42;
+    // bit<ATTENTION_WIDTH> data_43;
+    // bit<ATTENTION_WIDTH> data_44;
+    // bit<ATTENTION_WIDTH> data_45;
+    // bit<ATTENTION_WIDTH> data_46;
+    // bit<ATTENTION_WIDTH> data_47;
+    // bit<ATTENTION_WIDTH> data_48;
+    // bit<ATTENTION_WIDTH> data_49;
+    // bit<ATTENTION_WIDTH> data_50;
+    // bit<ATTENTION_WIDTH> data_51;
+    // bit<ATTENTION_WIDTH> data_52;
+    // bit<ATTENTION_WIDTH> data_53;
+    // bit<ATTENTION_WIDTH> data_54;
+    // bit<ATTENTION_WIDTH> data_55;
+    // bit<ATTENTION_WIDTH> data_56;
+    // bit<ATTENTION_WIDTH> data_57;
+    // bit<ATTENTION_WIDTH> data_58;
+    // bit<ATTENTION_WIDTH> data_59;
+    // bit<ATTENTION_WIDTH> data_60;
+    // bit<ATTENTION_WIDTH> data_61;
+    // bit<ATTENTION_WIDTH> data_62;
+    // bit<ATTENTION_WIDTH> data_63;
+}
+
+struct ingress_metadata_t {
+    bit<8> offset;
+    bit<8> gamma_ba;
+    bit<8> gamma_log_res;
+    bit<8> gamma_max;
+    bit<6> gamma_ba_cal_res;
+    bit<1> local_gamma_big_flag;
+    bit<80> padding;
+    attention_set_t pkt_attention_set;
+    attention_set_t attention_set;
+
+
+
+
+
+
+    bit<8> attention_0_pkt_res; bit<8> attention_0_local_res;
+    bit<8> attention_1_pkt_res; bit<8> attention_1_local_res;
+    bit<8> attention_2_pkt_res; bit<8> attention_2_local_res;
+    bit<8> attention_3_pkt_res; bit<8> attention_3_local_res;
+    bit<8> attention_4_pkt_res; bit<8> attention_4_local_res;
+    bit<8> attention_5_pkt_res; bit<8> attention_5_local_res;
+    bit<8> attention_6_pkt_res; bit<8> attention_6_local_res;
+    bit<8> attention_7_pkt_res; bit<8> attention_7_local_res;
+    bit<8> attention_8_pkt_res; bit<8> attention_8_local_res;
+    bit<8> attention_9_pkt_res; bit<8> attention_9_local_res;
+    bit<8> attention_10_pkt_res; bit<8> attention_10_local_res;
+    bit<8> attention_11_pkt_res; bit<8> attention_11_local_res;
+    bit<8> attention_12_pkt_res; bit<8> attention_12_local_res;
+    bit<8> attention_13_pkt_res; bit<8> attention_13_local_res;
+    bit<8> attention_14_pkt_res; bit<8> attention_14_local_res;
+    bit<8> attention_15_pkt_res; bit<8> attention_15_local_res;
+    bit<8> attention_16_pkt_res; bit<8> attention_16_local_res;
+    bit<8> attention_17_pkt_res; bit<8> attention_17_local_res;
+    bit<8> attention_18_pkt_res; bit<8> attention_18_local_res;
+    bit<8> attention_19_pkt_res; bit<8> attention_19_local_res;
+    bit<8> attention_20_pkt_res; bit<8> attention_20_local_res;
+    bit<8> attention_21_pkt_res; bit<8> attention_21_local_res;
+    bit<8> attention_22_pkt_res; bit<8> attention_22_local_res;
+    bit<8> attention_23_pkt_res; bit<8> attention_23_local_res;
+    bit<8> attention_24_pkt_res; bit<8> attention_24_local_res;
+    bit<8> attention_25_pkt_res; bit<8> attention_25_local_res;
+    bit<8> attention_26_pkt_res; bit<8> attention_26_local_res;
+    bit<8> attention_27_pkt_res; bit<8> attention_27_local_res;
+    bit<8> attention_28_pkt_res; bit<8> attention_28_local_res;
+    bit<8> attention_29_pkt_res; bit<8> attention_29_local_res;
+    bit<8> attention_30_pkt_res; bit<8> attention_30_local_res;
+    bit<8> attention_31_pkt_res; bit<8> attention_31_local_res;
+    bit<8> attention_32_pkt_res; bit<8> attention_32_local_res;
+    bit<8> attention_33_pkt_res; bit<8> attention_33_local_res;
+    bit<8> attention_34_pkt_res; bit<8> attention_34_local_res;
+    bit<8> attention_35_pkt_res; bit<8> attention_35_local_res;
+    bit<8> attention_36_pkt_res; bit<8> attention_36_local_res;
+    bit<8> attention_37_pkt_res; bit<8> attention_37_local_res;
+    bit<8> attention_38_pkt_res; bit<8> attention_38_local_res;
+    bit<8> attention_39_pkt_res; bit<8> attention_39_local_res;
+    bit<8> attention_40_pkt_res; bit<8> attention_40_local_res;
+    bit<8> attention_41_pkt_res; bit<8> attention_41_local_res;
+    bit<8> attention_42_pkt_res; bit<8> attention_42_local_res;
+    bit<8> attention_43_pkt_res; bit<8> attention_43_local_res;
+    bit<8> attention_44_pkt_res; bit<8> attention_44_local_res;
+    bit<8> attention_45_pkt_res; bit<8> attention_45_local_res;
+    bit<8> attention_46_pkt_res; bit<8> attention_46_local_res;
+    bit<8> attention_47_pkt_res; bit<8> attention_47_local_res;
+    bit<8> attention_48_pkt_res; bit<8> attention_48_local_res;
+    bit<8> attention_49_pkt_res; bit<8> attention_49_local_res;
+    bit<8> attention_50_pkt_res; bit<8> attention_50_local_res;
+    bit<8> attention_51_pkt_res; bit<8> attention_51_local_res;
+    bit<8> attention_52_pkt_res; bit<8> attention_52_local_res;
+    bit<8> attention_53_pkt_res; bit<8> attention_53_local_res;
+    bit<8> attention_54_pkt_res; bit<8> attention_54_local_res;
+    bit<8> attention_55_pkt_res; bit<8> attention_55_local_res;
+    bit<8> attention_56_pkt_res; bit<8> attention_56_local_res;
+    bit<8> attention_57_pkt_res; bit<8> attention_57_local_res;
+    bit<8> attention_58_pkt_res; bit<8> attention_58_local_res;
+    bit<8> attention_59_pkt_res; bit<8> attention_59_local_res;
+
+}
+# 4 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4" 2
+# 1 "/home/tangoic/oldz/gabber/p4_attention/parser.p4" 1
+
+parser TofinoIngressParser(
+    packet_in pkt,
+    out ingress_intrinsic_metadata_t ig_intr_md
+)
+{
+    state start {
+        pkt.extract(ig_intr_md);
+        transition select(ig_intr_md.resubmit_flag) {
+            1: parse_resubmit; // not in use
+            0: parse_port_metadata;
+        }
+    }
+
+    state parse_resubmit {
+        transition reject;
+    }
+
+    state parse_port_metadata {
+        pkt.advance(PORT_METADATA_SIZE);
+        transition accept;
+    }
+}
+
+parser TofinoEgressParser(
+        packet_in pkt,
+        out egress_intrinsic_metadata_t eg_intr_md
+) {
+    state start {
+        pkt.extract(eg_intr_md);
+        transition accept;
+    }
+}
+
+parser IngressParser (
+    packet_in pkt,
+    out ingress_header_t hdr,
+    out ingress_metadata_t ig_md,
+    out ingress_intrinsic_metadata_t ig_intr_md
+) {
+    TofinoIngressParser() tofino_parser;
+
+    state start {
+        tofino_parser.apply(pkt, ig_intr_md);
+        transition check_recirculate;
+    }
+
+    state check_recirculate {
+        bit<8> recirculate_id = pkt.lookahead<bit<8>>();
+        transition select(recirculate_id) {
+            220: parse_recirculate;
+            _: parse_ethernet;
+        }
+    }
+
+    state parse_recirculate {
+        pkt.extract(hdr.recirculate);
+        transition select(hdr.recirculate.recirculate_tag) {
+            0: parse_recirculate_gamma;
+            1: parse_recirculate_attention;
+        }
+    }
+
+    state parse_recirculate_gamma {
+        pkt.extract(hdr.recirculate_gamma);
+        transition parse_ethernet;
+    }
+
+    state parse_recirculate_attention {
+        pkt.extract(hdr.recirculate_attention);
+        transition parse_ethernet;
+    }
+
+    state parse_ethernet {
+        pkt.extract(hdr.ethernet);
+        transition select(hdr.ethernet.ether_type) {
+            0x0800: parse_ipv4;
+            default: accept;
+        }
+    }
+
+    state parse_ipv4 {
+        pkt.extract(hdr.ipv4);
+        transition select(hdr.ipv4.protocol) {
+            17: parse_udp;
+            default: accept;
+        }
+    }
+
+    state parse_udp {
+        pkt.extract(hdr.udp);
+        transition select(hdr.udp.dst_port) {
+            0x8888: parse_attention;
+            default: accept;
+        }
+    }
+
+    state parse_attention {
+        pkt.extract(hdr.attention);
+        pkt.extract(hdr.attention_data);
+        transition accept;
+    }
+}
+
+control IngressDeparser(
+    packet_out pkt,
+    inout ingress_header_t hdr,
+    in ingress_metadata_t ig_md,
+    in ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md
+) {
+    apply {
+        pkt.emit(hdr.recirculate);
+        pkt.emit(hdr.recirculate_gamma);
+        pkt.emit(hdr.recirculate_attention);
+        pkt.emit(hdr.ethernet);
+        pkt.emit(hdr.ipv4);
+        pkt.emit(hdr.udp);
+        pkt.emit(hdr.attention);
+        pkt.emit(hdr.attention_data);
+    }
+}
+
+parser EgressParser(
+    packet_in pkt,
+    out egress_header_t hdr,
+    out egress_metadata_t eg_md,
+    out egress_intrinsic_metadata_t eg_intr_md
+) {
+    TofinoEgressParser() tofino_parser;
+    state start {
+        tofino_parser.apply(pkt, eg_intr_md);
+        transition accept;
+    }
+}
+
+control EgressDeparser(
+    packet_out pkt,
+    inout egress_header_t hdr,
+    in egress_metadata_t eg_md,
+    in egress_intrinsic_metadata_for_deparser_t eg_dprsr_md
+) {
+    apply{
+
+    }
+}
+# 5 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4" 2
+
+control Ingress (
+    inout ingress_header_t hdr,
+    inout ingress_metadata_t meta,
+    in ingress_intrinsic_metadata_t ig_intr_md,
+    in ingress_intrinsic_metadata_from_parser_t ig_prsr_md,
+    inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
+    inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
+
+    // offset define
+    Register<bit<8>, bit<8>>(255) offset_reg;
+    RegisterAction<bit<8>, bit<8>, bit<8>>(offset_reg) get_cur_offset = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            res = value;
+            if (value == 19) {
+                value = 4;
+            } else {
+                value = value + 1;
+            }
+        }
+    };
+
+    // ig_intr_md.ingress_port
+    // 获得大小之差 0
+    Register<bit<8>, bit<8>>(255) gamma_for_ba_reg_0;
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_ba_reg_0) get_gamma_ba_0 = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            if (hdr.attention.gamma > value) {
+                res = hdr.attention.gamma - value;
+            } else {
+                res = value - hdr.attention.gamma;
+            }
+        }
+    };
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_ba_reg_0) set_gamma_ba_0 = {
+        void apply(inout bit<8> value) {
+            value = meta.gamma_log_res;
+        }
+    };
+
+    // 获得较大的gamma 0
+    Register<bit<8>, bit<8>>(255) gamma_for_max_reg_0;
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_max_reg_0) get_gamma_max_0 = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            res = max(hdr.attention.gamma, value);
+        }
+    };
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_max_reg_0) set_gamma_max_0 = {
+        void apply(inout bit<8> value) {
+            value = meta.gamma_log_res;
+        }
+    };
+
+    // 获得大小之差 1
+    Register<bit<8>, bit<8>>(255) gamma_for_ba_reg_1;
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_ba_reg_1) get_gamma_ba_1 = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            if (hdr.attention.gamma > value) {
+                res = hdr.attention.gamma - value;
+            } else {
+                res = value - hdr.attention.gamma;
+            }
+        }
+    };
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_ba_reg_1) set_gamma_ba_1 = {
+        void apply(inout bit<8> value) {
+            value = meta.gamma_log_res;
+        }
+    };
+
+    // 获得较大的gamma 1
+    Register<bit<8>, bit<8>>(255) gamma_for_max_reg_1;
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_max_reg_1) get_gamma_max_1 = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            res = max(hdr.attention.gamma, value);
+        }
+    };
+    RegisterAction<bit<8>, bit<8>, bit<8>>(gamma_for_max_reg_1) set_gamma_max_1 = {
+        void apply(inout bit<8> value) {
+            value = meta.gamma_log_res;
+        }
+    };
+
+
+    //定义log2(1+2^-gamma)表
+    action set_gamma_log_res(bit<8> res, bit<6> cal_res) {
+        meta.gamma_log_res = res + meta.gamma_max; // 计算出新的gamma_local?
+        meta.gamma_ba_cal_res = cal_res; // 求解1/(1+2^gamma_ba)
+    }
+    table log2_gamma_t {
+        key = {
+            meta.gamma_ba: exact;
+        }
+        actions = {
+            set_gamma_log_res;
+        }
+        size = 256;
+    }
+# 129 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+    // 将数据包携带的attention进行查表运算，放到meta.attention_i_pkt_res
+    action set_attention_0_packet_res(bit<8> res) { meta.attention_0_pkt_res = res; }
+    action set_attention_1_packet_res(bit<8> res) { meta.attention_1_pkt_res = res; }
+    action set_attention_2_packet_res(bit<8> res) { meta.attention_2_pkt_res = res; }
+    action set_attention_3_packet_res(bit<8> res) { meta.attention_3_pkt_res = res; }
+    action set_attention_4_packet_res(bit<8> res) { meta.attention_4_pkt_res = res; }
+    action set_attention_5_packet_res(bit<8> res) { meta.attention_5_pkt_res = res; }
+    action set_attention_6_packet_res(bit<8> res) { meta.attention_6_pkt_res = res; }
+    action set_attention_7_packet_res(bit<8> res) { meta.attention_7_pkt_res = res; }
+    action set_attention_8_packet_res(bit<8> res) { meta.attention_8_pkt_res = res; }
+    action set_attention_9_packet_res(bit<8> res) { meta.attention_9_pkt_res = res; }
+    action set_attention_10_packet_res(bit<8> res) { meta.attention_10_pkt_res = res; }
+    action set_attention_11_packet_res(bit<8> res) { meta.attention_11_pkt_res = res; }
+    action set_attention_12_packet_res(bit<8> res) { meta.attention_12_pkt_res = res; }
+    action set_attention_13_packet_res(bit<8> res) { meta.attention_13_pkt_res = res; }
+    action set_attention_14_packet_res(bit<8> res) { meta.attention_14_pkt_res = res; }
+    action set_attention_15_packet_res(bit<8> res) { meta.attention_15_pkt_res = res; }
+    action set_attention_16_packet_res(bit<8> res) { meta.attention_16_pkt_res = res; }
+    action set_attention_17_packet_res(bit<8> res) { meta.attention_17_pkt_res = res; }
+    action set_attention_18_packet_res(bit<8> res) { meta.attention_18_pkt_res = res; }
+    action set_attention_19_packet_res(bit<8> res) { meta.attention_19_pkt_res = res; }
+    action set_attention_20_packet_res(bit<8> res) { meta.attention_20_pkt_res = res; }
+    action set_attention_21_packet_res(bit<8> res) { meta.attention_21_pkt_res = res; }
+    action set_attention_22_packet_res(bit<8> res) { meta.attention_22_pkt_res = res; }
+    action set_attention_23_packet_res(bit<8> res) { meta.attention_23_pkt_res = res; }
+    action set_attention_24_packet_res(bit<8> res) { meta.attention_24_pkt_res = res; }
+    action set_attention_25_packet_res(bit<8> res) { meta.attention_25_pkt_res = res; }
+    action set_attention_26_packet_res(bit<8> res) { meta.attention_26_pkt_res = res; }
+    action set_attention_27_packet_res(bit<8> res) { meta.attention_27_pkt_res = res; }
+    action set_attention_28_packet_res(bit<8> res) { meta.attention_28_pkt_res = res; }
+    action set_attention_29_packet_res(bit<8> res) { meta.attention_29_pkt_res = res; }
+    action set_attention_30_packet_res(bit<8> res) { meta.attention_30_pkt_res = res; }
+    action set_attention_31_packet_res(bit<8> res) { meta.attention_31_pkt_res = res; }
+    // ATTENTION_CAL_ACTION_PKT(32)
+    // ATTENTION_CAL_ACTION_PKT(33)
+    // ATTENTION_CAL_ACTION_PKT(34)
+    // ATTENTION_CAL_ACTION_PKT(35)
+    // ATTENTION_CAL_ACTION_PKT(36)
+    // ATTENTION_CAL_ACTION_PKT(37)
+    // ATTENTION_CAL_ACTION_PKT(38)
+    // ATTENTION_CAL_ACTION_PKT(39)
+    // ATTENTION_CAL_ACTION_PKT(40)
+    // ATTENTION_CAL_ACTION_PKT(41)
+    // ATTENTION_CAL_ACTION_PKT(42)
+    // ATTENTION_CAL_ACTION_PKT(43)
+    // ATTENTION_CAL_ACTION_PKT(44)
+    // ATTENTION_CAL_ACTION_PKT(45)
+    // ATTENTION_CAL_ACTION_PKT(46)
+    // ATTENTION_CAL_ACTION_PKT(47)
+    // ATTENTION_CAL_ACTION_PKT(48)
+    // ATTENTION_CAL_ACTION_PKT(49)
+    // ATTENTION_CAL_ACTION_PKT(50)
+    // ATTENTION_CAL_ACTION_PKT(51)
+    // ATTENTION_CAL_ACTION_PKT(52)
+    // ATTENTION_CAL_ACTION_PKT(53)
+    // ATTENTION_CAL_ACTION_PKT(54)
+    // ATTENTION_CAL_ACTION_PKT(55)
+    // ATTENTION_CAL_ACTION_PKT(56)
+    // ATTENTION_CAL_ACTION_PKT(57)
+    // ATTENTION_CAL_ACTION_PKT(58)
+    // ATTENTION_CAL_ACTION_PKT(59)
+
+    table attention_mul_t_0 { key = { hdr.attention_data.data_0: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_0_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_1 { key = { hdr.attention_data.data_1: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_1_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_2 { key = { hdr.attention_data.data_2: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_2_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_3 { key = { hdr.attention_data.data_3: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_3_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_4 { key = { hdr.attention_data.data_4: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_4_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_5 { key = { hdr.attention_data.data_5: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_5_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_6 { key = { hdr.attention_data.data_6: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_6_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_7 { key = { hdr.attention_data.data_7: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_7_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_8 { key = { hdr.attention_data.data_8: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_8_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_9 { key = { hdr.attention_data.data_9: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_9_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_10 { key = { hdr.attention_data.data_10: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_10_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_11 { key = { hdr.attention_data.data_11: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_11_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_12 { key = { hdr.attention_data.data_12: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_12_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_13 { key = { hdr.attention_data.data_13: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_13_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_14 { key = { hdr.attention_data.data_14: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_14_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_15 { key = { hdr.attention_data.data_15: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_15_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_16 { key = { hdr.attention_data.data_16: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_16_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_17 { key = { hdr.attention_data.data_17: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_17_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_18 { key = { hdr.attention_data.data_18: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_18_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_19 { key = { hdr.attention_data.data_19: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_19_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_20 { key = { hdr.attention_data.data_20: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_20_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_21 { key = { hdr.attention_data.data_21: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_21_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_22 { key = { hdr.attention_data.data_22: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_22_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_23 { key = { hdr.attention_data.data_23: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_23_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_24 { key = { hdr.attention_data.data_24: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_24_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_25 { key = { hdr.attention_data.data_25: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_25_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_26 { key = { hdr.attention_data.data_26: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_26_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_27 { key = { hdr.attention_data.data_27: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_27_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_28 { key = { hdr.attention_data.data_28: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_28_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_29 { key = { hdr.attention_data.data_29: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_29_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_30 { key = { hdr.attention_data.data_30: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_30_packet_res; } size = 1024 << 4; }
+    table attention_mul_t_31 { key = { hdr.attention_data.data_31: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_31_packet_res; } size = 1024 << 4; }
+    // ATTENTION_CAL_TABLE_PKT(32)
+    // ATTENTION_CAL_TABLE_PKT(33)
+    // ATTENTION_CAL_TABLE_PKT(34)
+    // ATTENTION_CAL_TABLE_PKT(35)
+    // ATTENTION_CAL_TABLE_PKT(36)
+    // ATTENTION_CAL_TABLE_PKT(37)
+    // ATTENTION_CAL_TABLE_PKT(38)
+    // ATTENTION_CAL_TABLE_PKT(39)
+    // ATTENTION_CAL_TABLE_PKT(40)
+    // ATTENTION_CAL_TABLE_PKT(41)
+    // ATTENTION_CAL_TABLE_PKT(42)
+    // ATTENTION_CAL_TABLE_PKT(43)
+    // ATTENTION_CAL_TABLE_PKT(44)
+    // ATTENTION_CAL_TABLE_PKT(45)
+    // ATTENTION_CAL_TABLE_PKT(46)
+    // ATTENTION_CAL_TABLE_PKT(47)
+    // ATTENTION_CAL_TABLE_PKT(48)
+    // ATTENTION_CAL_TABLE_PKT(49)
+    // ATTENTION_CAL_TABLE_PKT(50)
+    // ATTENTION_CAL_TABLE_PKT(51)
+    // ATTENTION_CAL_TABLE_PKT(52)
+    // ATTENTION_CAL_TABLE_PKT(53)
+    // ATTENTION_CAL_TABLE_PKT(54)
+    // ATTENTION_CAL_TABLE_PKT(55)
+    // ATTENTION_CAL_TABLE_PKT(56)
+    // ATTENTION_CAL_TABLE_PKT(57)
+    // ATTENTION_CAL_TABLE_PKT(58)
+    // ATTENTION_CAL_TABLE_PKT(59)
+
+    // 更新本地的attention到metadata
+    action set_attention_0_local_res(bit<8> res) { meta.attention_0_local_res = res + meta.attention_0_pkt_res; }
+    action set_attention_1_local_res(bit<8> res) { meta.attention_1_local_res = res + meta.attention_1_pkt_res; }
+    action set_attention_2_local_res(bit<8> res) { meta.attention_2_local_res = res + meta.attention_2_pkt_res; }
+    action set_attention_3_local_res(bit<8> res) { meta.attention_3_local_res = res + meta.attention_3_pkt_res; }
+    action set_attention_4_local_res(bit<8> res) { meta.attention_4_local_res = res + meta.attention_4_pkt_res; }
+    action set_attention_5_local_res(bit<8> res) { meta.attention_5_local_res = res + meta.attention_5_pkt_res; }
+    action set_attention_6_local_res(bit<8> res) { meta.attention_6_local_res = res + meta.attention_6_pkt_res; }
+    action set_attention_7_local_res(bit<8> res) { meta.attention_7_local_res = res + meta.attention_7_pkt_res; }
+    action set_attention_8_local_res(bit<8> res) { meta.attention_8_local_res = res + meta.attention_8_pkt_res; }
+    action set_attention_9_local_res(bit<8> res) { meta.attention_9_local_res = res + meta.attention_9_pkt_res; }
+    action set_attention_10_local_res(bit<8> res) { meta.attention_10_local_res = res + meta.attention_10_pkt_res; }
+    action set_attention_11_local_res(bit<8> res) { meta.attention_11_local_res = res + meta.attention_11_pkt_res; }
+    action set_attention_12_local_res(bit<8> res) { meta.attention_12_local_res = res + meta.attention_12_pkt_res; }
+    action set_attention_13_local_res(bit<8> res) { meta.attention_13_local_res = res + meta.attention_13_pkt_res; }
+    action set_attention_14_local_res(bit<8> res) { meta.attention_14_local_res = res + meta.attention_14_pkt_res; }
+    action set_attention_15_local_res(bit<8> res) { meta.attention_15_local_res = res + meta.attention_15_pkt_res; }
+    action set_attention_16_local_res(bit<8> res) { meta.attention_16_local_res = res + meta.attention_16_pkt_res; }
+    action set_attention_17_local_res(bit<8> res) { meta.attention_17_local_res = res + meta.attention_17_pkt_res; }
+    action set_attention_18_local_res(bit<8> res) { meta.attention_18_local_res = res + meta.attention_18_pkt_res; }
+    action set_attention_19_local_res(bit<8> res) { meta.attention_19_local_res = res + meta.attention_19_pkt_res; }
+    action set_attention_20_local_res(bit<8> res) { meta.attention_20_local_res = res + meta.attention_20_pkt_res; }
+    action set_attention_21_local_res(bit<8> res) { meta.attention_21_local_res = res + meta.attention_21_pkt_res; }
+    action set_attention_22_local_res(bit<8> res) { meta.attention_22_local_res = res + meta.attention_22_pkt_res; }
+    action set_attention_23_local_res(bit<8> res) { meta.attention_23_local_res = res + meta.attention_23_pkt_res; }
+    action set_attention_24_local_res(bit<8> res) { meta.attention_24_local_res = res + meta.attention_24_pkt_res; }
+    action set_attention_25_local_res(bit<8> res) { meta.attention_25_local_res = res + meta.attention_25_pkt_res; }
+    action set_attention_26_local_res(bit<8> res) { meta.attention_26_local_res = res + meta.attention_26_pkt_res; }
+    action set_attention_27_local_res(bit<8> res) { meta.attention_27_local_res = res + meta.attention_27_pkt_res; }
+    action set_attention_28_local_res(bit<8> res) { meta.attention_28_local_res = res + meta.attention_28_pkt_res; }
+    action set_attention_29_local_res(bit<8> res) { meta.attention_29_local_res = res + meta.attention_29_pkt_res; }
+    action set_attention_30_local_res(bit<8> res) { meta.attention_30_local_res = res + meta.attention_30_pkt_res; }
+    action set_attention_31_local_res(bit<8> res) { meta.attention_31_local_res = res + meta.attention_31_pkt_res; }
+    // ATTENTION_CAL_ACTION_LOCAL(32)
+    // ATTENTION_CAL_ACTION_LOCAL(33)
+    // ATTENTION_CAL_ACTION_LOCAL(34)
+    // ATTENTION_CAL_ACTION_LOCAL(35)
+    // ATTENTION_CAL_ACTION_LOCAL(36)
+    // ATTENTION_CAL_ACTION_LOCAL(37)
+    // ATTENTION_CAL_ACTION_LOCAL(38)
+    // ATTENTION_CAL_ACTION_LOCAL(39)
+    // ATTENTION_CAL_ACTION_LOCAL(40)
+    // ATTENTION_CAL_ACTION_LOCAL(41)
+    // ATTENTION_CAL_ACTION_LOCAL(42)
+    // ATTENTION_CAL_ACTION_LOCAL(43)
+    // ATTENTION_CAL_ACTION_LOCAL(44)
+    // ATTENTION_CAL_ACTION_LOCAL(45)
+    // ATTENTION_CAL_ACTION_LOCAL(46)
+    // ATTENTION_CAL_ACTION_LOCAL(47)
+    // ATTENTION_CAL_ACTION_LOCAL(48)
+    // ATTENTION_CAL_ACTION_LOCAL(49)
+    // ATTENTION_CAL_ACTION_LOCAL(50)
+    // ATTENTION_CAL_ACTION_LOCAL(51)
+    // ATTENTION_CAL_ACTION_LOCAL(52)
+    // ATTENTION_CAL_ACTION_LOCAL(53)
+    // ATTENTION_CAL_ACTION_LOCAL(54)
+    // ATTENTION_CAL_ACTION_LOCAL(55)
+    // ATTENTION_CAL_ACTION_LOCAL(56)
+    // ATTENTION_CAL_ACTION_LOCAL(57)
+    // ATTENTION_CAL_ACTION_LOCAL(58)
+    // ATTENTION_CAL_ACTION_LOCAL(59)
+# 328 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+    table attention_mul_local_t_0 { key = { meta.attention_set.data_0: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_0_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_1 { key = { meta.attention_set.data_1: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_1_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_2 { key = { meta.attention_set.data_2: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_2_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_3 { key = { meta.attention_set.data_3: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_3_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_4 { key = { meta.attention_set.data_4: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_4_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_5 { key = { meta.attention_set.data_5: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_5_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_6 { key = { meta.attention_set.data_6: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_6_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_7 { key = { meta.attention_set.data_7: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_7_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_8 { key = { meta.attention_set.data_8: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_8_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_9 { key = { meta.attention_set.data_9: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_9_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_10 { key = { meta.attention_set.data_10: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_10_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_11 { key = { meta.attention_set.data_11: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_11_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_12 { key = { meta.attention_set.data_12: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_12_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_13 { key = { meta.attention_set.data_13: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_13_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_14 { key = { meta.attention_set.data_14: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_14_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_15 { key = { meta.attention_set.data_15: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_15_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_16 { key = { meta.attention_set.data_16: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_16_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_17 { key = { meta.attention_set.data_17: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_17_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_18 { key = { meta.attention_set.data_18: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_18_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_19 { key = { meta.attention_set.data_19: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_19_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_20 { key = { meta.attention_set.data_20: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_20_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_21 { key = { meta.attention_set.data_21: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_21_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_22 { key = { meta.attention_set.data_22: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_22_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_23 { key = { meta.attention_set.data_23: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_23_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_24 { key = { meta.attention_set.data_24: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_24_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_25 { key = { meta.attention_set.data_25: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_25_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_26 { key = { meta.attention_set.data_26: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_26_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_27 { key = { meta.attention_set.data_27: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_27_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_28 { key = { meta.attention_set.data_28: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_28_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_29 { key = { meta.attention_set.data_29: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_29_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_30 { key = { meta.attention_set.data_30: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_30_local_res; } size = 1024 << 4; }
+    table attention_mul_local_t_31 { key = { meta.attention_set.data_31: exact; meta.gamma_ba_cal_res: exact; meta.local_gamma_big_flag: exact; meta.padding: exact; } actions = { set_attention_31_local_res; } size = 1024 << 4; }
+    // ATTENTION_CAL_TABLE_LOCAL(32)
+    // ATTENTION_CAL_TABLE_LOCAL(33)
+    // ATTENTION_CAL_TABLE_LOCAL(34)
+    // ATTENTION_CAL_TABLE_LOCAL(35)
+    // ATTENTION_CAL_TABLE_LOCAL(36)
+    // ATTENTION_CAL_TABLE_LOCAL(37)
+    // ATTENTION_CAL_TABLE_LOCAL(38)
+    // ATTENTION_CAL_TABLE_LOCAL(39)
+    // ATTENTION_CAL_TABLE_LOCAL(40)
+    // ATTENTION_CAL_TABLE_LOCAL(41)
+    // ATTENTION_CAL_TABLE_LOCAL(42)
+    // ATTENTION_CAL_TABLE_LOCAL(43)
+    // ATTENTION_CAL_TABLE_LOCAL(44)
+    // ATTENTION_CAL_TABLE_LOCAL(45)
+    // ATTENTION_CAL_TABLE_LOCAL(46)
+    // ATTENTION_CAL_TABLE_LOCAL(47)
+    // ATTENTION_CAL_TABLE_LOCAL(48)
+    // ATTENTION_CAL_TABLE_LOCAL(49)
+    // ATTENTION_CAL_TABLE_LOCAL(50)
+    // ATTENTION_CAL_TABLE_LOCAL(51)
+    // ATTENTION_CAL_TABLE_LOCAL(52)
+    // ATTENTION_CAL_TABLE_LOCAL(53)
+    // ATTENTION_CAL_TABLE_LOCAL(54)
+    // ATTENTION_CAL_TABLE_LOCAL(55)
+# 394 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+    Register<bit<8>, bit<8>>(256) attention_0_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_0_reg) get_attention_0_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_1_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_1_reg) get_attention_1_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_2_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_2_reg) get_attention_2_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_3_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_3_reg) get_attention_3_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_4_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_4_reg) get_attention_4_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_5_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_5_reg) get_attention_5_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_6_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_6_reg) get_attention_6_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+    Register<bit<8>, bit<8>>(256) attention_7_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_7_reg) get_attention_7_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } };
+# 417 "/home/tangoic/oldz/gabber/p4_attention/attention_cal.p4"
+    /************************* Begin DirectRegister *********************************/
+    DirectRegister<bit<8>>() attention_register_example;
+    DirectRegisterAction<bit<8>, bit<8>>(attention_register_example) get_attention_reg_exmaple = {
+        void apply(inout bit<8> value, out bit<8> res) {
+            res = value;
+        }
+    };
+    DirectRegisterAction<bit<8>, bit<8>>(attention_register_example) set_attention_reg_exmaple = {
+        void apply(inout bit<8> value) {
+            value = 2;
+        }
+    };
+
+    action get_attention_act_example() {
+        get_attention_reg_exmaple.execute();
+    }
+    /*************************End DirectRegister *********************************/
+
+    // action set_attention_act_example() {
+    //     set_attention_reg_exmaple.execute();
+    // }
+
+    table attention_example_t {
+        key = {
+            hdr.attention.seq_id: exact;
+        }
+        actions = {
+            get_attention_act_example;
+            // set_attention_act_example;
+        }
+        size = 256;
+        registers = attention_register_example;
+    }
+
+    Register<bit<8>, bit<8>>(256) attention_8_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_8_reg) get_attention_8_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_8_reg) set_attention_8_act = { void apply(inout bit<8> value) { value = meta.attention_0_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_9_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_9_reg) get_attention_9_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_9_reg) set_attention_9_act = { void apply(inout bit<8> value) { value = meta.attention_1_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_10_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_10_reg) get_attention_10_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_10_reg) set_attention_10_act = { void apply(inout bit<8> value) { value = meta.attention_2_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_11_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_11_reg) get_attention_11_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_11_reg) set_attention_11_act = { void apply(inout bit<8> value) { value = meta.attention_3_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_12_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_12_reg) get_attention_12_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_12_reg) set_attention_12_act = { void apply(inout bit<8> value) { value = meta.attention_4_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_13_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_13_reg) get_attention_13_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_13_reg) set_attention_13_act = { void apply(inout bit<8> value) { value = meta.attention_5_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_14_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_14_reg) get_attention_14_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_14_reg) set_attention_14_act = { void apply(inout bit<8> value) { value = meta.attention_6_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_15_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_15_reg) get_attention_15_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_15_reg) set_attention_15_act = { void apply(inout bit<8> value) { value = meta.attention_7_local_res; } };
+
+    Register<bit<8>, bit<8>>(256) attention_16_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_16_reg) get_attention_16_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_16_reg) set_attention_16_act = { void apply(inout bit<8> value) { value = meta.attention_8_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_17_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_17_reg) get_attention_17_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_17_reg) set_attention_17_act = { void apply(inout bit<8> value) { value = meta.attention_9_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_18_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_18_reg) get_attention_18_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_18_reg) set_attention_18_act = { void apply(inout bit<8> value) { value = meta.attention_10_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_19_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_19_reg) get_attention_19_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_19_reg) set_attention_19_act = { void apply(inout bit<8> value) { value = meta.attention_11_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_20_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_20_reg) get_attention_20_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_20_reg) set_attention_20_act = { void apply(inout bit<8> value) { value = meta.attention_12_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_21_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_21_reg) get_attention_21_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_21_reg) set_attention_21_act = { void apply(inout bit<8> value) { value = meta.attention_13_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_22_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_22_reg) get_attention_22_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_22_reg) set_attention_22_act = { void apply(inout bit<8> value) { value = meta.attention_14_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_23_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_23_reg) get_attention_23_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_23_reg) set_attention_23_act = { void apply(inout bit<8> value) { value = meta.attention_15_local_res; } };
+
+    Register<bit<8>, bit<8>>(256) attention_24_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_24_reg) get_attention_24_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_24_reg) set_attention_24_act = { void apply(inout bit<8> value) { value = meta.attention_16_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_25_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_25_reg) get_attention_25_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_25_reg) set_attention_25_act = { void apply(inout bit<8> value) { value = meta.attention_17_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_26_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_26_reg) get_attention_26_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_26_reg) set_attention_26_act = { void apply(inout bit<8> value) { value = meta.attention_18_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_27_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_27_reg) get_attention_27_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_27_reg) set_attention_27_act = { void apply(inout bit<8> value) { value = meta.attention_19_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_28_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_28_reg) get_attention_28_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_28_reg) set_attention_28_act = { void apply(inout bit<8> value) { value = meta.attention_20_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_29_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_29_reg) get_attention_29_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_29_reg) set_attention_29_act = { void apply(inout bit<8> value) { value = meta.attention_21_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_30_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_30_reg) get_attention_30_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_30_reg) set_attention_30_act = { void apply(inout bit<8> value) { value = meta.attention_22_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_31_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_31_reg) get_attention_31_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_31_reg) set_attention_31_act = { void apply(inout bit<8> value) { value = meta.attention_23_local_res; } };
+
+    Register<bit<8>, bit<8>>(256) attention_32_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_32_reg) get_attention_32_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_32_reg) set_attention_32_act = { void apply(inout bit<8> value) { value = meta.attention_24_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_33_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_33_reg) get_attention_33_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_33_reg) set_attention_33_act = { void apply(inout bit<8> value) { value = meta.attention_25_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_34_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_34_reg) get_attention_34_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_34_reg) set_attention_34_act = { void apply(inout bit<8> value) { value = meta.attention_26_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_35_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_35_reg) get_attention_35_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_35_reg) set_attention_35_act = { void apply(inout bit<8> value) { value = meta.attention_27_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_36_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_36_reg) get_attention_36_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_36_reg) set_attention_36_act = { void apply(inout bit<8> value) { value = meta.attention_28_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_37_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_37_reg) get_attention_37_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_37_reg) set_attention_37_act = { void apply(inout bit<8> value) { value = meta.attention_29_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_38_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_38_reg) get_attention_38_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_38_reg) set_attention_38_act = { void apply(inout bit<8> value) { value = meta.attention_30_local_res; } };
+    Register<bit<8>, bit<8>>(256) attention_39_reg; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_39_reg) get_attention_39_act = { void apply(inout bit<8> value, out bit<8> res) { res = value; } }; RegisterAction<bit<8>, bit<8>, bit<8>>(attention_39_reg) set_attention_39_act = { void apply(inout bit<8> value) { value = meta.attention_31_local_res; } };
+
+    // REG_DEF(40, 32)
+    // REG_DEF(41, 33)
+    // REG_DEF(42, 34)
+    // REG_DEF(43, 35)
+    // REG_DEF(44, 36)
+    // REG_DEF(45, 37)
+    // REG_DEF(46, 38)
+    // REG_DEF(47, 39)
+
+    // REG_DEF(48, 40)
+    // REG_DEF(49, 41)
+    // REG_DEF(50, 42)
+    // REG_DEF(51, 43)
+    // REG_DEF(52, 44)
+    // REG_DEF(53, 45)
+    // REG_DEF(54, 46)
+    // REG_DEF(55, 47)
+
+    // REG_DEF(56, 48)
+    // REG_DEF(57, 49)
+    // REG_DEF(58, 50)
+    // REG_DEF(59, 51)
+    // REG_DEF(60, 52)
+    // REG_DEF(61, 53)
+    // REG_DEF(62, 54)
+    // REG_DEF(63, 55)
+
+    apply {
+        if (hdr.recirculate_gamma.isValid()) {
+
+        } else if (hdr.recirculate_attention.isValid()) {
+
+        } else {
+            meta.offset = get_cur_offset.execute(hdr.attention.seq_id);
+            if (meta.offset == 2) {
+                attention_example_t.apply();
+            } else if (meta.offset == 4) {
+                meta.gamma_ba = get_gamma_ba_0.execute(hdr.attention.seq_id);
+                meta.gamma_max = get_gamma_max_0.execute(hdr.attention.seq_id);
+                log2_gamma_t.apply();
+                set_gamma_ba_1.execute(hdr.attention.seq_id);
+                set_gamma_max_1.execute(hdr.attention.seq_id);
+                if (hdr.attention.gamma == meta.gamma_max) {
+                    meta.local_gamma_big_flag = 0;
+                } else {
+                    meta.local_gamma_big_flag = 1;
+                }
+
+                /****** attention 0 的计算 ********/
+                // // 计算数据包携带的attention
+                // attention_mul_t_0.apply();
+                // // 得到本地的attention 0
+                // meta.attention_set.data_0 = get_attention_0_act.execute(hdr.attention.seq_id);
+                // // 查表计算本地的attention 0
+                // attention_mul_local_t_0.apply();
+                // // 写回attention
+                // set_attention_5_act.execute(hdr.attention.seq_id);
+
+
+
+
+
+
+
+                attention_mul_t_0.apply(); meta.attention_set.data_0 = get_attention_0_act.execute(hdr.attention.seq_id); attention_mul_local_t_0.apply(); set_attention_8_act.execute(hdr.attention.seq_id);
+                attention_mul_t_1.apply(); meta.attention_set.data_1 = get_attention_1_act.execute(hdr.attention.seq_id); attention_mul_local_t_1.apply(); set_attention_9_act.execute(hdr.attention.seq_id);
+                attention_mul_t_2.apply(); meta.attention_set.data_2 = get_attention_2_act.execute(hdr.attention.seq_id); attention_mul_local_t_2.apply(); set_attention_10_act.execute(hdr.attention.seq_id);
+                attention_mul_t_3.apply(); meta.attention_set.data_3 = get_attention_3_act.execute(hdr.attention.seq_id); attention_mul_local_t_3.apply(); set_attention_11_act.execute(hdr.attention.seq_id);
+                attention_mul_t_4.apply(); meta.attention_set.data_4 = get_attention_4_act.execute(hdr.attention.seq_id); attention_mul_local_t_4.apply(); set_attention_12_act.execute(hdr.attention.seq_id);
+                attention_mul_t_5.apply(); meta.attention_set.data_5 = get_attention_5_act.execute(hdr.attention.seq_id); attention_mul_local_t_5.apply(); set_attention_13_act.execute(hdr.attention.seq_id);
+                attention_mul_t_6.apply(); meta.attention_set.data_6 = get_attention_6_act.execute(hdr.attention.seq_id); attention_mul_local_t_6.apply(); set_attention_14_act.execute(hdr.attention.seq_id);
+                attention_mul_t_7.apply(); meta.attention_set.data_7 = get_attention_7_act.execute(hdr.attention.seq_id); attention_mul_local_t_7.apply(); set_attention_15_act.execute(hdr.attention.seq_id);
+                attention_mul_t_8.apply(); meta.attention_set.data_8 = get_attention_8_act.execute(hdr.attention.seq_id); attention_mul_local_t_8.apply(); set_attention_16_act.execute(hdr.attention.seq_id);
+                attention_mul_t_9.apply(); meta.attention_set.data_9 = get_attention_9_act.execute(hdr.attention.seq_id); attention_mul_local_t_9.apply(); set_attention_17_act.execute(hdr.attention.seq_id);
+                attention_mul_t_10.apply(); meta.attention_set.data_10 = get_attention_10_act.execute(hdr.attention.seq_id); attention_mul_local_t_10.apply(); set_attention_18_act.execute(hdr.attention.seq_id);
+                attention_mul_t_11.apply(); meta.attention_set.data_11 = get_attention_11_act.execute(hdr.attention.seq_id); attention_mul_local_t_11.apply(); set_attention_19_act.execute(hdr.attention.seq_id);
+                attention_mul_t_12.apply(); meta.attention_set.data_12 = get_attention_12_act.execute(hdr.attention.seq_id); attention_mul_local_t_12.apply(); set_attention_20_act.execute(hdr.attention.seq_id);
+                attention_mul_t_13.apply(); meta.attention_set.data_13 = get_attention_13_act.execute(hdr.attention.seq_id); attention_mul_local_t_13.apply(); set_attention_21_act.execute(hdr.attention.seq_id);
+                attention_mul_t_14.apply(); meta.attention_set.data_14 = get_attention_14_act.execute(hdr.attention.seq_id); attention_mul_local_t_14.apply(); set_attention_22_act.execute(hdr.attention.seq_id);
+                attention_mul_t_15.apply(); meta.attention_set.data_15 = get_attention_15_act.execute(hdr.attention.seq_id); attention_mul_local_t_15.apply(); set_attention_23_act.execute(hdr.attention.seq_id);
+                attention_mul_t_16.apply(); meta.attention_set.data_16 = get_attention_16_act.execute(hdr.attention.seq_id); attention_mul_local_t_16.apply(); set_attention_24_act.execute(hdr.attention.seq_id);
+                attention_mul_t_17.apply(); meta.attention_set.data_17 = get_attention_17_act.execute(hdr.attention.seq_id); attention_mul_local_t_17.apply(); set_attention_25_act.execute(hdr.attention.seq_id);
+                attention_mul_t_18.apply(); meta.attention_set.data_18 = get_attention_18_act.execute(hdr.attention.seq_id); attention_mul_local_t_18.apply(); set_attention_26_act.execute(hdr.attention.seq_id);
+                attention_mul_t_19.apply(); meta.attention_set.data_19 = get_attention_19_act.execute(hdr.attention.seq_id); attention_mul_local_t_19.apply(); set_attention_27_act.execute(hdr.attention.seq_id);
+                attention_mul_t_20.apply(); meta.attention_set.data_20 = get_attention_20_act.execute(hdr.attention.seq_id); attention_mul_local_t_20.apply(); set_attention_28_act.execute(hdr.attention.seq_id);
+                attention_mul_t_21.apply(); meta.attention_set.data_21 = get_attention_21_act.execute(hdr.attention.seq_id); attention_mul_local_t_21.apply(); set_attention_29_act.execute(hdr.attention.seq_id);
+                attention_mul_t_22.apply(); meta.attention_set.data_22 = get_attention_22_act.execute(hdr.attention.seq_id); attention_mul_local_t_22.apply(); set_attention_30_act.execute(hdr.attention.seq_id);
+                attention_mul_t_23.apply(); meta.attention_set.data_23 = get_attention_23_act.execute(hdr.attention.seq_id); attention_mul_local_t_23.apply(); set_attention_31_act.execute(hdr.attention.seq_id);
+                attention_mul_t_24.apply(); meta.attention_set.data_24 = get_attention_24_act.execute(hdr.attention.seq_id); attention_mul_local_t_24.apply(); set_attention_32_act.execute(hdr.attention.seq_id);
+                attention_mul_t_25.apply(); meta.attention_set.data_25 = get_attention_25_act.execute(hdr.attention.seq_id); attention_mul_local_t_25.apply(); set_attention_33_act.execute(hdr.attention.seq_id);
+                attention_mul_t_26.apply(); meta.attention_set.data_26 = get_attention_26_act.execute(hdr.attention.seq_id); attention_mul_local_t_26.apply(); set_attention_34_act.execute(hdr.attention.seq_id);
+                attention_mul_t_27.apply(); meta.attention_set.data_27 = get_attention_27_act.execute(hdr.attention.seq_id); attention_mul_local_t_27.apply(); set_attention_35_act.execute(hdr.attention.seq_id);
+                attention_mul_t_28.apply(); meta.attention_set.data_28 = get_attention_28_act.execute(hdr.attention.seq_id); attention_mul_local_t_28.apply(); set_attention_36_act.execute(hdr.attention.seq_id);
+                attention_mul_t_29.apply(); meta.attention_set.data_29 = get_attention_29_act.execute(hdr.attention.seq_id); attention_mul_local_t_29.apply(); set_attention_37_act.execute(hdr.attention.seq_id);
+                attention_mul_t_30.apply(); meta.attention_set.data_30 = get_attention_30_act.execute(hdr.attention.seq_id); attention_mul_local_t_30.apply(); set_attention_38_act.execute(hdr.attention.seq_id);
+                attention_mul_t_31.apply(); meta.attention_set.data_31 = get_attention_31_act.execute(hdr.attention.seq_id); attention_mul_local_t_31.apply(); set_attention_39_act.execute(hdr.attention.seq_id);
+                // APPLY_ATTENTION(32, 40)
+                // APPLY_ATTENTION(33, 41)
+                // APPLY_ATTENTION(34, 42)
+                // APPLY_ATTENTION(35, 43)
+                // APPLY_ATTENTION(36, 44)
+                // APPLY_ATTENTION(37, 45)
+                // APPLY_ATTENTION(38, 46)
+                // APPLY_ATTENTION(39, 47)
+                // APPLY_ATTENTION(40, 48)
+                // APPLY_ATTENTION(41, 49)
+                // APPLY_ATTENTION(42, 50)
+                // APPLY_ATTENTION(43, 51)
+                // APPLY_ATTENTION(44, 52)
+                // APPLY_ATTENTION(45, 53)
+                // APPLY_ATTENTION(46, 54)
+                // APPLY_ATTENTION(47, 55)
+                // APPLY_ATTENTION(48, 56)
+                // APPLY_ATTENTION(49, 57)
+                // APPLY_ATTENTION(50, 58)
+                // APPLY_ATTENTION(51, 59)
+                // APPLY_ATTENTION(52, 60)
+                // APPLY_ATTENTION(53, 61)
+                // APPLY_ATTENTION(54, 62)
+                // APPLY_ATTENTION(55, 63)
+
+            } else if (meta.offset == 6) {
+
+            } else if (meta.offset == 8) {
+
+            } else if (meta.offset == 10) {
+
+            } else if (meta.offset == 12) {
+
+            } else if (meta.offset == 14) {
+
+            } else if (meta.offset == 16) {
+
+            } else if (meta.offset == 18) {
+
+            } else {
+                // nothing, pass
+            }
+        }
+    }
+
+}
+
+control Egress(
+    inout egress_header_t hdr,
+    inout egress_metadata_t meta,
+    in egress_intrinsic_metadata_t eg_intr_md,
+    in egress_intrinsic_metadata_from_parser_t eg_prsr_md,
+    inout egress_intrinsic_metadata_for_deparser_t eg_dprsr_md,
+    inout egress_intrinsic_metadata_for_output_port_t eg_oport_md)
+{
+    apply {
+
+    }
+}
+
+Pipeline(
+    IngressParser(),
+    Ingress(),
+    IngressDeparser(),
+    EgressParser(),
+    Egress(),
+    EgressDeparser()
+) pipe;
+
+Switch(pipe) main;

@@ -1,0 +1,122 @@
+ingress::parse_attention is split into 2 states:
+  ingress::parse_attention
+  ingress::parse_attention.$split_0
+allocated { $byte0 } to {  [ ingress::start : inbuf bit[0] ig_intr_md.resubmit_flag; ] }
+allocated { $byte0 } to {  [ ingress::TofinoIngressParser_parse_port_metadata : inbuf bit[192..199] recirculate_id_0 ] }
+allocated { $byte0 } to {  [ ingress::parse_recirculate : inbuf bit[8..15] hdr.recirculate/recirculate.recirculate_tag; ] }
+allocated { $byte0 $byte1 } to {  [ ingress::parse_ethernet : inbuf bit[96..111] hdr.ethernet/ethernet.ether_type; ] }
+allocated { $byte0 } to {  [ ingress::parse_ipv4 : inbuf bit[72..79] hdr.ipv4/ipv4.protocol; ] }
+allocated { $byte0 $byte1 } to {  [ ingress::parse_udp : inbuf bit[16..31] hdr.udp/udp.dst_port; ] }
+ComputeLoweredParserIR preorder on Header : header recirculate_h {
+  bit<8> recirculate_flag;
+  bit<8> recirculate_tag; }
+ComputeLoweredParserIR preorder on Header : header recirculate_gamma_h {
+  bit<8> gamma_diff;
+  bit<8> gamma_local;
+  bit<8> gamma_new; }
+ComputeLoweredParserIR preorder on Header : header ethernet_h {
+  bit<48> dst_addr;
+  bit<48> src_addr;
+  bit<16> ether_type; }
+ComputeLoweredParserIR preorder on Header : header ipv4_h {
+  bit<4> version;
+  bit<4> ihl;
+  bit<8> diffserv;
+  bit<16> total_len;
+  bit<16> identification;
+  bit<3> flags;
+  bit<13> frag_offset;
+  bit<8> ttl;
+  bit<8> protocol;
+  bit<16> hdr_checksum;
+  bit<32> src_addr;
+  bit<32> dst_addr; }
+ComputeLoweredParserIR preorder on Header : header udp_h {
+  bit<16> src_port;
+  bit<16> dst_port;
+  bit<16> len;
+  bit<16> checksum; }
+ComputeLoweredParserIR preorder on Header : header attention_h {
+  bit<8> layer_id;
+  bit<8> head_id;
+  bit<8> seq_id;
+  bit<8> gamma; }
+ComputeLoweredParserIR preorder on Header : header attention_data_h {
+  bit<8> data_0;
+  bit<8> data_1;
+  bit<8> data_2;
+  bit<8> data_3;
+  bit<8> data_4;
+  bit<8> data_5;
+  bit<8> data_6;
+  bit<8> data_7;
+  bit<8> data_8;
+  bit<8> data_9;
+  bit<8> data_10;
+  bit<8> data_11;
+  bit<8> data_12;
+  bit<8> data_13;
+  bit<8> data_14;
+  bit<8> data_15;
+  bit<8> data_16;
+  bit<8> data_17;
+  bit<8> data_18;
+  bit<8> data_19;
+  bit<8> data_20;
+  bit<8> data_21;
+  bit<8> data_22;
+  bit<8> data_23;
+  bit<8> data_24;
+  bit<8> data_25;
+  bit<8> data_26;
+  bit<8> data_27;
+  bit<8> data_28;
+  bit<8> data_29;
+  bit<8> data_30;
+  bit<8> data_31; }
+ComputeLoweredParserIR preorder on Header : header recirculate_attention_h {
+  bit<8> m;
+  bit<8> n;
+  bit<8> data_rec_0;
+  bit<8> data_rec_1;
+  bit<8> data_rec_2;
+  bit<8> data_rec_3;
+  bit<8> data_rec_4;
+  bit<8> data_rec_5;
+  bit<8> data_rec_6;
+  bit<8> data_rec_7;
+  bit<8> data_rec_8;
+  bit<8> data_rec_9;
+  bit<8> data_rec_10;
+  bit<8> data_rec_11;
+  bit<8> data_rec_12;
+  bit<8> data_rec_13;
+  bit<8> data_rec_14;
+  bit<8> data_rec_15; }
+ComputeLoweredParserIR preorder on Header : header egress_intrinsic_metadata_t @__intrinsic_metadata {
+  @padding @__intrinsic_metadata bit<7> _pad0;
+  @__intrinsic_metadata bit<9> egress_port;
+  @padding @__intrinsic_metadata bit<5> _pad1;
+  @__intrinsic_metadata bit<19> enq_qdepth;
+  @padding @__intrinsic_metadata bit<6> _pad2;
+  @__intrinsic_metadata bit<2> enq_congest_stat;
+  @padding @__intrinsic_metadata bit<14> _pad3;
+  @__intrinsic_metadata bit<18> enq_tstamp;
+  @padding @__intrinsic_metadata bit<5> _pad4;
+  @__intrinsic_metadata bit<19> deq_qdepth;
+  @padding @__intrinsic_metadata bit<6> _pad5;
+  @__intrinsic_metadata bit<2> deq_congest_stat;
+  @__intrinsic_metadata bit<8> app_pool_congest_stat;
+  @padding @__intrinsic_metadata bit<14> _pad6;
+  @__intrinsic_metadata bit<18> deq_timedelta;
+  @__intrinsic_metadata bit<16> egress_rid;
+  @padding @__intrinsic_metadata bit<7> _pad7;
+  @__intrinsic_metadata bit<1> egress_rid_first;
+  @padding @__intrinsic_metadata bit<1> _pad8;
+  @__intrinsic_metadata bit<7> egress_qid;
+  @padding @__intrinsic_metadata bit<5> _pad9;
+  @__intrinsic_metadata bit<3> egress_cos;
+  @padding @__intrinsic_metadata bit<7> _pad10;
+  @__intrinsic_metadata bit<1> deflection_flag;
+  @__intrinsic_metadata bit<16> pkt_length;
+  @padding @__intrinsic_metadata bit<8> _pad_eg_int_md; }

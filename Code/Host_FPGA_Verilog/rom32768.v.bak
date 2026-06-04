@@ -1,0 +1,19 @@
+
+module rom32768 (
+    input [14:0] addr,
+    output [7:0] data
+);
+
+reg [7:0] memory [0:32767];
+integer i;
+
+initial begin
+    for (i = 0; i < 32767; i = i + 1) begin
+        memory[i] = i;
+    end
+end
+
+assign data = memory[addr];
+
+endmodule
+

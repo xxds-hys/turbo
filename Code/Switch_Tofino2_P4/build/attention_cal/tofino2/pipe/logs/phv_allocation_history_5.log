@@ -1,0 +1,114 @@
+Allocation history of config default_incremental_alloc
+1: TRYING to allocate SUPERCLUSTER Uid: 3071
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_18_reg$index<10> meta [0:9]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3074
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_18_reg$index<10> meta [0:9]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H9[0:9] <- Ingress.attention_18_reg$index<10> meta [0:9] @[-1r,12w]
+2: TRYING to allocate SUPERCLUSTER Uid: 3067
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_9_reg$index<10> meta [0:9]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3081
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_9_reg$index<10> meta [0:9]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H10[0:9] <- Ingress.attention_9_reg$index<10> meta [0:9] @[-1r,12w]
+3: TRYING to allocate SUPERCLUSTER Uid: 3069
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_15_reg$index<10> meta [0:9]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3088
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_15_reg$index<10> meta [0:9]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H11[0:9] <- Ingress.attention_15_reg$index<10> meta [0:9] @[-1r,12w]
+4: TRYING to allocate SUPERCLUSTER Uid: 3073
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_23_reg$index<10> meta [0:9]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3095
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_23_reg$index<10> meta [0:9]]]
+
+Best Score: {[n_set_gress: 1, n_inc_containers: 1, n_inc_small_containers: 1, n_mismatched_deparser_gress: 1, ], }
+Allocation Decisions:
+allocate: H12[0:9] <- Ingress.attention_23_reg$index<10> meta [0:9] @[-1r,12w]
+5: TRYING to allocate SUPERCLUSTER Uid: 3070
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_18_reg$ena<1> meta [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3102
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_18_reg$ena<1> meta [0:0]]]
+
+Best Score: {[n_packing_bits: 1, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: B38[1:1] <- Ingress.attention_18_reg$ena<1> meta [0:0] @[-1r,12w]
+6: TRYING to allocate SUPERCLUSTER Uid: 3066
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_9_reg$ena<1> meta [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3103
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_9_reg$ena<1> meta [0:0]]]
+
+Best Score: {[n_packing_bits: 1, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: B38[2:2] <- Ingress.attention_9_reg$ena<1> meta [0:0] @[-1r,12w]
+7: TRYING to allocate SUPERCLUSTER Uid: 3068
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_15_reg$ena<1> meta [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3104
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_15_reg$ena<1> meta [0:0]]]
+
+Best Score: {[n_packing_bits: 1, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: B38[3:3] <- Ingress.attention_15_reg$ena<1> meta [0:0] @[-1r,12w]
+8: TRYING to allocate SUPERCLUSTER Uid: 3072
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_23_reg$ena<1> meta [0:0]]]
+Successfully Allocated
+By slicing into the following superclusters:
+SUPERCLUSTER Uid: 3105
+    slice lists:	[ ]
+    rotational clusters:	
+        [[Ingress.attention_23_reg$ena<1> meta [0:0]]]
+
+Best Score: {[n_packing_bits: 1, n_packing_priority: 100000, ], }
+Allocation Decisions:
+allocate: B38[4:4] <- Ingress.attention_23_reg$ena<1> meta [0:0] @[-1r,12w]
+

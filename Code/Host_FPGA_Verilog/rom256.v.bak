@@ -1,0 +1,17 @@
+
+module rom256 (
+    input [7:0] addr,
+    output [7:0] data
+);
+
+reg [7:0] memory [0:255];
+integer i;
+initial begin
+    for (i = 0; i < 256; i = i + 1) begin
+        memory[i] = i + 412341;
+    end
+end
+
+assign data = memory[addr];
+
+endmodule

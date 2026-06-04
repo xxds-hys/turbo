@@ -1,0 +1,21 @@
+{
+    "build_date": "Thu Sep 19 23:16:41 2024",
+    "program_name": "attention_cal.p4",
+    "run_id": "3943d845dd38b6ce",
+    "schema_version": "1.12.1",
+    "compiler_version": "9.8.0",
+    "target": "tofino2",
+    "tables": [],
+    "phv_allocation": [],
+    "parser": {
+        "ingress": [],
+        "egress": []
+    },
+    "learn_quanta": [],
+    "mau_stage_characteristics": [],
+    "dynamic_hash_calculations": [],
+    "configuration_cache": [],
+    "driver_options": {
+        "hash_parity_enabled": false
+    }
+}

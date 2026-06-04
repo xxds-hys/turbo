@@ -1,0 +1,10 @@
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/install/strip.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/install/local.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/install.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/list_install_components.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/driver.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/edit_cache.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/attention_cal.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/attention_cal-tofino2.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/bf-p4c.dir
+/home/tangoic/oldz/gabber/p4_attention/build/CMakeFiles/rebuild_cache.dir

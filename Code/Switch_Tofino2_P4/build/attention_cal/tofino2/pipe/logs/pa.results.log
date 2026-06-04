@@ -1,0 +1,229 @@
++---------------------------------------------------------------------+
+|  Log file: pa.results.log                                           |
+|  Compiler version: 9.8.0                                            |
+|  Created on: Thu Sep 19 23:16:41 2024                               |
+|  Run ID: 3943d845dd38b6ce                                           |
++---------------------------------------------------------------------+
+
+Allocation state: Final Allocation
+-----------------------------------------------------------------------------
+|       PHV Group        | Containers Used |  Bits Used   | Bits Available |
+| (container bit widths) |     (% used)    |   (% used)   |                |
+-----------------------------------------------------------------------------
+|         0 (32)         |    4 (20.00%)   | 128 (20.00%) |      640       |
+|         1 (32)         |    4 (20.00%)   | 128 (20.00%) |      640       |
+|         2 (32)         |    2 (10.00%)   | 64 (10.00%)  |      640       |
+|         3 (32)         |    0 (0.00%)    |  0 (0.00%)   |      640       |
+|    Total for 32 bit    |   10 (12.50%)   | 320 (12.50%) |      2560      |
+|                        |                 |              |                |
+|         4 (8)          |   12 (60.00%)   | 90 (56.25%)  |      160       |
+|         5 (8)          |   12 (60.00%)   | 96 (60.00%)  |      160       |
+|         6 (8)          |   12 (60.00%)   | 96 (60.00%)  |      160       |
+|         7 (8)          |   12 (60.00%)   | 91 (56.88%)  |      160       |
+|    Total for 8 bit     |   48 (60.00%)   | 373 (58.28%) |      640       |
+|                        |                 |              |                |
+|         8 (16)         |   13 (65.00%)   | 166 (51.88%) |      320       |
+|         9 (16)         |    4 (20.00%)   | 36 (11.25%)  |      320       |
+|        10 (16)         |    0 (0.00%)    |  0 (0.00%)   |      320       |
+|        11 (16)         |    0 (0.00%)    |  0 (0.00%)   |      320       |
+|        12 (16)         |    0 (0.00%)    |  0 (0.00%)   |      320       |
+|        13 (16)         |    0 (0.00%)    |  0 (0.00%)   |      320       |
+|    Total for 16 bit    |   17 (14.17%)   | 202 (10.52%) |      1920      |
+|                        |                 |              |                |
+|     Overall total      |   75 (26.79%)   | 895 (17.48%) |      5120      |
+-----------------------------------------------------------------------------
+
+--------------------------------------------
+PHV Allocation
+--------------------------------------------
+
+Allocations in Group 0 32 bits
+  32-bit PHV 12m (ingress): phv12[31:24] = hdr.attention_data.data_28[7:0] (deparsed)
+  32-bit PHV 12m (ingress): phv12[23:16] = hdr.attention_data.data_29[7:0] (deparsed)
+  32-bit PHV 12m (ingress): phv12[15:8] = hdr.attention_data.data_30[7:0] (deparsed)
+  32-bit PHV 12m (ingress): phv12[7:0] = hdr.attention_data.data_31[7:0] (deparsed)
+  32-bit PHV 13m (ingress): phv13[31:24] = hdr.attention_data.data_24[7:0] (deparsed)
+  32-bit PHV 13m (ingress): phv13[23:16] = hdr.attention_data.data_25[7:0] (deparsed)
+  32-bit PHV 13m (ingress): phv13[15:8] = hdr.attention_data.data_26[7:0] (deparsed)
+  32-bit PHV 13m (ingress): phv13[7:0] = hdr.attention_data.data_27[7:0] (deparsed)
+  32-bit PHV 14m (ingress): phv14[31:24] = hdr.attention_data.data_20[7:0] (deparsed)
+  32-bit PHV 14m (ingress): phv14[23:16] = hdr.attention_data.data_21[7:0] (deparsed)
+  32-bit PHV 14m (ingress): phv14[15:8] = hdr.attention_data.data_22[7:0] (deparsed)
+  32-bit PHV 14m (ingress): phv14[7:0] = hdr.attention_data.data_23[7:0] (deparsed)
+  32-bit PHV 15m (ingress): phv15[31:24] = hdr.attention_data.data_16[7:0] (deparsed)
+  32-bit PHV 15m (ingress): phv15[23:16] = hdr.attention_data.data_17[7:0] (deparsed)
+  32-bit PHV 15m (ingress): phv15[15:8] = hdr.attention_data.data_18[7:0] (deparsed)
+  32-bit PHV 15m (ingress): phv15[7:0] = hdr.attention_data.data_19[7:0] (deparsed)
+  >> 4 in ingress and 0 in egress
+
+Allocations in Group 1 32 bits
+  32-bit PHV 32m (ingress): phv32[31:24] = hdr.attention_data.data_12[7:0] (deparsed)
+  32-bit PHV 32m (ingress): phv32[23:16] = hdr.attention_data.data_13[7:0] (deparsed)
+  32-bit PHV 32m (ingress): phv32[15:8] = hdr.attention_data.data_14[7:0] (deparsed)
+  32-bit PHV 32m (ingress): phv32[7:0] = hdr.attention_data.data_15[7:0] (deparsed)
+  32-bit PHV 33m (ingress): phv33[31:24] = hdr.attention_data.data_8[7:0] (deparsed)
+  32-bit PHV 33m (ingress): phv33[23:16] = hdr.attention_data.data_9[7:0] (deparsed)
+  32-bit PHV 33m (ingress): phv33[15:8] = hdr.attention_data.data_10[7:0] (deparsed)
+  32-bit PHV 33m (ingress): phv33[7:0] = hdr.attention_data.data_11[7:0] (deparsed)
+  32-bit PHV 34m (ingress): phv34[31:24] = hdr.attention_data.data_4[7:0] (deparsed)
+  32-bit PHV 34m (ingress): phv34[23:16] = hdr.attention_data.data_5[7:0] (deparsed)
+  32-bit PHV 34m (ingress): phv34[15:8] = hdr.attention_data.data_6[7:0] (deparsed)
+  32-bit PHV 34m (ingress): phv34[7:0] = hdr.attention_data.data_7[7:0] (deparsed)
+  32-bit PHV 35m (ingress): phv35[31:24] = hdr.attention_data.data_0[7:0] (deparsed)
+  32-bit PHV 35m (ingress): phv35[23:16] = hdr.attention_data.data_1[7:0] (deparsed)
+  32-bit PHV 35m (ingress): phv35[15:8] = hdr.attention_data.data_2[7:0] (deparsed)
+  32-bit PHV 35m (ingress): phv35[7:0] = hdr.attention_data.data_3[7:0] (deparsed)
+  >> 4 in ingress and 0 in egress
+
+Allocations in Group 2 32 bits
+  32-bit PHV 52m (ingress): phv52[31:0] = ig_md.padding[47:16]
+  32-bit PHV 53m (ingress): phv53[31:0] = ig_md.padding[79:48]
+  >> 2 in ingress and 0 in egress
+
+Allocations in Group 4 8 bits
+  8-bit PHV 80n (ingress): phv80[7:7] = hdr.recirculate_attention.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[6:6] = hdr.attention_data.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[5:5] = hdr.attention.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[4:4] = hdr.udp.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[3:3] = hdr.ipv4.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[2:2] = hdr.ethernet.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[1:1] = hdr.recirculate_gamma.$valid[0:0] (deparsed)
+  8-bit PHV 80n (ingress): phv80[0:0] = hdr.recirculate.$valid[0:0] (deparsed)
+  8-bit PHV 81n (ingress): phv81[7:0] = ig_md.gamma_ba[7:0]
+  8-bit PHV 81n (ingress): phv81[7:0] = ig_md.attention_9_pkt_res[7:0]
+  8-bit PHV 81n (ingress): phv81[7:0] = ig_md.attention_29_local_res[7:0]
+  8-bit PHV 82n (ingress): phv82[7:0] = ig_md.offset[7:0]
+  8-bit PHV 82n (ingress): phv82[7:0] = ig_md.attention_set.data_24[7:0]
+  8-bit PHV 82n (ingress): phv82[7:0] = ig_md.attention_10_pkt_res[7:0]
+  8-bit PHV 83n (ingress): phv83[7:0] = ig_md.attention_29_pkt_res[7:0]
+  8-bit PHV 84n (egress): phv84[1:1] = eg_intr_md.egress_port.$valid[0:0] (deparsed)
+  8-bit PHV 84n (egress): phv84[0:0] = eg_intr_md_for_dprsr.mirror_io_select.$valid[0:0] (deparsed)
+  8-bit PHV 85n (ingress): phv85[7:0] = ig_md.attention_6_pkt_res[7:0]
+  8-bit PHV 85n (ingress): phv85[7:0] = ig_md.attention_9_local_res[7:0]
+  8-bit PHV 85n (ingress): phv85[7:0] = ig_md.attention_18_local_res[7:0]
+  8-bit PHV 85n (ingress): phv85[7:0] = ig_md.attention_31_local_res[7:0]
+  8-bit PHV 86n (ingress): phv86[7:0] = ig_md.attention_6_local_res[7:0]
+  8-bit PHV 86n (ingress): phv86[7:0] = ig_md.attention_10_local_res[7:0]
+  8-bit PHV 86n (ingress): phv86[7:0] = ig_md.attention_23_local_res[7:0]
+  8-bit PHV 87n (ingress): phv87[7:0] = ig_md.attention_18_pkt_res[7:0]
+  8-bit PHV 88n (ingress): phv88[7:0] = ig_md.attention_23_pkt_res[7:0]
+  8-bit PHV 89n (ingress): phv89[7:0] = ig_md.attention_31_pkt_res[7:0]
+  8-bit PHV 90n (ingress): phv90[7:0] = ig_md.attention_set.data_18[7:0]
+  8-bit PHV 90n (ingress): phv90[7:0] = ig_md.attention_1_pkt_res[7:0]
+  8-bit PHV 91n (ingress): phv91[7:0] = ig_md.attention_set.data_25[7:0]
+  8-bit PHV 91n (ingress): phv91[7:0] = ig_md.attention_1_local_res[7:0]
+  >> 11 in ingress and 1 in egress
+
+Allocations in Group 5 8 bits
+  8-bit PHV 100n (ingress): phv100[7:0] = ig_md.attention_4_pkt_res[7:0]
+  8-bit PHV 100n (ingress): phv100[7:0] = ig_md.attention_11_local_res[7:0]
+  8-bit PHV 100n (ingress): phv100[7:0] = ig_md.attention_16_local_res[7:0]
+  8-bit PHV 101n (ingress): phv101[7:0] = ig_md.attention_4_local_res[7:0]
+  8-bit PHV 101n (ingress): phv101[7:0] = ig_md.attention_12_local_res[7:0]
+  8-bit PHV 101n (ingress): phv101[7:0] = ig_md.attention_17_local_res[7:0]
+  8-bit PHV 102n (ingress): phv102[7:0] = ig_md.attention_5_pkt_res[7:0]
+  8-bit PHV 102n (ingress): phv102[7:0] = ig_md.attention_13_local_res[7:0]
+  8-bit PHV 103n (ingress): phv103[7:0] = ig_md.attention_5_local_res[7:0]
+  8-bit PHV 103n (ingress): phv103[7:0] = ig_md.attention_14_local_res[7:0]
+  8-bit PHV 104n (ingress): phv104[7:0] = ig_md.attention_set.data_23[7:0]
+  8-bit PHV 104n (ingress): phv104[7:0] = ig_md.attention_7_pkt_res[7:0]
+  8-bit PHV 105n (ingress): phv105[7:0] = ig_md.attention_set.data_26[7:0]
+  8-bit PHV 105n (ingress): phv105[7:0] = ig_md.attention_7_local_res[7:0]
+  8-bit PHV 106n (ingress): phv106[7:0] = ig_md.attention_set.data_29[7:0]
+  8-bit PHV 106n (ingress): phv106[7:0] = ig_md.attention_11_pkt_res[7:0]
+  8-bit PHV 107n (ingress): phv107[7:0] = ig_md.attention_set.data_30[7:0]
+  8-bit PHV 107n (ingress): phv107[7:0] = ig_md.attention_12_pkt_res[7:0]
+  8-bit PHV 108n (ingress): phv108[7:0] = ig_md.attention_set.data_31[7:0]
+  8-bit PHV 108n (ingress): phv108[7:0] = ig_md.attention_13_pkt_res[7:0]
+  8-bit PHV 109n (ingress): phv109[7:0] = ig_md.attention_set.data_27[7:0]
+  8-bit PHV 109n (ingress): phv109[7:0] = ig_md.attention_14_pkt_res[7:0]
+  8-bit PHV 110n (ingress): phv110[7:0] = ig_md.attention_16_pkt_res[7:0]
+  8-bit PHV 111n (ingress): phv111[7:0] = ig_md.attention_17_pkt_res[7:0]
+  >> 12 in ingress and 0 in egress
+
+Allocations in Group 6 8 bits
+  8-bit PHV 120n (ingress): phv120[7:0] = ig_md.attention_0_pkt_res[7:0]
+  8-bit PHV 120n (ingress): phv120[7:0] = ig_md.attention_8_local_res[7:0]
+  8-bit PHV 120n (ingress): phv120[7:0] = ig_md.attention_19_local_res[7:0]
+  8-bit PHV 120n (ingress): phv120[7:0] = ig_md.attention_27_local_res[7:0]
+  8-bit PHV 121n (ingress): phv121[7:0] = ig_md.attention_0_local_res[7:0]
+  8-bit PHV 121n (ingress): phv121[7:0] = ig_md.attention_15_local_res[7:0]
+  8-bit PHV 121n (ingress): phv121[7:0] = ig_md.attention_20_local_res[7:0]
+  8-bit PHV 121n (ingress): phv121[7:0] = ig_md.attention_28_local_res[7:0]
+  8-bit PHV 122n (ingress): phv122[7:0] = ig_md.attention_2_pkt_res[7:0]
+  8-bit PHV 122n (ingress): phv122[7:0] = ig_md.attention_21_local_res[7:0]
+  8-bit PHV 123n (ingress): phv123[7:0] = ig_md.attention_2_local_res[7:0]
+  8-bit PHV 123n (ingress): phv123[7:0] = ig_md.attention_22_local_res[7:0]
+  8-bit PHV 124n (ingress): phv124[7:0] = ig_md.attention_set.data_28[7:0]
+  8-bit PHV 124n (ingress): phv124[7:0] = ig_md.attention_8_pkt_res[7:0]
+  8-bit PHV 125n (ingress): phv125[7:0] = ig_md.attention_15_pkt_res[7:0]
+  8-bit PHV 126n (ingress): phv126[7:0] = ig_md.attention_19_pkt_res[7:0]
+  8-bit PHV 127n (ingress): phv127[7:0] = ig_md.attention_20_pkt_res[7:0]
+  8-bit PHV 128n (ingress): phv128[7:0] = ig_md.attention_21_pkt_res[7:0]
+  8-bit PHV 129n (ingress): phv129[7:0] = ig_md.attention_22_pkt_res[7:0]
+  8-bit PHV 130n (ingress): phv130[7:0] = ig_md.attention_27_pkt_res[7:0]
+  8-bit PHV 131n (ingress): phv131[7:0] = ig_md.attention_28_pkt_res[7:0]
+  >> 12 in ingress and 0 in egress
+
+Allocations in Group 7 8 bits
+  8-bit PHV 140n (ingress): phv140[7:0] = ig_md.attention_25_pkt_res[7:0]
+  8-bit PHV 141n (ingress): phv141[7:0] = ig_md.attention_25_local_res[7:0]
+  8-bit PHV 142n (ingress): phv142[4:4] = Ingress.attention_23_reg$ena[0:0]
+  8-bit PHV 142n (ingress): phv142[3:3] = Ingress.attention_15_reg$ena[0:0]
+  8-bit PHV 142n (ingress): phv142[2:2] = Ingress.attention_9_reg$ena[0:0]
+  8-bit PHV 142n (ingress): phv142[1:1] = Ingress.attention_18_reg$ena[0:0]
+  8-bit PHV 142n (ingress): phv142[0:0] = ig_md.local_gamma_big_flag[0:0]
+  8-bit PHV 143n (ingress): phv143[5:0] = ig_md.gamma_ba_cal_res[5:0]
+  8-bit PHV 144n (ingress): phv144[7:0] = ig_md.attention_set.data_9[7:0]
+  8-bit PHV 145n (ingress): phv145[7:0] = ig_md.attention_set.data_15[7:0]
+  8-bit PHV 146n (ingress): phv146[7:0] = ig_md.attention_set.data_0[7:0]
+  8-bit PHV 146n (ingress): phv146[7:0] = ig_md.attention_set.data_16[7:0]
+  8-bit PHV 147n (ingress): phv147[7:0] = ig_md.attention_set.data_1[7:0]
+  8-bit PHV 147n (ingress): phv147[7:0] = ig_md.attention_set.data_17[7:0]
+  8-bit PHV 148n (ingress): phv148[7:0] = ig_md.attention_set.data_2[7:0]
+  8-bit PHV 148n (ingress): phv148[7:0] = ig_md.attention_set.data_19[7:0]
+  8-bit PHV 149n (ingress): phv149[7:0] = ig_md.attention_set.data_3[7:0]
+  8-bit PHV 149n (ingress): phv149[7:0] = ig_md.attention_set.data_20[7:0]
+  8-bit PHV 150n (ingress): phv150[7:0] = ig_md.attention_set.data_4[7:0]
+  8-bit PHV 150n (ingress): phv150[7:0] = ig_md.attention_set.data_21[7:0]
+  8-bit PHV 151n (ingress): phv151[7:0] = ig_md.attention_set.data_5[7:0]
+  8-bit PHV 151n (ingress): phv151[7:0] = ig_md.attention_set.data_22[7:0]
+  >> 12 in ingress and 0 in egress
+
+Allocations in Group 8 16 bits
+  16-bit PHV 160n (ingress): phv160[15:8] = ig_md.attention_26_pkt_res[7:0]
+  16-bit PHV 160n (ingress): phv160[7:0] = ig_md.gamma_max[7:0]
+  16-bit PHV 160n (ingress): phv160[7:0] = ig_md.attention_3_pkt_res[7:0]
+  16-bit PHV 161n (ingress): phv161[7:0] = ig_md.gamma_log_res[7:0]
+  16-bit PHV 161n (ingress): phv161[7:0] = ig_md.attention_3_local_res[7:0]
+  16-bit PHV 161n (ingress): phv161[7:0] = ig_md.attention_30_local_res[7:0]
+  16-bit PHV 162n (ingress): phv162[15:8] = ig_md.attention_26_local_res[7:0]
+  16-bit PHV 163n (ingress): phv163[15:8] = ig_md.attention_24_pkt_res[7:0]
+  16-bit PHV 163n (ingress): phv163[7:0] = ig_md.attention_30_pkt_res[7:0]
+  16-bit PHV 164n (ingress): phv164[15:8] = ig_md.attention_24_local_res[7:0]
+  16-bit PHV 165n (ingress): phv165[15:8] = ig_md.attention_set.data_10[7:0]
+  16-bit PHV 165n (ingress): phv165[7:0] = ig_md.attention_set.data_6[7:0]
+  16-bit PHV 166n (ingress): phv166[15:8] = ig_md.attention_set.data_13[7:0]
+  16-bit PHV 166n (ingress): phv166[7:0] = ig_md.attention_set.data_11[7:0]
+  16-bit PHV 167n (ingress): phv167[15:8] = ig_md.attention_set.data_14[7:0]
+  16-bit PHV 167n (ingress): phv167[7:0] = ig_md.attention_set.data_12[7:0]
+  16-bit PHV 168n (ingress): phv168[15:8] = ig_md.attention_set.data_7[7:0]
+  16-bit PHV 168n (ingress): phv168[7:0] = ig_md.attention_set.data_8[7:0]
+  16-bit PHV 169n (ingress): phv169[9:0] = Ingress.attention_18_reg$index[9:0]
+  16-bit PHV 170n (ingress): phv170[9:0] = Ingress.attention_9_reg$index[9:0]
+  16-bit PHV 171n (ingress): phv171[9:0] = Ingress.attention_15_reg$index[9:0]
+  16-bit PHV 172m (ingress): phv172[15:8] = hdr.attention.seq_id[7:0] (deparsed)
+  16-bit PHV 172m (ingress): phv172[7:0] = hdr.attention.gamma[7:0] (deparsed)
+  >> 13 in ingress and 0 in egress
+
+Allocations in Group 9 16 bits
+  16-bit PHV 180n (ingress): phv180[9:0] = Ingress.attention_23_reg$index[9:0]
+  16-bit PHV 192m (egress): phv192[8:0] = eg_intr_md.egress_port[8:0] (deparsed)
+  16-bit PHV 193m (egress): phv193[0:0] = eg_intr_md_for_dprsr.mirror_io_select[0:0] (deparsed)
+  16-bit PHV 194m (ingress): phv194[15:0] = ig_md.padding[15:0]
+  >> 2 in ingress and 2 in egress
+
+
+Final POV layout (ingress):
+
+Final POV layout (egress):

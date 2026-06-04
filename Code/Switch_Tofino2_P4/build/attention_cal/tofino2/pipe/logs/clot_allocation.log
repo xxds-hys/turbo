@@ -1,0 +1,672 @@
+
+CLOT Allocation (ingress):
++------+------------------------------------------------+---------------+-----------+
+| CLOT |                     Fields                     |     Bits      | Property  |
++------+------------------------------------------------+---------------+-----------+
+|  0   |           state ingress::parse_ipv4            |   20 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.ipv4.version            |   4 [0..3]    |           |
+|      |             ingress::hdr.ipv4.ihl              |   4 [4..7]    |           |
+|      |           ingress::hdr.ipv4.diffserv           |   8 [8..15]   |           |
+|      |          ingress::hdr.ipv4.total_len           |  16 [16..31]  |           |
+|      |        ingress::hdr.ipv4.identification        |  16 [32..47]  |           |
+|      |            ingress::hdr.ipv4.flags             |  3 [48..50]   |           |
+|      |         ingress::hdr.ipv4.frag_offset          |  13 [51..63]  |           |
+|      |             ingress::hdr.ipv4.ttl              |  8 [64..71]   |           |
+|      |           ingress::hdr.ipv4.protocol           |  8 [72..79]   |           |
+|      |         ingress::hdr.ipv4.hdr_checksum         |  16 [80..95]  |           |
+|      |           ingress::hdr.ipv4.src_addr           | 32 [96..127]  |           |
+|      |           ingress::hdr.ipv4.dst_addr           | 32 [128..159] |           |
++------+------------------------------------------------+---------------+-----------+
+|  1   |   state ingress::parse_recirculate_attention   |   18 bytes    |           |
+|      |                                                |               |           |
+|      |      ingress::hdr.recirculate_attention.m      |   8 [0..7]    |           |
+|      |      ingress::hdr.recirculate_attention.n      |   8 [8..15]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_0  |  8 [16..23]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_1  |  8 [24..31]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_2  |  8 [32..39]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_3  |  8 [40..47]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_4  |  8 [48..55]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_5  |  8 [56..63]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_6  |  8 [64..71]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_7  |  8 [72..79]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_8  |  8 [80..87]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_9  |  8 [88..95]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_10 |  8 [96..103]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_11 | 8 [104..111]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_12 | 8 [112..119]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_13 | 8 [120..127]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_14 | 8 [128..135]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_15 | 8 [136..143]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  2   |         state ingress::parse_ethernet          |   14 bytes    |           |
+|      |                                                |               |           |
+|      |         ingress::hdr.ethernet.dst_addr         |  48 [0..47]   |           |
+|      |         ingress::hdr.ethernet.src_addr         |  48 [48..95]  |           |
+|      |        ingress::hdr.ethernet.ether_type        | 16 [96..111]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  3   |            state ingress::parse_udp            |    8 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.udp.src_port            |  16 [0..15]   |           |
+|      |           ingress::hdr.udp.dst_port            |  16 [16..31]  |           |
+|      |              ingress::hdr.udp.len              |  16 [32..47]  |           |
+|      |           ingress::hdr.udp.checksum            |  16 [48..63]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  4   |     state ingress::parse_recirculate_gamma     |    3 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_diff    |   8 [0..7]    |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_local   |   8 [8..15]   |           |
+|      |    ingress::hdr.recirculate_gamma.gamma_new    |  8 [16..23]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  5   |         state ingress::parse_attention         |    4 bytes    |           |
+|      |                                                |               |           |
+|      |        ingress::hdr.attention.layer_id         |   8 [0..7]    |           |
+|      |         ingress::hdr.attention.head_id         |   8 [8..15]   |           |
+|      |         ingress::hdr.attention.seq_id          |  8 [16..23]   |  ( phv )  |
+|      |          ingress::hdr.attention.gamma          |  8 [24..31]   |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|  6   |        state ingress::parse_recirculate        |    2 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate.recirculate_flag    |   8 [0..7]    |           |
+|      |    ingress::hdr.recirculate.recirculate_tag    |   8 [8..15]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  7   |         state ingress::parse_attention         |   32 bytes    |           |
+|      |                                                |               |           |
+|      |       ingress::hdr.attention_data.data_0       |   8 [0..7]    |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_1       |   8 [8..15]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_2       |  8 [16..23]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_3       |  8 [24..31]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_4       |  8 [32..39]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_5       |  8 [40..47]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_6       |  8 [48..55]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_7       |  8 [56..63]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_8       |  8 [64..71]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_9       |  8 [72..79]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_10       |  8 [80..87]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_11       |  8 [88..95]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_12       |  8 [96..103]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_13       | 8 [104..111]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_14       | 8 [112..119]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_15       | 8 [120..127]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_16       | 8 [128..135]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_17       | 8 [136..143]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_18       | 8 [144..151]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_19       | 8 [152..159]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_20       | 8 [160..167]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_21       | 8 [168..175]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_22       | 8 [176..183]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_23       | 8 [184..191]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_24       | 8 [192..199]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_25       | 8 [200..207]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_26       | 8 [208..215]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_27       | 8 [216..223]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_28       | 8 [224..231]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_29       | 8 [232..239]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_30       | 8 [240..247]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_31       | 8 [248..255]  |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|      |                   Total Bits                   |      808      |           |
++------+------------------------------------------------+---------------+-----------+
+
+  Packets will use up to 7 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    ingress::parse_attention (2 CLOTs)
+    ingress::parse_udp (1 CLOTs)
+    ingress::parse_ipv4 (1 CLOTs)
+    ingress::parse_ethernet (1 CLOTs)
+    ingress::parse_recirculate_gamma (1 CLOTs)
+    ingress::parse_recirculate_attention (1 CLOTs)
+    ingress::parse_recirculate (1 CLOTs)
+    ingress::TofinoIngressParser_parse_port_metadata (0 CLOTs)
+    ingress::start (0 CLOTs)
+    ingress::$entry_point (0 CLOTs)
+
+CLOT Allocation (egress):
++------+------------+------+----------+
+| CLOT |   Fields   | Bits | Property |
++------+------------+------+----------+
+|      | Total Bits |  0   |          |
++------+------------+------+----------+
+
+  Packets will use up to 0 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    $entry_point.start (0 CLOTs)
+
+All fields:
++------------------------------------------------+------+-------+-----------+
+|                     Field                      | Bits | CLOTs | Property  |
++------------------------------------------------+------+-------+-----------+
+|   ingress::hdr.recirculate.recirculate_flag    |  8   |   6   |  unused   |
+|    ingress::hdr.recirculate.recirculate_tag    |  8   |   6   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_diff    |  8   |   4   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_local   |  8   |   4   |  unused   |
+|    ingress::hdr.recirculate_gamma.gamma_new    |  8   |   4   |  unused   |
+|         ingress::hdr.ethernet.dst_addr         |  48  |   2   |  unused   |
+|         ingress::hdr.ethernet.src_addr         |  48  |   2   |  unused   |
+|        ingress::hdr.ethernet.ether_type        |  16  |   2   |  unused   |
+|           ingress::hdr.ipv4.version            |  4   |   0   |  unused   |
+|             ingress::hdr.ipv4.ihl              |  4   |   0   |  unused   |
+|           ingress::hdr.ipv4.diffserv           |  8   |   0   |  unused   |
+|          ingress::hdr.ipv4.total_len           |  16  |   0   |  unused   |
+|        ingress::hdr.ipv4.identification        |  16  |   0   |  unused   |
+|            ingress::hdr.ipv4.flags             |  3   |   0   |  unused   |
+|         ingress::hdr.ipv4.frag_offset          |  13  |   0   |  unused   |
+|             ingress::hdr.ipv4.ttl              |  8   |   0   |  unused   |
+|           ingress::hdr.ipv4.protocol           |  8   |   0   |  unused   |
+|         ingress::hdr.ipv4.hdr_checksum         |  16  |   0   |  unused   |
+|           ingress::hdr.ipv4.src_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.ipv4.dst_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.udp.src_port            |  16  |   3   |  unused   |
+|           ingress::hdr.udp.dst_port            |  16  |   3   |  unused   |
+|              ingress::hdr.udp.len              |  16  |   3   |  unused   |
+|           ingress::hdr.udp.checksum            |  16  |   3   |  unused   |
+|        ingress::hdr.attention.layer_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.head_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.seq_id          |  8   |   5   | read-only |
+|          ingress::hdr.attention.gamma          |  8   |   5   | read-only |
+|       ingress::hdr.attention_data.data_0       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_1       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_2       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_3       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_4       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_5       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_6       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_7       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_8       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_9       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_10       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_11       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_12       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_13       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_14       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_15       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_16       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_17       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_18       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_19       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_20       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_21       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_22       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_23       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_24       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_25       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_26       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_27       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_28       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_29       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_30       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_31       |  8   |   7   | read-only |
+|      ingress::hdr.recirculate_attention.m      |  8   |   1   |  unused   |
+|      ingress::hdr.recirculate_attention.n      |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_0  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_1  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_2  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_3  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_4  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_5  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_6  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_7  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_8  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_9  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_10 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_11 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_12 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_13 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_14 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_15 |  8   |   1   |  unused   |
+|         egress::eg_intr_md.egress_port         |  9   |       | read-only |
++------------------------------------------------+------+-------+-----------+
+|                 Unused fields                  |  44  |       |           |
+|                  Unused bits                   | 536  |       |           |
+|          Unused CLOT-allocated fields          |  44  |       |           |
+|           Unused CLOT-allocated bits           | 536  |       |           |
++------------------------------------------------+------+-------+-----------+
+
+
+CLOT Allocation (ingress):
++------+------------------------------------------------+---------------+-----------+
+| CLOT |                     Fields                     |     Bits      | Property  |
++------+------------------------------------------------+---------------+-----------+
+|  0   |           state ingress::parse_ipv4            |   20 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.ipv4.version            |   4 [0..3]    |           |
+|      |             ingress::hdr.ipv4.ihl              |   4 [4..7]    |           |
+|      |           ingress::hdr.ipv4.diffserv           |   8 [8..15]   |           |
+|      |          ingress::hdr.ipv4.total_len           |  16 [16..31]  |           |
+|      |        ingress::hdr.ipv4.identification        |  16 [32..47]  |           |
+|      |            ingress::hdr.ipv4.flags             |  3 [48..50]   |           |
+|      |         ingress::hdr.ipv4.frag_offset          |  13 [51..63]  |           |
+|      |             ingress::hdr.ipv4.ttl              |  8 [64..71]   |           |
+|      |           ingress::hdr.ipv4.protocol           |  8 [72..79]   |           |
+|      |         ingress::hdr.ipv4.hdr_checksum         |  16 [80..95]  |           |
+|      |           ingress::hdr.ipv4.src_addr           | 32 [96..127]  |           |
+|      |           ingress::hdr.ipv4.dst_addr           | 32 [128..159] |           |
++------+------------------------------------------------+---------------+-----------+
+|  1   |   state ingress::parse_recirculate_attention   |   18 bytes    |           |
+|      |                                                |               |           |
+|      |      ingress::hdr.recirculate_attention.m      |   8 [0..7]    |           |
+|      |      ingress::hdr.recirculate_attention.n      |   8 [8..15]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_0  |  8 [16..23]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_1  |  8 [24..31]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_2  |  8 [32..39]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_3  |  8 [40..47]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_4  |  8 [48..55]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_5  |  8 [56..63]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_6  |  8 [64..71]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_7  |  8 [72..79]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_8  |  8 [80..87]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_9  |  8 [88..95]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_10 |  8 [96..103]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_11 | 8 [104..111]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_12 | 8 [112..119]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_13 | 8 [120..127]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_14 | 8 [128..135]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_15 | 8 [136..143]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  2   |         state ingress::parse_ethernet          |   14 bytes    |           |
+|      |                                                |               |           |
+|      |         ingress::hdr.ethernet.dst_addr         |  48 [0..47]   |           |
+|      |         ingress::hdr.ethernet.src_addr         |  48 [48..95]  |           |
+|      |        ingress::hdr.ethernet.ether_type        | 16 [96..111]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  3   |            state ingress::parse_udp            |    8 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.udp.src_port            |  16 [0..15]   |           |
+|      |           ingress::hdr.udp.dst_port            |  16 [16..31]  |           |
+|      |              ingress::hdr.udp.len              |  16 [32..47]  |           |
+|      |           ingress::hdr.udp.checksum            |  16 [48..63]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  4   |     state ingress::parse_recirculate_gamma     |    3 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_diff    |   8 [0..7]    |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_local   |   8 [8..15]   |           |
+|      |    ingress::hdr.recirculate_gamma.gamma_new    |  8 [16..23]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  5   |         state ingress::parse_attention         |    4 bytes    |           |
+|      |                                                |               |           |
+|      |        ingress::hdr.attention.layer_id         |   8 [0..7]    |           |
+|      |         ingress::hdr.attention.head_id         |   8 [8..15]   |           |
+|      |         ingress::hdr.attention.seq_id          |  8 [16..23]   |  ( phv )  |
+|      |          ingress::hdr.attention.gamma          |  8 [24..31]   |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|  6   |        state ingress::parse_recirculate        |    2 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate.recirculate_flag    |   8 [0..7]    |           |
+|      |    ingress::hdr.recirculate.recirculate_tag    |   8 [8..15]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  7   |         state ingress::parse_attention         |   32 bytes    |           |
+|      |                                                |               |           |
+|      |       ingress::hdr.attention_data.data_0       |   8 [0..7]    |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_1       |   8 [8..15]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_2       |  8 [16..23]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_3       |  8 [24..31]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_4       |  8 [32..39]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_5       |  8 [40..47]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_6       |  8 [48..55]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_7       |  8 [56..63]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_8       |  8 [64..71]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_9       |  8 [72..79]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_10       |  8 [80..87]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_11       |  8 [88..95]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_12       |  8 [96..103]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_13       | 8 [104..111]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_14       | 8 [112..119]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_15       | 8 [120..127]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_16       | 8 [128..135]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_17       | 8 [136..143]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_18       | 8 [144..151]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_19       | 8 [152..159]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_20       | 8 [160..167]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_21       | 8 [168..175]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_22       | 8 [176..183]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_23       | 8 [184..191]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_24       | 8 [192..199]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_25       | 8 [200..207]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_26       | 8 [208..215]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_27       | 8 [216..223]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_28       | 8 [224..231]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_29       | 8 [232..239]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_30       | 8 [240..247]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_31       | 8 [248..255]  |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|      |                   Total Bits                   |      808      |           |
++------+------------------------------------------------+---------------+-----------+
+
+  Packets will use up to 7 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    ingress::parse_attention (2 CLOTs)
+    ingress::parse_udp (1 CLOTs)
+    ingress::parse_ipv4 (1 CLOTs)
+    ingress::parse_ethernet (1 CLOTs)
+    ingress::parse_recirculate_gamma (1 CLOTs)
+    ingress::parse_recirculate_attention (1 CLOTs)
+    ingress::parse_recirculate (1 CLOTs)
+    ingress::TofinoIngressParser_parse_port_metadata (0 CLOTs)
+    ingress::start (0 CLOTs)
+    ingress::$entry_point (0 CLOTs)
+
+CLOT Allocation (egress):
++------+------------+------+----------+
+| CLOT |   Fields   | Bits | Property |
++------+------------+------+----------+
+|      | Total Bits |  0   |          |
++------+------------+------+----------+
+
+  Packets will use up to 0 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    $entry_point.start (0 CLOTs)
+
+All fields:
++------------------------------------------------+------+-------+-----------+
+|                     Field                      | Bits | CLOTs | Property  |
++------------------------------------------------+------+-------+-----------+
+|   ingress::hdr.recirculate.recirculate_flag    |  8   |   6   |  unused   |
+|    ingress::hdr.recirculate.recirculate_tag    |  8   |   6   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_diff    |  8   |   4   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_local   |  8   |   4   |  unused   |
+|    ingress::hdr.recirculate_gamma.gamma_new    |  8   |   4   |  unused   |
+|         ingress::hdr.ethernet.dst_addr         |  48  |   2   |  unused   |
+|         ingress::hdr.ethernet.src_addr         |  48  |   2   |  unused   |
+|        ingress::hdr.ethernet.ether_type        |  16  |   2   |  unused   |
+|           ingress::hdr.ipv4.version            |  4   |   0   |  unused   |
+|             ingress::hdr.ipv4.ihl              |  4   |   0   |  unused   |
+|           ingress::hdr.ipv4.diffserv           |  8   |   0   |  unused   |
+|          ingress::hdr.ipv4.total_len           |  16  |   0   |  unused   |
+|        ingress::hdr.ipv4.identification        |  16  |   0   |  unused   |
+|            ingress::hdr.ipv4.flags             |  3   |   0   |  unused   |
+|         ingress::hdr.ipv4.frag_offset          |  13  |   0   |  unused   |
+|             ingress::hdr.ipv4.ttl              |  8   |   0   |  unused   |
+|           ingress::hdr.ipv4.protocol           |  8   |   0   |  unused   |
+|         ingress::hdr.ipv4.hdr_checksum         |  16  |   0   |  unused   |
+|           ingress::hdr.ipv4.src_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.ipv4.dst_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.udp.src_port            |  16  |   3   |  unused   |
+|           ingress::hdr.udp.dst_port            |  16  |   3   |  unused   |
+|              ingress::hdr.udp.len              |  16  |   3   |  unused   |
+|           ingress::hdr.udp.checksum            |  16  |   3   |  unused   |
+|        ingress::hdr.attention.layer_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.head_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.seq_id          |  8   |   5   | read-only |
+|          ingress::hdr.attention.gamma          |  8   |   5   | read-only |
+|       ingress::hdr.attention_data.data_0       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_1       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_2       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_3       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_4       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_5       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_6       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_7       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_8       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_9       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_10       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_11       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_12       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_13       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_14       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_15       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_16       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_17       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_18       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_19       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_20       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_21       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_22       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_23       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_24       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_25       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_26       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_27       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_28       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_29       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_30       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_31       |  8   |   7   | read-only |
+|      ingress::hdr.recirculate_attention.m      |  8   |   1   |  unused   |
+|      ingress::hdr.recirculate_attention.n      |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_0  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_1  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_2  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_3  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_4  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_5  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_6  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_7  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_8  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_9  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_10 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_11 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_12 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_13 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_14 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_15 |  8   |   1   |  unused   |
+|         egress::eg_intr_md.egress_port         |  9   |       | read-only |
++------------------------------------------------+------+-------+-----------+
+|                 Unused fields                  |  44  |       |           |
+|                  Unused bits                   | 536  |       |           |
+|          Unused CLOT-allocated fields          |  44  |       |           |
+|           Unused CLOT-allocated bits           | 536  |       |           |
++------------------------------------------------+------+-------+-----------+
+
+
+CLOT Allocation (ingress):
++------+------------------------------------------------+---------------+-----------+
+| CLOT |                     Fields                     |     Bits      | Property  |
++------+------------------------------------------------+---------------+-----------+
+|  0   |           state ingress::parse_ipv4            |   20 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.ipv4.version            |   4 [0..3]    |           |
+|      |             ingress::hdr.ipv4.ihl              |   4 [4..7]    |           |
+|      |           ingress::hdr.ipv4.diffserv           |   8 [8..15]   |           |
+|      |          ingress::hdr.ipv4.total_len           |  16 [16..31]  |           |
+|      |        ingress::hdr.ipv4.identification        |  16 [32..47]  |           |
+|      |            ingress::hdr.ipv4.flags             |  3 [48..50]   |           |
+|      |         ingress::hdr.ipv4.frag_offset          |  13 [51..63]  |           |
+|      |             ingress::hdr.ipv4.ttl              |  8 [64..71]   |           |
+|      |           ingress::hdr.ipv4.protocol           |  8 [72..79]   |           |
+|      |         ingress::hdr.ipv4.hdr_checksum         |  16 [80..95]  |           |
+|      |           ingress::hdr.ipv4.src_addr           | 32 [96..127]  |           |
+|      |           ingress::hdr.ipv4.dst_addr           | 32 [128..159] |           |
++------+------------------------------------------------+---------------+-----------+
+|  1   |   state ingress::parse_recirculate_attention   |   18 bytes    |           |
+|      |                                                |               |           |
+|      |      ingress::hdr.recirculate_attention.m      |   8 [0..7]    |           |
+|      |      ingress::hdr.recirculate_attention.n      |   8 [8..15]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_0  |  8 [16..23]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_1  |  8 [24..31]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_2  |  8 [32..39]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_3  |  8 [40..47]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_4  |  8 [48..55]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_5  |  8 [56..63]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_6  |  8 [64..71]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_7  |  8 [72..79]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_8  |  8 [80..87]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_9  |  8 [88..95]   |           |
+|      | ingress::hdr.recirculate_attention.data_rec_10 |  8 [96..103]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_11 | 8 [104..111]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_12 | 8 [112..119]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_13 | 8 [120..127]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_14 | 8 [128..135]  |           |
+|      | ingress::hdr.recirculate_attention.data_rec_15 | 8 [136..143]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  2   |         state ingress::parse_ethernet          |   14 bytes    |           |
+|      |                                                |               |           |
+|      |         ingress::hdr.ethernet.dst_addr         |  48 [0..47]   |           |
+|      |         ingress::hdr.ethernet.src_addr         |  48 [48..95]  |           |
+|      |        ingress::hdr.ethernet.ether_type        | 16 [96..111]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  3   |            state ingress::parse_udp            |    8 bytes    |           |
+|      |                                                |               |           |
+|      |           ingress::hdr.udp.src_port            |  16 [0..15]   |           |
+|      |           ingress::hdr.udp.dst_port            |  16 [16..31]  |           |
+|      |              ingress::hdr.udp.len              |  16 [32..47]  |           |
+|      |           ingress::hdr.udp.checksum            |  16 [48..63]  |           |
++------+------------------------------------------------+---------------+-----------+
+|  4   |     state ingress::parse_recirculate_gamma     |    3 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_diff    |   8 [0..7]    |           |
+|      |   ingress::hdr.recirculate_gamma.gamma_local   |   8 [8..15]   |           |
+|      |    ingress::hdr.recirculate_gamma.gamma_new    |  8 [16..23]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  5   |         state ingress::parse_attention         |    4 bytes    |           |
+|      |                                                |               |           |
+|      |        ingress::hdr.attention.layer_id         |   8 [0..7]    |           |
+|      |         ingress::hdr.attention.head_id         |   8 [8..15]   |           |
+|      |         ingress::hdr.attention.seq_id          |  8 [16..23]   |  ( phv )  |
+|      |          ingress::hdr.attention.gamma          |  8 [24..31]   |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|  6   |        state ingress::parse_recirculate        |    2 bytes    |           |
+|      |                                                |               |           |
+|      |   ingress::hdr.recirculate.recirculate_flag    |   8 [0..7]    |           |
+|      |    ingress::hdr.recirculate.recirculate_tag    |   8 [8..15]   |           |
++------+------------------------------------------------+---------------+-----------+
+|  7   |         state ingress::parse_attention         |   32 bytes    |           |
+|      |                                                |               |           |
+|      |       ingress::hdr.attention_data.data_0       |   8 [0..7]    |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_1       |   8 [8..15]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_2       |  8 [16..23]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_3       |  8 [24..31]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_4       |  8 [32..39]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_5       |  8 [40..47]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_6       |  8 [48..55]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_7       |  8 [56..63]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_8       |  8 [64..71]   |  ( phv )  |
+|      |       ingress::hdr.attention_data.data_9       |  8 [72..79]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_10       |  8 [80..87]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_11       |  8 [88..95]   |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_12       |  8 [96..103]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_13       | 8 [104..111]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_14       | 8 [112..119]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_15       | 8 [120..127]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_16       | 8 [128..135]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_17       | 8 [136..143]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_18       | 8 [144..151]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_19       | 8 [152..159]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_20       | 8 [160..167]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_21       | 8 [168..175]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_22       | 8 [176..183]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_23       | 8 [184..191]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_24       | 8 [192..199]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_25       | 8 [200..207]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_26       | 8 [208..215]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_27       | 8 [216..223]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_28       | 8 [224..231]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_29       | 8 [232..239]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_30       | 8 [240..247]  |  ( phv )  |
+|      |      ingress::hdr.attention_data.data_31       | 8 [248..255]  |  ( phv )  |
++------+------------------------------------------------+---------------+-----------+
+|      |                   Total Bits                   |      808      |           |
++------+------------------------------------------------+---------------+-----------+
+
+  Packets will use up to 7 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    ingress::parse_attention (2 CLOTs)
+    ingress::parse_udp (1 CLOTs)
+    ingress::parse_ipv4 (1 CLOTs)
+    ingress::parse_ethernet (1 CLOTs)
+    ingress::parse_recirculate_gamma (1 CLOTs)
+    ingress::parse_recirculate_attention (1 CLOTs)
+    ingress::parse_recirculate (1 CLOTs)
+    ingress::TofinoIngressParser_parse_port_metadata (0 CLOTs)
+    ingress::start (0 CLOTs)
+    ingress::$entry_point (0 CLOTs)
+
+CLOT Allocation (egress):
++------+------------+------+----------+
+| CLOT |   Fields   | Bits | Property |
++------+------------+------+----------+
+|      | Total Bits |  0   |          |
++------+------------+------+----------+
+
+  Packets will use up to 0 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    $entry_point.start (0 CLOTs)
+
+All fields:
++------------------------------------------------+------+-------+-----------+
+|                     Field                      | Bits | CLOTs | Property  |
++------------------------------------------------+------+-------+-----------+
+|   ingress::hdr.recirculate.recirculate_flag    |  8   |   6   |  unused   |
+|    ingress::hdr.recirculate.recirculate_tag    |  8   |   6   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_diff    |  8   |   4   |  unused   |
+|   ingress::hdr.recirculate_gamma.gamma_local   |  8   |   4   |  unused   |
+|    ingress::hdr.recirculate_gamma.gamma_new    |  8   |   4   |  unused   |
+|         ingress::hdr.ethernet.dst_addr         |  48  |   2   |  unused   |
+|         ingress::hdr.ethernet.src_addr         |  48  |   2   |  unused   |
+|        ingress::hdr.ethernet.ether_type        |  16  |   2   |  unused   |
+|           ingress::hdr.ipv4.version            |  4   |   0   |  unused   |
+|             ingress::hdr.ipv4.ihl              |  4   |   0   |  unused   |
+|           ingress::hdr.ipv4.diffserv           |  8   |   0   |  unused   |
+|          ingress::hdr.ipv4.total_len           |  16  |   0   |  unused   |
+|        ingress::hdr.ipv4.identification        |  16  |   0   |  unused   |
+|            ingress::hdr.ipv4.flags             |  3   |   0   |  unused   |
+|         ingress::hdr.ipv4.frag_offset          |  13  |   0   |  unused   |
+|             ingress::hdr.ipv4.ttl              |  8   |   0   |  unused   |
+|           ingress::hdr.ipv4.protocol           |  8   |   0   |  unused   |
+|         ingress::hdr.ipv4.hdr_checksum         |  16  |   0   |  unused   |
+|           ingress::hdr.ipv4.src_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.ipv4.dst_addr           |  32  |   0   |  unused   |
+|           ingress::hdr.udp.src_port            |  16  |   3   |  unused   |
+|           ingress::hdr.udp.dst_port            |  16  |   3   |  unused   |
+|              ingress::hdr.udp.len              |  16  |   3   |  unused   |
+|           ingress::hdr.udp.checksum            |  16  |   3   |  unused   |
+|        ingress::hdr.attention.layer_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.head_id         |  8   |   5   |  unused   |
+|         ingress::hdr.attention.seq_id          |  8   |   5   | read-only |
+|          ingress::hdr.attention.gamma          |  8   |   5   | read-only |
+|       ingress::hdr.attention_data.data_0       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_1       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_2       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_3       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_4       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_5       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_6       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_7       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_8       |  8   |   7   | read-only |
+|       ingress::hdr.attention_data.data_9       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_10       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_11       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_12       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_13       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_14       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_15       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_16       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_17       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_18       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_19       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_20       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_21       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_22       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_23       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_24       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_25       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_26       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_27       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_28       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_29       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_30       |  8   |   7   | read-only |
+|      ingress::hdr.attention_data.data_31       |  8   |   7   | read-only |
+|      ingress::hdr.recirculate_attention.m      |  8   |   1   |  unused   |
+|      ingress::hdr.recirculate_attention.n      |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_0  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_1  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_2  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_3  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_4  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_5  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_6  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_7  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_8  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_9  |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_10 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_11 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_12 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_13 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_14 |  8   |   1   |  unused   |
+| ingress::hdr.recirculate_attention.data_rec_15 |  8   |   1   |  unused   |
+|         egress::eg_intr_md.egress_port         |  9   |       | read-only |
++------------------------------------------------+------+-------+-----------+
+|                 Unused fields                  |  44  |       |           |
+|                  Unused bits                   | 536  |       |           |
+|          Unused CLOT-allocated fields          |  44  |       |           |
+|           Unused CLOT-allocated bits           | 536  |       |           |
++------------------------------------------------+------+-------+-----------+
+

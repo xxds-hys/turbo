@@ -1,0 +1,7 @@
+/root/P4/bf-sde-9.8.0/install/share/p4/targets/tofino2/attention_cal.conf
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/source.json
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/frontend-ir.json
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/bf-rt.json
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/pipe/tofino2.bin
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/pipe/context.json
+/root/P4/bf-sde-9.8.0/install/share/tofino2pd/attention_cal/events.json

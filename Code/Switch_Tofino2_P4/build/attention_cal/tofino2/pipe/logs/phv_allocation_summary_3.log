@@ -1,0 +1,572 @@
+PHV ALLOCATION SUCCESSFUL
+PHV Allocation
++-----------+-------+-----------------+------------------------------------------------------+
+|Container  |Gress  |Container Slice  |Field Slice                                           |
++-----------+-------+-----------------+------------------------------------------------------+
+|B0         |I      |[0]              |ingress::hdr.recirculate.$valid                       |
+|           |       |[1]              |ingress::hdr.recirculate_gamma.$valid                 |
+|           |       |[2]              |ingress::hdr.ethernet.$valid                          |
+|           |       |[3]              |ingress::hdr.ipv4.$valid                              |
+|           |       |[4]              |ingress::hdr.udp.$valid                               |
+|           |       |[5]              |ingress::hdr.attention.$valid                         |
+|           |       |[6]              |ingress::hdr.attention_data.$valid                    |
+|           |       |[7]              |ingress::hdr.recirculate_attention.$valid             |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B1         |I      |                 |ingress::ig_md.attention_9_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_29_local_res                 |
+|           |       |                 |ingress::ig_md.gamma_ba                               |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B2         |I      |                 |ingress::ig_md.attention_10_pkt_res                   |
+|           |       |                 |ingress::ig_md.attention_set.data_24                  |
+|           |       |                 |ingress::ig_md.offset                                 |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B3         |I      |                 |ingress::ig_md.attention_29_pkt_res                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B4         |E      |[0]              |egress::eg_intr_md_for_dprsr.mirror_io_select.$valid  |
+|           |       |[1]              |egress::eg_intr_md.egress_port.$valid                 |
+|           |       |                 |                                                      |
+|B5         |I      |                 |ingress::ig_md.attention_6_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_18_local_res                 |
+|           |       |                 |ingress::ig_md.attention_31_local_res                 |
+|           |       |                 |ingress::ig_md.attention_9_local_res                  |
+|           |       |                 |                                                      |
+|B6         |I      |                 |ingress::ig_md.attention_6_local_res                  |
+|           |       |                 |ingress::ig_md.attention_23_local_res                 |
+|           |       |                 |ingress::ig_md.attention_10_local_res                 |
+|           |       |                 |                                                      |
+|B7         |I      |                 |ingress::ig_md.attention_18_pkt_res                   |
+|           |       |                 |                                                      |
+|B8         |I      |                 |ingress::ig_md.attention_23_pkt_res                   |
+|           |       |                 |                                                      |
+|B9         |I      |                 |ingress::ig_md.attention_31_pkt_res                   |
+|           |       |                 |                                                      |
+|B10        |I      |                 |ingress::ig_md.attention_1_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_set.data_18                  |
+|           |       |                 |                                                      |
+|B11        |I      |                 |ingress::ig_md.attention_1_local_res                  |
+|           |       |                 |ingress::ig_md.attention_set.data_25                  |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B12        |I      |                 |ingress::ig_md.attention_4_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_11_local_res                 |
+|           |       |                 |ingress::ig_md.attention_16_local_res                 |
+|           |       |                 |                                                      |
+|B13        |I      |                 |ingress::ig_md.attention_4_local_res                  |
+|           |       |                 |ingress::ig_md.attention_12_local_res                 |
+|           |       |                 |ingress::ig_md.attention_17_local_res                 |
+|           |       |                 |                                                      |
+|B14        |I      |                 |ingress::ig_md.attention_5_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_13_local_res                 |
+|           |       |                 |                                                      |
+|B15        |I      |                 |ingress::ig_md.attention_5_local_res                  |
+|           |       |                 |ingress::ig_md.attention_14_local_res                 |
+|           |       |                 |                                                      |
+|B16        |I      |                 |ingress::ig_md.attention_7_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_set.data_23                  |
+|           |       |                 |                                                      |
+|B17        |I      |                 |ingress::ig_md.attention_7_local_res                  |
+|           |       |                 |ingress::ig_md.attention_set.data_26                  |
+|           |       |                 |                                                      |
+|B18        |I      |                 |ingress::ig_md.attention_11_pkt_res                   |
+|           |       |                 |ingress::ig_md.attention_set.data_29                  |
+|           |       |                 |                                                      |
+|B19        |I      |                 |ingress::ig_md.attention_12_pkt_res                   |
+|           |       |                 |ingress::ig_md.attention_set.data_30                  |
+|           |       |                 |                                                      |
+|B20        |I      |                 |ingress::ig_md.attention_13_pkt_res                   |
+|           |       |                 |ingress::ig_md.attention_set.data_31                  |
+|           |       |                 |                                                      |
+|B21        |I      |                 |ingress::ig_md.attention_14_pkt_res                   |
+|           |       |                 |ingress::ig_md.attention_set.data_27                  |
+|           |       |                 |                                                      |
+|B22        |I      |                 |ingress::ig_md.attention_16_pkt_res                   |
+|           |       |                 |                                                      |
+|B23        |I      |                 |ingress::ig_md.attention_17_pkt_res                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B24        |I      |                 |ingress::ig_md.attention_0_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_8_local_res                  |
+|           |       |                 |ingress::ig_md.attention_19_local_res                 |
+|           |       |                 |ingress::ig_md.attention_27_local_res                 |
+|           |       |                 |                                                      |
+|B25        |I      |                 |ingress::ig_md.attention_0_local_res                  |
+|           |       |                 |ingress::ig_md.attention_15_local_res                 |
+|           |       |                 |ingress::ig_md.attention_20_local_res                 |
+|           |       |                 |ingress::ig_md.attention_28_local_res                 |
+|           |       |                 |                                                      |
+|B26        |I      |                 |ingress::ig_md.attention_2_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_21_local_res                 |
+|           |       |                 |                                                      |
+|B27        |I      |                 |ingress::ig_md.attention_2_local_res                  |
+|           |       |                 |ingress::ig_md.attention_22_local_res                 |
+|           |       |                 |                                                      |
+|B28        |I      |                 |ingress::ig_md.attention_8_pkt_res                    |
+|           |       |                 |ingress::ig_md.attention_set.data_28                  |
+|           |       |                 |                                                      |
+|B29        |I      |                 |ingress::ig_md.attention_15_pkt_res                   |
+|           |       |                 |                                                      |
+|B30        |I      |                 |ingress::ig_md.attention_19_pkt_res                   |
+|           |       |                 |                                                      |
+|B31        |I      |                 |ingress::ig_md.attention_20_pkt_res                   |
+|           |       |                 |                                                      |
+|B32        |I      |                 |ingress::ig_md.attention_21_pkt_res                   |
+|           |       |                 |                                                      |
+|B33        |I      |                 |ingress::ig_md.attention_22_pkt_res                   |
+|           |       |                 |                                                      |
+|B34        |I      |                 |ingress::ig_md.attention_27_pkt_res                   |
+|           |       |                 |                                                      |
+|B35        |I      |                 |ingress::ig_md.attention_28_pkt_res                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|B36        |I      |                 |ingress::ig_md.attention_25_pkt_res                   |
+|           |       |                 |                                                      |
+|B37        |I      |                 |ingress::ig_md.attention_25_local_res                 |
+|           |       |                 |                                                      |
+|B38        |I      |[0]              |ingress::ig_md.local_gamma_big_flag                   |
+|           |       |                 |                                                      |
+|B39        |I      |[5:0]            |ingress::ig_md.gamma_ba_cal_res                       |
+|           |       |                 |                                                      |
+|B40        |I      |                 |ingress::ig_md.attention_set.data_9                   |
+|           |       |                 |                                                      |
+|B41        |I      |                 |ingress::ig_md.attention_set.data_15                  |
+|           |       |                 |                                                      |
+|B42        |I      |                 |ingress::ig_md.attention_set.data_0                   |
+|           |       |                 |ingress::ig_md.attention_set.data_16                  |
+|           |       |                 |                                                      |
+|B43        |I      |                 |ingress::ig_md.attention_set.data_1                   |
+|           |       |                 |ingress::ig_md.attention_set.data_17                  |
+|           |       |                 |                                                      |
+|B44        |I      |                 |ingress::ig_md.attention_set.data_2                   |
+|           |       |                 |ingress::ig_md.attention_set.data_19                  |
+|           |       |                 |                                                      |
+|B45        |I      |                 |ingress::ig_md.attention_set.data_3                   |
+|           |       |                 |ingress::ig_md.attention_set.data_20                  |
+|           |       |                 |                                                      |
+|B46        |I      |                 |ingress::ig_md.attention_set.data_4                   |
+|           |       |                 |ingress::ig_md.attention_set.data_21                  |
+|           |       |                 |                                                      |
+|B47        |I      |                 |ingress::ig_md.attention_set.data_5                   |
+|           |       |                 |ingress::ig_md.attention_set.data_22                  |
+|           |       |                 |                                                      |
+|H0         |I      |[7:0]            |ingress::ig_md.gamma_max                              |
+|           |       |[7:0]            |ingress::ig_md.attention_3_pkt_res                    |
+|           |       |[15:8]           |ingress::ig_md.attention_26_pkt_res                   |
+|           |       |                 |                                                      |
+|MH0        |I      |[7:0]            |ingress::hdr.attention.gamma                          |
+|           |       |[15:8]           |ingress::hdr.attention.seq_id                         |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|H1         |I      |[7:0]            |ingress::ig_md.gamma_log_res                          |
+|           |       |[7:0]            |ingress::ig_md.attention_3_local_res                  |
+|           |       |[7:0]            |ingress::ig_md.attention_30_local_res                 |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|H2         |I      |[15:8]           |ingress::ig_md.attention_26_local_res                 |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|H3         |I      |[7:0]            |ingress::ig_md.attention_30_pkt_res                   |
+|           |       |[15:8]           |ingress::ig_md.attention_24_pkt_res                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|H4         |I      |[15:8]           |ingress::ig_md.attention_24_local_res                 |
+|           |       |                 |                                                      |
+|H5         |I      |[7:0]            |ingress::ig_md.attention_set.data_6                   |
+|           |       |[15:8]           |ingress::ig_md.attention_set.data_10                  |
+|           |       |                 |                                                      |
+|H6         |I      |[7:0]            |ingress::ig_md.attention_set.data_11                  |
+|           |       |[15:8]           |ingress::ig_md.attention_set.data_13                  |
+|           |       |                 |                                                      |
+|H7         |I      |[7:0]            |ingress::ig_md.attention_set.data_12                  |
+|           |       |[15:8]           |ingress::ig_md.attention_set.data_14                  |
+|           |       |                 |                                                      |
+|H8         |I      |[7:0]            |ingress::ig_md.attention_set.data_8                   |
+|           |       |[15:8]           |ingress::ig_md.attention_set.data_7                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MH4        |E      |[8:0]            |egress::eg_intr_md.egress_port                        |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MH5        |E      |[0]              |egress::eg_intr_md_for_dprsr.mirror_io_select         |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MH6        |I      |                 |ingress::ig_md.padding[15:0]                          |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW0        |I      |[7:0]            |ingress::hdr.attention_data.data_31                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_30                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_29                   |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_28                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW1        |I      |[7:0]            |ingress::hdr.attention_data.data_27                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_26                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_25                   |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_24                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW2        |I      |[7:0]            |ingress::hdr.attention_data.data_23                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_22                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_21                   |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_20                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW3        |I      |[7:0]            |ingress::hdr.attention_data.data_19                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_18                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_17                   |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_16                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW4        |I      |[7:0]            |ingress::hdr.attention_data.data_15                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_14                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_13                   |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_12                   |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW5        |I      |[7:0]            |ingress::hdr.attention_data.data_11                   |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_10                   |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_9                    |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_8                    |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW6        |I      |[7:0]            |ingress::hdr.attention_data.data_7                    |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_6                    |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_5                    |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_4                    |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW7        |I      |[7:0]            |ingress::hdr.attention_data.data_3                    |
+|           |       |[15:8]           |ingress::hdr.attention_data.data_2                    |
+|           |       |[23:16]          |ingress::hdr.attention_data.data_1                    |
+|           |       |[31:24]          |ingress::hdr.attention_data.data_0                    |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW8        |I      |                 |ingress::ig_md.padding[47:16]                         |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
+|MW9        |I      |                 |ingress::ig_md.padding[79:48]                         |
+|           |       |                 |                                                      |
+|...        |       |                 |                                                      |
+|           |       |                 |                                                      |
++-----------+-------+-----------------+------------------------------------------------------+
+
+
+POV Allocation (ingress):
++-----------+-----------------+-------------------------------------------+
+|Container  |Container Slice  |Field Slice                                |
++-----------+-----------------+-------------------------------------------+
+|B0         |[0]              |ingress::hdr.recirculate.$valid            |
+|           |[1]              |ingress::hdr.recirculate_gamma.$valid      |
+|           |[2]              |ingress::hdr.ethernet.$valid               |
+|           |[3]              |ingress::hdr.ipv4.$valid                   |
+|           |[4]              |ingress::hdr.udp.$valid                    |
+|           |[5]              |ingress::hdr.attention.$valid              |
+|           |[6]              |ingress::hdr.attention_data.$valid         |
+|           |[7]              |ingress::hdr.recirculate_attention.$valid  |
++-----------+-----------------+-------------------------------------------+
+|           |Total Bits Used  |8 / 128 ( 6.25 %)                          |
+|           |Pack Density     |8 / 8 (  100 %)                            |
++-----------+-----------------+-------------------------------------------+
+
+POV Allocation (egress):
++-----------+-----------------+------------------------------------------------------+
+|Container  |Container Slice  |Field Slice                                           |
++-----------+-----------------+------------------------------------------------------+
+|B4         |[0]              |egress::eg_intr_md_for_dprsr.mirror_io_select.$valid  |
+|           |[1]              |egress::eg_intr_md.egress_port.$valid                 |
++-----------+-----------------+------------------------------------------------------+
+|           |Total Bits Used  |2 / 128 ( 1.56 %)                                     |
+|           |Pack Density     |2 / 8 (  25  %)                                       |
++-----------+-----------------+------------------------------------------------------+
+
++------------------------------------------------------+------------+-----------+----------------+-----------------+
+|Field Slice                                           |Live Range  |Container  |Container Type  |Container Slice  |
++------------------------------------------------------+------------+-----------+----------------+-----------------+
+|ingress::hdr.attention.seq_id                         |[-1r, 12w]  |MH0        |MH              |[15:8]           |
+|ingress::hdr.attention.gamma                          |[-1r, 12w]  |MH0        |MH              |[7:0]            |
+|ingress::hdr.attention_data.data_0                    |[-1r, 12w]  |MW7        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_1                    |[-1r, 12w]  |MW7        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_2                    |[-1r, 12w]  |MW7        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_3                    |[-1r, 12w]  |MW7        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_4                    |[-1r, 12w]  |MW6        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_5                    |[-1r, 12w]  |MW6        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_6                    |[-1r, 12w]  |MW6        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_7                    |[-1r, 12w]  |MW6        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_8                    |[-1r, 12w]  |MW5        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_9                    |[-1r, 12w]  |MW5        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_10                   |[-1r, 12w]  |MW5        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_11                   |[-1r, 12w]  |MW5        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_12                   |[-1r, 12w]  |MW4        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_13                   |[-1r, 12w]  |MW4        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_14                   |[-1r, 12w]  |MW4        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_15                   |[-1r, 12w]  |MW4        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_16                   |[-1r, 12w]  |MW3        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_17                   |[-1r, 12w]  |MW3        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_18                   |[-1r, 12w]  |MW3        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_19                   |[-1r, 12w]  |MW3        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_20                   |[-1r, 12w]  |MW2        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_21                   |[-1r, 12w]  |MW2        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_22                   |[-1r, 12w]  |MW2        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_23                   |[-1r, 12w]  |MW2        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_24                   |[-1r, 12w]  |MW1        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_25                   |[-1r, 12w]  |MW1        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_26                   |[-1r, 12w]  |MW1        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_27                   |[-1r, 12w]  |MW1        |MW              |[7:0]            |
+|ingress::hdr.attention_data.data_28                   |[-1r, 12w]  |MW0        |MW              |[31:24]          |
+|ingress::hdr.attention_data.data_29                   |[-1r, 12w]  |MW0        |MW              |[23:16]          |
+|ingress::hdr.attention_data.data_30                   |[-1r, 12w]  |MW0        |MW              |[15:8]           |
+|ingress::hdr.attention_data.data_31                   |[-1r, 12w]  |MW0        |MW              |[7:0]            |
+|ingress::ig_md.offset                                 |[-1r, 12w]  |B2         |B               |                 |
+|ingress::ig_md.gamma_ba                               |[-1r, 12w]  |B1         |B               |                 |
+|ingress::ig_md.gamma_log_res                          |[-1r, 12w]  |H1         |H               |[7:0]            |
+|ingress::ig_md.gamma_max                              |[-1r, 12w]  |H0         |H               |[7:0]            |
+|ingress::ig_md.gamma_ba_cal_res                       |[-1r, 12w]  |B39        |B               |[5:0]            |
+|ingress::ig_md.local_gamma_big_flag                   |[-1r, 12w]  |B38        |B               |[0]              |
+|ingress::ig_md.padding[15:0]                          |[-1r, 12w]  |MH6        |MH              |                 |
+|ingress::ig_md.padding[47:16]                         |[-1r, 12w]  |MW8        |MW              |                 |
+|ingress::ig_md.padding[79:48]                         |[-1r, 12w]  |MW9        |MW              |                 |
+|ingress::ig_md.attention_set.data_0                   |[-1r, 12w]  |B42        |B               |                 |
+|ingress::ig_md.attention_set.data_1                   |[-1r, 12w]  |B43        |B               |                 |
+|ingress::ig_md.attention_set.data_2                   |[-1r, 12w]  |B44        |B               |                 |
+|ingress::ig_md.attention_set.data_3                   |[-1r, 12w]  |B45        |B               |                 |
+|ingress::ig_md.attention_set.data_4                   |[-1r, 12w]  |B46        |B               |                 |
+|ingress::ig_md.attention_set.data_5                   |[-1r, 12w]  |B47        |B               |                 |
+|ingress::ig_md.attention_set.data_6                   |[-1r, 12w]  |H5         |H               |[7:0]            |
+|ingress::ig_md.attention_set.data_7                   |[-1r, 12w]  |H8         |H               |[15:8]           |
+|ingress::ig_md.attention_set.data_8                   |[-1r, 12w]  |H8         |H               |[7:0]            |
+|ingress::ig_md.attention_set.data_9                   |[-1r, 12w]  |B40        |B               |                 |
+|ingress::ig_md.attention_set.data_10                  |[-1r, 12w]  |H5         |H               |[15:8]           |
+|ingress::ig_md.attention_set.data_11                  |[-1r, 12w]  |H6         |H               |[7:0]            |
+|ingress::ig_md.attention_set.data_12                  |[-1r, 12w]  |H7         |H               |[7:0]            |
+|ingress::ig_md.attention_set.data_13                  |[-1r, 12w]  |H6         |H               |[15:8]           |
+|ingress::ig_md.attention_set.data_14                  |[-1r, 12w]  |H7         |H               |[15:8]           |
+|ingress::ig_md.attention_set.data_15                  |[-1r, 12w]  |B41        |B               |                 |
+|ingress::ig_md.attention_set.data_16                  |[-1r, 12w]  |B42        |B               |                 |
+|ingress::ig_md.attention_set.data_17                  |[-1r, 12w]  |B43        |B               |                 |
+|ingress::ig_md.attention_set.data_18                  |[-1r, 12w]  |B10        |B               |                 |
+|ingress::ig_md.attention_set.data_19                  |[-1r, 12w]  |B44        |B               |                 |
+|ingress::ig_md.attention_set.data_20                  |[-1r, 12w]  |B45        |B               |                 |
+|ingress::ig_md.attention_set.data_21                  |[-1r, 12w]  |B46        |B               |                 |
+|ingress::ig_md.attention_set.data_22                  |[-1r, 12w]  |B47        |B               |                 |
+|ingress::ig_md.attention_set.data_23                  |[-1r, 12w]  |B16        |B               |                 |
+|ingress::ig_md.attention_set.data_24                  |[-1r, 12w]  |B2         |B               |                 |
+|ingress::ig_md.attention_set.data_25                  |[-1r, 12w]  |B11        |B               |                 |
+|ingress::ig_md.attention_set.data_26                  |[-1r, 12w]  |B17        |B               |                 |
+|ingress::ig_md.attention_set.data_27                  |[-1r, 12w]  |B21        |B               |                 |
+|ingress::ig_md.attention_set.data_28                  |[-1r, 12w]  |B28        |B               |                 |
+|ingress::ig_md.attention_set.data_29                  |[-1r, 12w]  |B18        |B               |                 |
+|ingress::ig_md.attention_set.data_30                  |[-1r, 12w]  |B19        |B               |                 |
+|ingress::ig_md.attention_set.data_31                  |[-1r, 12w]  |B20        |B               |                 |
+|ingress::ig_md.attention_0_pkt_res                    |[-1r, 12w]  |B24        |B               |                 |
+|ingress::ig_md.attention_0_local_res                  |[-1r, 12w]  |B25        |B               |                 |
+|ingress::ig_md.attention_1_pkt_res                    |[-1r, 12w]  |B10        |B               |                 |
+|ingress::ig_md.attention_1_local_res                  |[-1r, 12w]  |B11        |B               |                 |
+|ingress::ig_md.attention_2_pkt_res                    |[-1r, 12w]  |B26        |B               |                 |
+|ingress::ig_md.attention_2_local_res                  |[-1r, 12w]  |B27        |B               |                 |
+|ingress::ig_md.attention_3_pkt_res                    |[-1r, 12w]  |H0         |H               |[7:0]            |
+|ingress::ig_md.attention_3_local_res                  |[-1r, 12w]  |H1         |H               |[7:0]            |
+|ingress::ig_md.attention_4_pkt_res                    |[-1r, 12w]  |B12        |B               |                 |
+|ingress::ig_md.attention_4_local_res                  |[-1r, 12w]  |B13        |B               |                 |
+|ingress::ig_md.attention_5_pkt_res                    |[-1r, 12w]  |B14        |B               |                 |
+|ingress::ig_md.attention_5_local_res                  |[-1r, 12w]  |B15        |B               |                 |
+|ingress::ig_md.attention_6_pkt_res                    |[-1r, 12w]  |B5         |B               |                 |
+|ingress::ig_md.attention_6_local_res                  |[-1r, 12w]  |B6         |B               |                 |
+|ingress::ig_md.attention_7_pkt_res                    |[-1r, 12w]  |B16        |B               |                 |
+|ingress::ig_md.attention_7_local_res                  |[-1r, 12w]  |B17        |B               |                 |
+|ingress::ig_md.attention_8_pkt_res                    |[-1r, 12w]  |B28        |B               |                 |
+|ingress::ig_md.attention_8_local_res                  |[-1r, 12w]  |B24        |B               |                 |
+|ingress::ig_md.attention_9_pkt_res                    |[-1r, 12w]  |B1         |B               |                 |
+|ingress::ig_md.attention_9_local_res                  |[-1r, 12w]  |B5         |B               |                 |
+|ingress::ig_md.attention_10_pkt_res                   |[-1r, 12w]  |B2         |B               |                 |
+|ingress::ig_md.attention_10_local_res                 |[-1r, 12w]  |B6         |B               |                 |
+|ingress::ig_md.attention_11_pkt_res                   |[-1r, 12w]  |B18        |B               |                 |
+|ingress::ig_md.attention_11_local_res                 |[-1r, 12w]  |B12        |B               |                 |
+|ingress::ig_md.attention_12_pkt_res                   |[-1r, 12w]  |B19        |B               |                 |
+|ingress::ig_md.attention_12_local_res                 |[-1r, 12w]  |B13        |B               |                 |
+|ingress::ig_md.attention_13_pkt_res                   |[-1r, 12w]  |B20        |B               |                 |
+|ingress::ig_md.attention_13_local_res                 |[-1r, 12w]  |B14        |B               |                 |
+|ingress::ig_md.attention_14_pkt_res                   |[-1r, 12w]  |B21        |B               |                 |
+|ingress::ig_md.attention_14_local_res                 |[-1r, 12w]  |B15        |B               |                 |
+|ingress::ig_md.attention_15_pkt_res                   |[-1r, 12w]  |B29        |B               |                 |
+|ingress::ig_md.attention_15_local_res                 |[-1r, 12w]  |B25        |B               |                 |
+|ingress::ig_md.attention_16_pkt_res                   |[-1r, 12w]  |B22        |B               |                 |
+|ingress::ig_md.attention_16_local_res                 |[-1r, 12w]  |B12        |B               |                 |
+|ingress::ig_md.attention_17_pkt_res                   |[-1r, 12w]  |B23        |B               |                 |
+|ingress::ig_md.attention_17_local_res                 |[-1r, 12w]  |B13        |B               |                 |
+|ingress::ig_md.attention_18_pkt_res                   |[-1r, 12w]  |B7         |B               |                 |
+|ingress::ig_md.attention_18_local_res                 |[-1r, 12w]  |B5         |B               |                 |
+|ingress::ig_md.attention_19_pkt_res                   |[-1r, 12w]  |B30        |B               |                 |
+|ingress::ig_md.attention_19_local_res                 |[-1r, 12w]  |B24        |B               |                 |
+|ingress::ig_md.attention_20_pkt_res                   |[-1r, 12w]  |B31        |B               |                 |
+|ingress::ig_md.attention_20_local_res                 |[-1r, 12w]  |B25        |B               |                 |
+|ingress::ig_md.attention_21_pkt_res                   |[-1r, 12w]  |B32        |B               |                 |
+|ingress::ig_md.attention_21_local_res                 |[-1r, 12w]  |B26        |B               |                 |
+|ingress::ig_md.attention_22_pkt_res                   |[-1r, 12w]  |B33        |B               |                 |
+|ingress::ig_md.attention_22_local_res                 |[-1r, 12w]  |B27        |B               |                 |
+|ingress::ig_md.attention_23_pkt_res                   |[-1r, 12w]  |B8         |B               |                 |
+|ingress::ig_md.attention_23_local_res                 |[-1r, 12w]  |B6         |B               |                 |
+|ingress::ig_md.attention_24_pkt_res                   |[-1r, 12w]  |H3         |H               |[15:8]           |
+|ingress::ig_md.attention_24_local_res                 |[-1r, 12w]  |H4         |H               |[15:8]           |
+|ingress::ig_md.attention_25_pkt_res                   |[-1r, 12w]  |B36        |B               |                 |
+|ingress::ig_md.attention_25_local_res                 |[-1r, 12w]  |B37        |B               |                 |
+|ingress::ig_md.attention_26_pkt_res                   |[-1r, 12w]  |H0         |H               |[15:8]           |
+|ingress::ig_md.attention_26_local_res                 |[-1r, 12w]  |H2         |H               |[15:8]           |
+|ingress::ig_md.attention_27_pkt_res                   |[-1r, 12w]  |B34        |B               |                 |
+|ingress::ig_md.attention_27_local_res                 |[-1r, 12w]  |B24        |B               |                 |
+|ingress::ig_md.attention_28_pkt_res                   |[-1r, 12w]  |B35        |B               |                 |
+|ingress::ig_md.attention_28_local_res                 |[-1r, 12w]  |B25        |B               |                 |
+|ingress::ig_md.attention_29_pkt_res                   |[-1r, 12w]  |B3         |B               |                 |
+|ingress::ig_md.attention_29_local_res                 |[-1r, 12w]  |B1         |B               |                 |
+|ingress::ig_md.attention_30_pkt_res                   |[-1r, 12w]  |H3         |H               |[7:0]            |
+|ingress::ig_md.attention_30_local_res                 |[-1r, 12w]  |H1         |H               |[7:0]            |
+|ingress::ig_md.attention_31_pkt_res                   |[-1r, 12w]  |B9         |B               |                 |
+|ingress::ig_md.attention_31_local_res                 |[-1r, 12w]  |B5         |B               |                 |
+|egress::eg_intr_md_for_dprsr.mirror_io_select         |[-1r, 12w]  |MH5        |MH              |[0]              |
+|egress::eg_intr_md_for_dprsr.mirror_io_select.$valid  |[-1r, 12w]  |B4         |B               |[0]              |
+|egress::eg_intr_md.egress_port                        |[-1r, 12w]  |MH4        |MH              |[8:0]            |
+|egress::eg_intr_md.egress_port.$valid                 |[-1r, 12w]  |B4         |B               |[1]              |
+|ingress::hdr.recirculate.$valid                       |[-1r, 12w]  |B0         |B               |[0]              |
+|ingress::hdr.recirculate_gamma.$valid                 |[-1r, 12w]  |B0         |B               |[1]              |
+|ingress::hdr.ethernet.$valid                          |[-1r, 12w]  |B0         |B               |[2]              |
+|ingress::hdr.ipv4.$valid                              |[-1r, 12w]  |B0         |B               |[3]              |
+|ingress::hdr.udp.$valid                               |[-1r, 12w]  |B0         |B               |[4]              |
+|ingress::hdr.attention.$valid                         |[-1r, 12w]  |B0         |B               |[5]              |
+|ingress::hdr.attention_data.$valid                    |[-1r, 12w]  |B0         |B               |[6]              |
+|ingress::hdr.recirculate_attention.$valid             |[-1r, 12w]  |B0         |B               |[7]              |
++------------------------------------------------------+------------+-----------+----------------+-----------------+
+
+
+
+
+
+PHV Allocation State
+
+MAU Groups:
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|   Container Set    | Containers Used |   Bits Used   | Bits Used on Ingress | Bits Used on Egress | Bits Allocated | Bits Allocated on Ingress | Bits Allocated on Egress | Available Bits |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       B0-11        |  12 (  100 %)   | 90 ( 93.8 %)  |     88 ( 91.7 %)     |     2 ( 2.08 %)     | 178 (  185 %)  |       176 (  183 %)       |       2 ( 2.08 %)        |       96       |
+|       MB0-3        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|       DB0-3        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 1  |  12 (  60  %)   | 90 ( 56.2 %)  |     88 (  55  %)     |     2 ( 1.25 %)     | 178 (  111 %)  |       176 (  110 %)       |       2 ( 1.25 %)        |      160       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       B12-23       |  12 (  100 %)   | 96 (  100 %)  |     96 (  100 %)     |     0 (   0  %)     | 192 (  200 %)  |       192 (  200 %)       |       0 (   0  %)        |       96       |
+|       MB4-7        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|       DB4-7        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 2  |  12 (  60  %)   | 96 (  60  %)  |     96 (  60  %)     |     0 (   0  %)     | 192 (  120 %)  |       192 (  120 %)       |       0 (   0  %)        |      160       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       B24-35       |  12 (  100 %)   | 96 (  100 %)  |     96 (  100 %)     |     0 (   0  %)     | 168 (  175 %)  |       168 (  175 %)       |       0 (   0  %)        |       96       |
+|       MB8-11       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|       DB8-11       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 3  |  12 (  60  %)   | 96 (  60  %)  |     96 (  60  %)     |     0 (   0  %)     | 168 (  105 %)  |       168 (  105 %)       |       0 (   0  %)        |      160       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       B36-47       |  12 (  100 %)   | 87 ( 90.6 %)  |     87 ( 90.6 %)     |     0 (   0  %)     | 135 (  141 %)  |       135 (  141 %)       |       0 (   0  %)        |       96       |
+|      MB12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|      DB12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       32       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 4  |  12 (  60  %)   | 87 ( 54.4 %)  |     87 ( 54.4 %)     |     0 (   0  %)     | 135 ( 84.4 %)  |       135 ( 84.4 %)       |       0 (   0  %)        |      160       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H0-11        |   9 (  75  %)   | 120 ( 62.5 %) |    120 ( 62.5 %)     |     0 (   0  %)     | 144 (  75  %)  |       144 (  75  %)       |       0 (   0  %)        |      192       |
+|       MH0-3        |   1 (  25  %)   | 16 (  25  %)  |     16 (  25  %)     |     0 (   0  %)     |  16 (  25  %)  |       16 (  25  %)        |       0 (   0  %)        |       64       |
+|       DH0-3        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 5  |  10 (  50  %)   | 136 ( 42.5 %) |    136 ( 42.5 %)     |     0 (   0  %)     | 160 (  50  %)  |       160 (  50  %)       |       0 (   0  %)        |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H12-23       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      192       |
+|       MH4-7        |   3 (  75  %)   | 26 ( 40.6 %)  |     16 (  25  %)     |    10 ( 15.6 %)     |  26 ( 40.6 %)  |       16 (  25  %)        |       10 ( 15.6 %)       |       64       |
+|       DH4-7        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 6  |   3 (  15  %)   | 26 ( 8.12 %)  |     16 (   5  %)     |    10 ( 3.12 %)     |  26 ( 8.12 %)  |       16 (   5  %)        |       10 ( 3.12 %)       |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H24-35       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      192       |
+|       MH8-11       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|       DH8-11       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 7  |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H36-47       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      192       |
+|      MH12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|      DH12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 8  |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H48-59       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      192       |
+|      MH16-19       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|      DH16-19       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 9  |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       H60-71       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      192       |
+|      MH20-23       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|      DH20-23       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |       64       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 10 |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      320       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       W0-11        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      384       |
+|       MW0-3        |   4 (  100 %)   | 128 (  100 %) |    128 (  100 %)     |     0 (   0  %)     | 128 (  100 %)  |       128 (  100 %)       |       0 (   0  %)        |      128       |
+|       DW0-3        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      128       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 11 |   4 (  20  %)   | 128 (  20  %) |    128 (  20  %)     |     0 (   0  %)     | 128 (  20  %)  |       128 (  20  %)       |       0 (   0  %)        |      640       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       W12-23       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      384       |
+|       MW4-7        |   4 (  100 %)   | 128 (  100 %) |    128 (  100 %)     |     0 (   0  %)     | 128 (  100 %)  |       128 (  100 %)       |       0 (   0  %)        |      128       |
+|       DW4-7        |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      128       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 12 |   4 (  20  %)   | 128 (  20  %) |    128 (  20  %)     |     0 (   0  %)     | 128 (  20  %)  |       128 (  20  %)       |       0 (   0  %)        |      640       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       W24-35       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      384       |
+|       MW8-11       |   2 (  50  %)   | 64 (  50  %)  |     64 (  50  %)     |     0 (   0  %)     |  64 (  50  %)  |       64 (  50  %)        |       0 (   0  %)        |      128       |
+|       DW8-11       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      128       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 13 |   2 (  10  %)   | 64 (  10  %)  |     64 (  10  %)     |     0 (   0  %)     |  64 (  10  %)  |       64 (  10  %)        |       0 (   0  %)        |      640       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|       W36-47       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      384       |
+|      MW12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      128       |
+|      DW12-15       |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      128       |
+|                    |                 |               |                      |                     |                |                           |                          |                |
+| Usage for Group 14 |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      640       |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|    Usage for 8b    |  48 (  60  %)   | 369 ( 57.7 %) |    367 ( 57.3 %)     |     2 ( 0.312%)     | 673 (  105 %)  |       671 (  105 %)       |       2 ( 0.312%)        |      640       |
+|   Usage for 16b    |  13 ( 10.8 %)   | 162 ( 8.44 %) |    152 ( 7.92 %)     |    10 ( 0.521%)     | 186 ( 9.69 %)  |       176 ( 9.17 %)       |       10 ( 0.521%)       |      1920      |
+|   Usage for 32b    |  10 ( 12.5 %)   | 320 ( 12.5 %) |    320 ( 12.5 %)     |     0 (   0  %)     | 320 ( 12.5 %)  |       320 ( 12.5 %)       |       0 (   0  %)        |      2560      |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+|   Usage for dark   |   0 (   0  %)   |  0 (   0  %)  |     0 (   0  %)      |     0 (   0  %)     |  0 (   0  %)   |        0 (   0  %)        |       0 (   0  %)        |      1024      |
+|  Usage for mocha   |  14 (  25  %)   | 362 ( 35.4 %) |    352 ( 34.4 %)     |    10 ( 0.977%)     | 362 ( 35.4 %)  |       352 ( 34.4 %)       |       10 ( 0.977%)       |      1024      |
+|  Usage for normal  |  57 ( 33.9 %)   | 489 ( 15.9 %) |    487 ( 15.9 %)     |     2 (0.0651%)     | 817 ( 26.6 %)  |       815 ( 26.5 %)       |       2 (0.0651%)        |      3072      |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+| Overall PHV Usage  |  71 ( 25.4 %)   | 851 ( 16.6 %) |    839 ( 16.4 %)     |    12 ( 0.234%)     | 1179 (  23  %) |      1167 ( 22.8 %)       |       12 ( 0.234%)       |      5120      |
++--------------------+-----------------+---------------+----------------------+---------------------+----------------+---------------------------+--------------------------+----------------+
+
+
+
+
