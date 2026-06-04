@@ -1,6 +1,6 @@
 # Turbo: Efficiently Serving Long-Context Large Language Models with In-Network Aggregation
 
-This repository contains the source code and artifact scripts for the paper **"Turbo: Efficiently Serving Long-Context Large Language Models with In-Network Aggregation"**. 
+This repository contains the source code and artifact scripts for the paper **"Turbo: Efficiently Serving Long-Context Large Language Models with In-Network Aggregation"**, which has been accepted to SIGCOMM 2026.. 
 
 Turbo is a system designed to accelerate long-context LLM serving by offloading attention calculation aggregation tasks to the network switch and programmable host NICs (FPGAs). This repository includes the P4 implementation for Intel Tofino 2 switches, Verilog code for FPGA-based host acceleration, and a packet-level NS-3 simulation environment.
 
