@@ -1,0 +1,15 @@
+Job:0 Round:1 Complete:1 srcNode:9 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165074 LastTimeInNs:420599 EndTimeInNs:585673
+Job:0 Round:1 Complete:2 srcNode:10 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165116 LastTimeInNs:422573 EndTimeInNs:587689
+Job:0 Round:1 Complete:3 srcNode:11 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165158 LastTimeInNs:425051 EndTimeInNs:590209
+Job:0 Round:1 Complete:4 srcNode:12 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165200 LastTimeInNs:426479 EndTimeInNs:591679
+Job:0 Round:1 Complete:5 srcNode:13 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165242 LastTimeInNs:428663 EndTimeInNs:593905
+Job:0 Round:1 Complete:6 srcNode:14 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165284 LastTimeInNs:431897 EndTimeInNs:597181
+Job:0 Round:1 Complete:7 srcNode:15 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165326 LastTimeInNs:434963 EndTimeInNs:600289
+Job:0 Round:1 Complete:8 srcNode:1 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164738 LastTimeInNs:446555 EndTimeInNs:611293
+Job:0 Round:1 Complete:9 srcNode:2 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164780 LastTimeInNs:446933 EndTimeInNs:611713
+Job:0 Round:1 Complete:10 srcNode:3 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164822 LastTimeInNs:447353 EndTimeInNs:612175
+Job:0 Round:1 Complete:11 srcNode:4 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164864 LastTimeInNs:447605 EndTimeInNs:612469
+Job:0 Round:1 Complete:12 srcNode:5 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164906 LastTimeInNs:448949 EndTimeInNs:613855
+Job:0 Round:1 Complete:13 srcNode:6 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164948 LastTimeInNs:449159 EndTimeInNs:614107
+Job:0 Round:1 Complete:14 srcNode:7 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:164990 LastTimeInNs:449243 EndTimeInNs:614233
+Job:0 Round:1 Complete:15 srcNode:8 dstNode:16 DataSizeInByte:256000 PktSizeInByte:268288 StartTimeInNs:165032 LastTimeInNs:449579 EndTimeInNs:614611

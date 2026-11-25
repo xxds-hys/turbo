@@ -9,12 +9,15 @@ Turbo is a system designed to accelerate long-context LLM serving by offloading 
 ```
 .
 ├── Code/
-│   ├── Host_FPGA_Verilog/       # Verilog source code for Host FPGA logic
-│   ├── Simulator_NS3_CPP/       # NS-3 based simulation framework
-│   │   ├── Executable Files/    # Scripts to run simulations
-│   │   ├── inputFiles/          # Traffic traces (GPT, LLaMA) and topology configs
-│   │   └── src/                 # Modified NS-3 source modules (routing, transport, etc.)
-│   └── Switch_Tofino2_P4/       # P4_16 source code for Intel Tofino 2 switches
+│   ├── Host_FPGA_Verilog/           # Verilog source code for Host FPGA logic
+│   ├── Simulator_NS3_CPP/           # NS-3.33 based simulation framework
+│   │   ├── Dockerfile               # Container definition for build and precompiled runs
+│   │   ├── README.md                # Detailed NS-3 simulation guide (English)
+│   │   ├── README.zh-CN.md          # Detailed NS-3 simulation guide (Chinese)
+│   │   ├── file-in-ctr/             # Experiment programs, input traces, and reference outputs
+│   │   ├── ns-3.33/                 # Modified NS-3.33 simulator source code
+│   │   └── scripts/                 # Unified build and run CLI (turbo.py)
+│   └── Switch_Tofino2_P4/           # P4_16 source code for Intel Tofino 2 switches
 └── README.md
 ```
 
@@ -31,8 +34,8 @@ To fully reproduce the results and run the code, the following hardware and soft
 *   **Hardware**: FPGA-equipped SmartNIC or development board.
 
 ### 3. Simulation (NS-3)
-*   **OS**: Ubuntu 20.04/22.04 LTS (Recommended).
-*   **Dependencies**: Python 3.x, C++ compiler (g++/clang), and standard NS-3 build dependencies.
+*   **Option A — Docker (Recommended)**: Docker with Linux-container support (precompiled image published at `wzdl/turbo-ns3:v1.0`).
+*   **Option B — Native Linux**: Linux x86_64 (verified on Ubuntu 20.04 amd64) with C/C++ build tools, Python 3 (`python3-dev`, `python3-distutils`), OpenMPI, Boost, GSL, SQLite3, and libxml2. See [Code/Simulator_NS3_CPP/README.md](Code/Simulator_NS3_CPP/README.md) for the exact package list.
 
 ## Getting Started
 
@@ -60,27 +63,39 @@ The Verilog code implements the host-side offloading logic.
 
 ### Part 3: NS-3 Simulation
 
-The simulation framework models the end-to-end performance of Turbo with traces from popular LLMs (GPT, LLaMA).
+The simulation framework models the end-to-end performance of Turbo and baselines (`A00095`–`A00106`) with traces from popular LLMs (GPT, LLaMA). Full instructions, experiment catalog, and Windows PowerShell notes are provided in [Code/Simulator_NS3_CPP/README.md](Code/Simulator_NS3_CPP/README.md) ([中文说明](Code/Simulator_NS3_CPP/README.zh-CN.md)).
 
-#### Setup
-1.  Ensure you have `waf` and NS-3 dependencies installed.
-2.  The simulation source code is located in `Code/Simulator_NS3_CPP/src/`.
+First, navigate to the NS-3 directory (except for Option 3, which does not require a local checkout):
 
-#### Running Experiments
-Execution scripts are provided in the `Executable Files` directory.
+```bash
+cd Code/Simulator_NS3_CPP
+```
 
-1.  Navigate to the execution directory:
+Three ways are supported to build and run the experiments (using `A00095` as an example; replace with `all` to run all 12 experiments):
+
+1.  **Build and run manually (Linux)**:
     ```bash
-    cd "Code/Simulator_NS3_CPP/Executable Files/A00082"
+    python3 scripts/turbo.py build --configure --jobs 2
+    python3 scripts/turbo.py run A00095
     ```
-2.  Run the simulation using the provided Python script:
-    ```bash python run.py```
-    *   The script drives the simulation using input configurations found in `Code/Simulator_NS3_CPP/inputFiles/`.
-    *   Traffic traces for different models (e.g., `GPT_1.txt`, `LLAM_16.txt`) define the workload patterns.
+2.  **Compile and run in Docker** (mount local source into the container toolchain):
+    ```bash
+    docker pull "wzdl/turbo-ns3:v1.0"
+    docker run --rm --mount "type=bind,source=$(pwd),target=/opt/turbo" "wzdl/turbo-ns3:v1.0" build --configure --jobs 2
+    docker run --rm --mount "type=bind,source=$(pwd),target=/opt/turbo" "wzdl/turbo-ns3:v1.0" run A00095
+    ```
+3.  **Run the precompiled Docker image directly** (no compilation required):
+    ```bash
+    docker pull "wzdl/turbo-ns3:v1.0"
+    mkdir -p results
+    docker run --rm --mount "type=bind,source=$(pwd)/results,target=/results" "wzdl/turbo-ns3:v1.0" run A00095 --output-dir /results
+    ```
 
 ## Input Data
 
-The `Code/Simulator_NS3_CPP/inputFiles/` directory contains configuration files used for evaluation:
-*   **Traffic Patterns**: `GPT_*.txt`, `LLAM_*.txt` represent traffic traces for GPT and LLaMA models with varying batch sizes.
-*   **Topology**: `TOPO.txt` defines the network topology.
+The `Code/Simulator_NS3_CPP/file-in-ctr/inputFiles/` directory contains per-experiment (`A00095`–`A00106`) configuration files used for evaluation:
+*   **Traffic Patterns**: `GPT_*.txt`, `LLAM_*.txt` represent traffic traces for GPT and LLaMA models with varying batch sizes (`1`, `4`, `8`, `16`, `32`).
+*   **Topology**: `TOPO.txt` defines the network topology (Spark or Spine-Leaf, 200 Gbps links).
 *   **Protocol Config**: `CONFIG_DCQCN.txt` contains DCQCN parameters.
+
+Reference outputs for all experiments are stored in `Code/Simulator_NS3_CPP/file-in-ctr/outputFiles/`.

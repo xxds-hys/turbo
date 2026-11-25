@@ -1,0 +1,15 @@
+.git
+artifacts
+results
+full-results
+**/__pycache__
+**/*.pyc
+ns-3.33/build
+ns-3.33/.waf*
+ns-3.33/.lock-waf*
+ns-3.33/.vscode
+ns-3.33/scratch/turbo-*.cc
+file-in-ctr/outputFiles
+*.tar
+*.tar.gz
+*.zip

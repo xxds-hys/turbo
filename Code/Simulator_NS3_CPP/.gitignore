@@ -1,0 +1,16 @@
+# Simulation outputs and generated scratch targets
+/artifacts/
+/results/
+/full-results/
+/ns-3.33/scratch/turbo-*.cc
+
+# Generated ns-3 build files and local editor settings
+/ns-3.33/build/
+/ns-3.33/.lock-waf*
+/ns-3.33/.waf*/
+/ns-3.33/.vscode/
+
+# Python bytecode caches
+__pycache__/
+*.pyc
+*.pyo

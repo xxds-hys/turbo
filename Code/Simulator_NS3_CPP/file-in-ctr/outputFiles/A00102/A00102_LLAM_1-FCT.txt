@@ -1,0 +1,15 @@
+Job:0 Round:1 Complete:1 srcNode:1 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8498 LastTimeInNs:5264 EndTimeInNs:13762
+Job:0 Round:1 Complete:2 srcNode:2 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8540 LastTimeInNs:5558 EndTimeInNs:14098
+Job:0 Round:1 Complete:3 srcNode:3 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8582 LastTimeInNs:5852 EndTimeInNs:14434
+Job:0 Round:1 Complete:4 srcNode:4 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8624 LastTimeInNs:6146 EndTimeInNs:14770
+Job:0 Round:1 Complete:5 srcNode:5 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8666 LastTimeInNs:6440 EndTimeInNs:15106
+Job:0 Round:1 Complete:6 srcNode:6 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8708 LastTimeInNs:6734 EndTimeInNs:15442
+Job:0 Round:1 Complete:7 srcNode:7 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8750 LastTimeInNs:7028 EndTimeInNs:15778
+Job:0 Round:1 Complete:8 srcNode:8 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8792 LastTimeInNs:7322 EndTimeInNs:16114
+Job:0 Round:1 Complete:9 srcNode:9 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8834 LastTimeInNs:7616 EndTimeInNs:16450
+Job:0 Round:1 Complete:10 srcNode:10 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8876 LastTimeInNs:7868 EndTimeInNs:16744
+Job:0 Round:1 Complete:11 srcNode:11 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8918 LastTimeInNs:8078 EndTimeInNs:16996
+Job:0 Round:1 Complete:12 srcNode:12 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:8960 LastTimeInNs:8246 EndTimeInNs:17206
+Job:0 Round:1 Complete:13 srcNode:13 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:9002 LastTimeInNs:8372 EndTimeInNs:17374
+Job:0 Round:1 Complete:14 srcNode:14 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:9044 LastTimeInNs:8456 EndTimeInNs:17500
+Job:0 Round:1 Complete:15 srcNode:15 dstNode:16 DataSizeInByte:8000 PktSizeInByte:8384 StartTimeInNs:9086 LastTimeInNs:8498 EndTimeInNs:17584
