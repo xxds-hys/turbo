@@ -12,6 +12,7 @@ attention aggregation, targeting Intel Tofino 2 programmable switches (`t2na`).
 | `attention_cal.p4` | Main P4 program (Ingress/Egress controls, lookup tables, registers, and rolling-forward pipeline) |
 | `headers.p4` | Custom packet headers, metadata structures, and macro definitions |
 | `parser.p4` | Ingress/Egress parser and deparser definitions |
+| `manifest.json` | Build manifest |
 
 Run all commands below from this directory (`Code/Switch_Tofino2_P4/`).
 

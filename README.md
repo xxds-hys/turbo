@@ -22,7 +22,8 @@ Turbo is a system designed to accelerate long-context LLM serving by offloading 
 │       ├── README.zh-CN.md          # Switch P4 compilation guide (Chinese)
 │       ├── attention_cal.p4         # Main P4 aggregation program
 │       ├── headers.p4               # Packet headers and metadata definitions
-│       └── parser.p4                # Parser and deparser definitions
+│       ├── parser.p4                # Parser and deparser definitions
+│       └── manifest.json            # Build manifest
 └── README.md
 ```
 

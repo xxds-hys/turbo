@@ -11,6 +11,7 @@
 | `attention_cal.p4` | 主 P4 程序（Ingress/Egress 控制逻辑、查找表、寄存器及前滚更新流水线） |
 | `headers.p4` | 自定义协议头、元数据结构体及宏定义 |
 | `parser.p4` | Ingress/Egress 解析器与逆解析器定义 |
+| `manifest.json` | 编译清单文件 |
 
 以下命令均在本目录（`Code/Switch_Tofino2_P4/`）下执行。
 
