@@ -1,10 +1,10 @@
-
 #define ATTENTION_DIM 128
 
 #define ATTENTION_WIDTH 8
 #define GAMMA_WIDTH 4
 
-#define ATTENTION_CAL_TABLE_SIZE 1024 << 4 // 4 + 8
+// Per paper §5.1 & §6.3: 11-bit lookup table (2^11 = 2048 entries, 2 KB)
+#define ATTENTION_CAL_TABLE_SIZE 2048
 
 // 14B
 header ethernet_h {
@@ -37,7 +37,7 @@ header udp_h {
     bit<16>    checksum;
 }
 
-// 16B
+// 4B
 header attention_h {
     bit<8> layer_id;
     bit<8> head_id;
@@ -45,10 +45,10 @@ header attention_h {
     bit<8> gamma;
 }
 
-// 12B
+// 2B
 header recirculate_h {
     bit<8> recirculate_flag; // 220 is recirculate pkt
-    bit<8> recirculate_tag; // 0: gamma; 1: attention and m, n
+    bit<8> recirculate_tag;  // 0: gamma; 1: attention and m, n
 }
 
 header recirculate_gamma_h {
@@ -78,7 +78,7 @@ header recirculate_attention_h {
     bit<8> data_rec_15;
 }
 
-// 128B
+// 32-element segment (paper §5.1: 32-element configuration, 8 stages, plateau = 6)
 header attention_data_h {
     bit<ATTENTION_WIDTH> data_0;
     bit<ATTENTION_WIDTH> data_1;
@@ -112,38 +112,6 @@ header attention_data_h {
     bit<ATTENTION_WIDTH> data_29;
     bit<ATTENTION_WIDTH> data_30;
     bit<ATTENTION_WIDTH> data_31;
-    // bit<ATTENTION_WIDTH> data_32;
-    // bit<ATTENTION_WIDTH> data_33;
-    // bit<ATTENTION_WIDTH> data_34;
-    // bit<ATTENTION_WIDTH> data_35;
-    // bit<ATTENTION_WIDTH> data_36;
-    // bit<ATTENTION_WIDTH> data_37;
-    // bit<ATTENTION_WIDTH> data_38;
-    // bit<ATTENTION_WIDTH> data_39;
-    // bit<ATTENTION_WIDTH> data_40;
-    // bit<ATTENTION_WIDTH> data_41;
-    // bit<ATTENTION_WIDTH> data_42;
-    // bit<ATTENTION_WIDTH> data_43;
-    // bit<ATTENTION_WIDTH> data_44;
-    // bit<ATTENTION_WIDTH> data_45;
-    // bit<ATTENTION_WIDTH> data_46;
-    // bit<ATTENTION_WIDTH> data_47;
-    // bit<ATTENTION_WIDTH> data_48;
-    // bit<ATTENTION_WIDTH> data_49;
-    // bit<ATTENTION_WIDTH> data_50;
-    // bit<ATTENTION_WIDTH> data_51;
-    // bit<ATTENTION_WIDTH> data_52;
-    // bit<ATTENTION_WIDTH> data_53;
-    // bit<ATTENTION_WIDTH> data_54;
-    // bit<ATTENTION_WIDTH> data_55;
-    // bit<ATTENTION_WIDTH> data_56;
-    // bit<ATTENTION_WIDTH> data_57;
-    // bit<ATTENTION_WIDTH> data_58;
-    // bit<ATTENTION_WIDTH> data_59;
-    // bit<ATTENTION_WIDTH> data_60;
-    // bit<ATTENTION_WIDTH> data_61;
-    // bit<ATTENTION_WIDTH> data_62;
-    // bit<ATTENTION_WIDTH> data_63;
 }
 
 struct ingress_header_t {
@@ -198,38 +166,6 @@ struct attention_set_t {
     bit<ATTENTION_WIDTH> data_29;
     bit<ATTENTION_WIDTH> data_30;
     bit<ATTENTION_WIDTH> data_31;
-    // bit<ATTENTION_WIDTH> data_32;
-    // bit<ATTENTION_WIDTH> data_33;
-    // bit<ATTENTION_WIDTH> data_34;
-    // bit<ATTENTION_WIDTH> data_35;
-    // bit<ATTENTION_WIDTH> data_36;
-    // bit<ATTENTION_WIDTH> data_37;
-    // bit<ATTENTION_WIDTH> data_38;
-    // bit<ATTENTION_WIDTH> data_39;
-    // bit<ATTENTION_WIDTH> data_40;
-    // bit<ATTENTION_WIDTH> data_41;
-    // bit<ATTENTION_WIDTH> data_42;
-    // bit<ATTENTION_WIDTH> data_43;
-    // bit<ATTENTION_WIDTH> data_44;
-    // bit<ATTENTION_WIDTH> data_45;
-    // bit<ATTENTION_WIDTH> data_46;
-    // bit<ATTENTION_WIDTH> data_47;
-    // bit<ATTENTION_WIDTH> data_48;
-    // bit<ATTENTION_WIDTH> data_49;
-    // bit<ATTENTION_WIDTH> data_50;
-    // bit<ATTENTION_WIDTH> data_51;
-    // bit<ATTENTION_WIDTH> data_52;
-    // bit<ATTENTION_WIDTH> data_53;
-    // bit<ATTENTION_WIDTH> data_54;
-    // bit<ATTENTION_WIDTH> data_55;
-    // bit<ATTENTION_WIDTH> data_56;
-    // bit<ATTENTION_WIDTH> data_57;
-    // bit<ATTENTION_WIDTH> data_58;
-    // bit<ATTENTION_WIDTH> data_59;
-    // bit<ATTENTION_WIDTH> data_60;
-    // bit<ATTENTION_WIDTH> data_61;
-    // bit<ATTENTION_WIDTH> data_62;
-    // bit<ATTENTION_WIDTH> data_63;
 }
 
 struct ingress_metadata_t {
@@ -237,15 +173,12 @@ struct ingress_metadata_t {
     bit<8> gamma_ba;
     bit<8> gamma_log_res;
     bit<8> gamma_max;
-    bit<6> gamma_ba_cal_res;
+    bit<4> gamma_ba_cal_res;     // 4-bit quantized delta_gamma + 1-bit flag = 5 bits (paper m1=5)
     bit<1> local_gamma_big_flag;
-    bit<80> padding;
-    attention_set_t pkt_attention_set;
-    attention_set_t attention_set; 
+    attention_set_t attention_set;
 
-
-    #define ATTENTION_RES(i)            \
-        bit<ATTENTION_WIDTH> attention_##i##_pkt_res;     \
+    #define ATTENTION_RES(i) \
+        bit<ATTENTION_WIDTH> attention_##i##_pkt_res; \
         bit<ATTENTION_WIDTH> attention_##i##_local_res;
 
     ATTENTION_RES(0)
@@ -280,33 +213,4 @@ struct ingress_metadata_t {
     ATTENTION_RES(29)
     ATTENTION_RES(30)
     ATTENTION_RES(31)
-    ATTENTION_RES(32)
-    ATTENTION_RES(33)
-    ATTENTION_RES(34)
-    ATTENTION_RES(35)
-    ATTENTION_RES(36)
-    ATTENTION_RES(37)
-    ATTENTION_RES(38)
-    ATTENTION_RES(39)
-    ATTENTION_RES(40)
-    ATTENTION_RES(41)
-    ATTENTION_RES(42)
-    ATTENTION_RES(43)
-    ATTENTION_RES(44)
-    ATTENTION_RES(45)
-    ATTENTION_RES(46)
-    ATTENTION_RES(47)
-    ATTENTION_RES(48)
-    ATTENTION_RES(49)
-    ATTENTION_RES(50)
-    ATTENTION_RES(51)
-    ATTENTION_RES(52)
-    ATTENTION_RES(53)
-    ATTENTION_RES(54)
-    ATTENTION_RES(55)
-    ATTENTION_RES(56)
-    ATTENTION_RES(57)
-    ATTENTION_RES(58)
-    ATTENTION_RES(59)
-
 }

@@ -1,8 +1,7 @@
-
 parser TofinoIngressParser(
     packet_in pkt,
     out ingress_intrinsic_metadata_t ig_intr_md
-) 
+)
 {
     state start {
         pkt.extract(ig_intr_md);
@@ -139,7 +138,7 @@ control EgressDeparser(
     in egress_metadata_t eg_md,
     in egress_intrinsic_metadata_for_deparser_t eg_dprsr_md
 ) {
-    apply{
+    apply {
 
     }
 }

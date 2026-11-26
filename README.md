@@ -18,6 +18,11 @@ Turbo is a system designed to accelerate long-context LLM serving by offloading 
 │   │   ├── ns-3.33/                 # Modified NS-3.33 simulator source code
 │   │   └── scripts/                 # Unified build and run CLI (turbo.py)
 │   └── Switch_Tofino2_P4/           # P4_16 source code for Intel Tofino 2 switches
+│       ├── README.md                # Switch P4 compilation guide (English)
+│       ├── README.zh-CN.md          # Switch P4 compilation guide (Chinese)
+│       ├── attention_cal.p4         # Main P4 aggregation program
+│       ├── headers.p4               # Packet headers and metadata definitions
+│       └── parser.p4                # Parser and deparser definitions
 └── README.md
 ```
 
@@ -27,7 +32,7 @@ To fully reproduce the results and run the code, the following hardware and soft
 
 ### 1. In-Network Switch (P4)
 *   **Hardware**: Intel Tofino 2 Programmable Switch.
-*   **Software**: Intel P4 Studio (SDE) 9.7.0 or compatible version.
+*   **Software**: Intel P4 Studio (SDE) (verified on 9.7.1 or compatible version).
 
 ### 2. Host FPGA (Verilog)
 *   **Software**: Standard FPGA synthesis tools (e.g., Intel Quartus Prime or Xilinx Vivado) compatible with your target FPGA platform.
@@ -41,14 +46,17 @@ To fully reproduce the results and run the code, the following hardware and soft
 
 ### Part 1: Switch Data Plane (P4)
 
-The P4 code implements the in-network attention value aggregation.
+The P4 code implements the in-network attention value aggregation. See [Code/Switch_Tofino2_P4/README.md](Code/Switch_Tofino2_P4/README.md) ([中文说明](Code/Switch_Tofino2_P4/README.zh-CN.md)) for full instructions.
 
 1.  Navigate to the P4 directory:
-    ```bash cd Code/Switch_Tofino2_P4/ ```
+    ```bash
+    cd Code/Switch_Tofino2_P4/
+    ```
 2.  The main P4 program is `attention_cal.p4`.
-3.  Compile the program using the Tofino SDE compiler (`bf-p4c`). Ensure your environment variables for SDE are set.
-    ```bash # Example compilation command (adjust according to your SDE path)
-    bf-p4c -g --target tofino2 --arch t2na attention_cal.p4 ```
+3.  Compile the program using the Tofino SDE compiler (`bf-p4c`). Ensure your environment variables for SDE are set:
+    ```bash
+    bf-p4c --std p4-16 --target tofino2 --arch t2na -g -o ./build_out attention_cal.p4
+    ```
 4.  Load the compiled binary onto the switch using the switch driver.
 
 ### Part 2: Host FPGA Logic (Verilog)
@@ -56,7 +64,9 @@ The P4 code implements the in-network attention value aggregation.
 The Verilog code implements the host-side offloading logic.
 
 1.  Navigate to the Verilog directory:
-    ```bash cd Code/Host_FPGA_Verilog/ ```
+    ```bash
+    cd Code/Host_FPGA_Verilog/
+    ```
 2.  The top-level module is defined in `top.v`.
 3.  The design includes basic arithmetic modules (e.g., `abs_subtract.v`) and ROMs for lookup tables.
 4.  Import these files into your FPGA project workspace (Quartus/Vivado) for synthesis and implementation.
